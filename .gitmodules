@@ -1,0 +1,5 @@
+[submodule "libft"]
+	path = libft
+	url = git@github.com:mxvements/ft_libft.git
+[submodule "gnl"]
+	path = gnl

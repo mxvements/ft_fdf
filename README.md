@@ -11,6 +11,7 @@
 </div>
 
 # ft_fdf
+
 The representation in 3D of a landscape is a critical aspect of modern mapping. For example, in these times of spatial exploration, to have a 3D representation of Mars is a prerequisite condition to its conquest. As another example, comparing various 3D representations of an area of high tectonic activity will allow you to better understand these phenomena and their evolution, and as a result, be better prepared. It’s your turn today to modelize some 3D magnificent landscapes, imaginary or not.
 
 # Mandatory part
@@ -107,7 +108,7 @@ At 42 School, it is expected that almost every project is written in accordance 
 ```
 ## Aknowledgments
 
-+ ...
++ [MiniLibX Documentation](https://harm-smits.github.io/42docs/libs/minilibx/introduction.html)
 
 # License
 [MIT License](https://github.com/mxvements/ft_license/blob/main/LICENSE.txt)

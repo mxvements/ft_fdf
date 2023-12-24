@@ -2,6 +2,10 @@ CC=			cc
 
 CFLAGS=		-Wall -Wextra -Werror -g3
 
+MLX_MAC=	-Lmlx -lmlx -framework OpenGL -framework AppKit
+
+MLX_LINUX=	-Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+
 NAME=		fdf
 
 ###############################################################################
@@ -37,7 +41,7 @@ all: $(NAME)
 
 $(NAME): $(MY_OBJECTS)
 	make extra -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(MY_OBJECTS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(MY_OBJECTS) $(LIBFT) $(MLX_LINUX) -o $(NAME)
 
 clean:
 	make clean -C $(LIBFT_DIR)

@@ -12,7 +12,8 @@ NAME=		fdf
 
 #HRDS=
 
-SRCS=		main.c
+SRCS=		main.c \
+			mlx_intro.c
 
 SRCS_DIR=	./srcs/
 

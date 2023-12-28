@@ -10,7 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mlx_linux/mlx.h"
-#include "../mlx_linux/mlx_int.h"
-#include "../libft/libft.h"
-#include "../gnl/get_next_line.h"
+#include "fdf.h"
+
+char	*readfile(char *path)
+{
+	char	*txt;
+	char	*gnl;
+	char	*tmp;
+	int		fd;
+
+	txt = NULL;
+	fd = open(path, O_RDONLY);
+	while(1)
+	{
+		gnl = get_next_line(fd);
+		if (gnl == NULL)
+			break ;
+		if (!txt)
+			txt = gnl;
+		else
+		{
+			tmp = ft_strjoin(txt, gnl);
+			free(txt);
+			free(gnl);
+			txt = tmp;
+		}
+	}
+	close(fd);
+	return (txt);
+}
+
+int main(void)
+{
+	char	*path = "./test_maps/42.fdf";
+	char	*txt;
+
+	txt = readfile(path);
+	printf("%s\n", txt);
+
+	return (0);
+}

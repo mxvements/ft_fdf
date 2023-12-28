@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mlx_linux/mlx.h"
-#include "../mlx_linux/mlx_int.h"
-#include "../libft/libft.h"
-#include "../gnl/get_next_line.h"
-
-#define WIDTH 500
-#define HEIGHT 500
+#include "fdf.h"
 
 typedef struct	s_data {
 	void	*mlx;
@@ -44,12 +38,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 //In linux we use KEYSYM in mac.. keycode?
 int	handle_input(int keysym, t_data *data)
 {
-	if (keysym == XK_Escape)
+	if (keysym == KEY_ESC) //Linux: XK_Escape
 	{
 		write(1, "(EXC)\n", 6);
 		mlx_destroy_window(data->mlx, data->mlx_win);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
 		return (1);
 	}
 	printf("Key: (%d)\n", keysym);
@@ -79,15 +71,12 @@ int	main(void)
 	*  HOOKING EVENT
 	* 2 -> keydown
 	* 17 -> on_destroy
-		mlx_hook(data.mlx_win, 2, 0, my_close, &data);
-	* */
+	*/
 	
 	/*
 	// Alias hooking functions, for expose event, key event, and mouse event
-	mlx_key_hook(data.mlx_win, handle_input, &data);
-	if (!data.mlx)
-		return (1);
-	*/
+	mlx_key_hook(data.mlx_win, handle_input, &data);*/
+	
 
 	
 	
@@ -103,11 +92,10 @@ int	main(void)
 		y++;
 	}
 	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);
+	
 
 	
 	mlx_loop(data.mlx);
-	//destroy the connection with mlx
-	mlx_destroy_display(data.mlx);
 	free(data.mlx);
 	return (0);
 }

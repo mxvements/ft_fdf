@@ -21,7 +21,6 @@ t_dll	**evalerror(t_dll **ptlst)
 	return (ptlst);
 }
 
-/* this function will evaluate: (+-)nbr(,color) */
 t_dll	**evalpoint(char *s, t_dll **ptlst)
 {
 	const int	comma = ft_strchr(s, ',');
@@ -99,10 +98,11 @@ t_dll	**a_parse(char *s, t_dll **ptlst)
 		if (state == 3 && (ostate == 4 || s[i] == '\0'))
 		{
 			ptlst = evalpoint(ft_substr(s, init_pt, (i - init_pt) + 1), ptlst);
-			//if it's null.. a point hasnt been valid then we must return
+			if (!ptlst)
+				return (NULL);
 		}
 		if (ostate == 1 || (ostate < 3 && s[i] == '\0'))
-			//evalerror
+			evalerror(ptlst);
 		state = ostate;
 		i++;
 	}

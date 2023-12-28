@@ -48,5 +48,13 @@ int main(void)
 	txt = readfile(path);
 	printf("%s\n", txt);
 
+	/*
+	** TODO:
+	** - must create a t_dll **ptlst to start parsing
+	** - get matrix dimensions from txt
+	** - put list info on matrix (and free list)
+	** - update pt info with x and y from matrix
+	*/
+
 	return (0);
 }

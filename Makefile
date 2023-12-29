@@ -2,6 +2,8 @@ CC=			cc
 
 CFLAGS=		-Wall -Wextra -Werror -g3
 
+CFLAG_SAN=	-fsanitize=address
+
 MLX_MAC=	-Lmlx -lmlx -framework OpenGL -framework AppKit 
 
 MLX_LINUX=	-Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
@@ -12,7 +14,8 @@ NAME=		fdf
 
 #HRDS=
 
-SRCS=		main.c 
+SRCS=		main.c \
+			parse_automata.c
 
 SRCS_DIR=	./srcs/
 
@@ -43,10 +46,13 @@ $(NAME): $(MY_OBJECTS)
 	make extra -C $(LIBFT_DIR)
 
 mac:
-	$(CC) $(CFLAGS) $(MY_OBJECTS) -g3 $(LIBFT) $(MLX_MAC) -o $(NAME)
+	$(CC) $(CFLAGS) $(MY_OBJECTS) $(LIBFT) $(MLX_MAC) -o $(NAME)
 
 linux:
-	$(CC) $(CFLAGS) $(MY_OBJECTS) -g3 $(LIBFT) $(MLX_LINUX) -o $(NAME)
+	$(CC) $(CFLAGS) $(MY_OBJECTS) $(LIBFT) $(MLX_LINUX) -o $(NAME)
+
+sanitize: fclean $(NAME)
+	$(CC) $(CFLAGS) $(CFLAG_SAN) $(MY_OBJECTS) $(LIBFT) $(MLX_MAC) -o $(NAME)
 
 clean:
 	make clean -C $(LIBFT_DIR)

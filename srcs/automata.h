@@ -30,8 +30,8 @@ typedef struct s_ptcontent
 }	t_ptcont;
 
 //eval info
-t_dll	**evalpoint(char *s, t_dll **ptlst);
-t_dll	**evalerror(t_dll **ptlst);
+t_dll	**lst_evalpoint(char *s, t_dll **ptlst);
+t_dll	**lst_evalerror(t_dll **ptlst);
 //autoamata functs
 size_t	a_getstate(int i, int j);
 size_t	a_changestate(char c, size_t state);

@@ -12,16 +12,16 @@
 
 #include "automata.h"
 
-t_dll	**evalerror(t_dll **ptlst)
+t_dll	**lst_evalerror(t_dll **ptlst)
 {
 	ft_dllfree(ptlst);
-	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd("Error.\n", 2);
 	free(ptlst);
 	ptlst = NULL;
 	return (ptlst);
 }
 
-t_dll	**evalpoint(char *s, t_dll **ptlst)
+t_dll	**lst_evalpoint(char *s, t_dll **ptlst)
 {
 	const int	comma = ft_strchri(s, ',');
 	int			atoiflag;
@@ -33,17 +33,17 @@ t_dll	**evalpoint(char *s, t_dll **ptlst)
 	atoiflag = 0;
 	ptinfo = (t_ptcont *)malloc(sizeof(t_ptcont));
 	if (!ptinfo)
-		return (evalerror(ptlst));
+		return (lst_evalerror(ptlst));
 	ptinfo->height = ft_atoif(s, &atoiflag);
 	if (atoiflag < 0)
-		return (evalerror(ptlst));
+		return (lst_evalerror(ptlst));
 	if (comma != 0)
 		ptinfo->color = 0x33FFBD; //TODO: change to the actual info
 	else
 		ptinfo->color = 0x00;
 	ptnode = ft_dllnew((void *)ptinfo);
 	if (!ptnode)
-		return (evalerror(ptlst));
+		return (lst_evalerror(ptlst));
 	ft_dlladd_back(ptlst, ptnode);
 	free(s);
 	return (ptlst);
@@ -98,12 +98,12 @@ t_dll	**a_parse(char *s, t_dll **ptlst)
 			init_pt = i;
 		if ((state == 3 && ostate == 4) || (ostate == 3 && s[i + 1] == '\0'))
 		{
-			ptlst = evalpoint(ft_substr(s, init_pt, (i - init_pt) + 1), ptlst);
+			ptlst = lst_evalpoint(ft_substr(s, init_pt, (i - init_pt) + 1), ptlst);
 			if (!ptlst)
 				return (NULL);
 		}
 		if (ostate == 1 || (ostate < 3 && s[i + 1] == '\0'))
-			evalerror(ptlst);
+			lst_evalerror(ptlst);
 		state = ostate;
 		i++;
 	}

@@ -18,7 +18,7 @@
 
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
-# include "./automata.h"
+# include "automata.h"
 
 # define WIDTH		500
 # define HEIGHT		500
@@ -30,5 +30,11 @@ typedef struct s_point
 	int color;
 }	t_pt;
 
+typedef struct s_map
+{
+	int		x_dim;
+	int		y_dim;
+	t_pt	**map;
+}	t_map;
 
 #endif

@@ -15,7 +15,8 @@ NAME=		fdf
 #HRDS=
 
 SRCS=		main.c \
-			parse_automata.c
+			parse_automata.c \
+			map_init.c
 
 SRCS_DIR=	./srcs/
 

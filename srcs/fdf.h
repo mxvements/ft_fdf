@@ -37,4 +37,8 @@ typedef struct s_map
 	t_pt	**map;
 }	t_map;
 
+t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
+t_map	*map_buildptmap(t_map	*map, t_dll **lst);
+t_map	*map_init(t_dll **lst, char *txt);
+
 #endif

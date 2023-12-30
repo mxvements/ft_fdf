@@ -10,15 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "automata.h"
+#include "fdf.h"
 
-t_dll	**lst_evalerror(t_dll **ptlst)
+void	*lst_evalerror(t_dll **ptlst)
 {
-	ft_dllfree(ptlst);
+	if ((*ptlst))
+		ft_dllfree(ptlst);
+	if (ptlst)
+	{
+		free(ptlst);
+		*ptlst = NULL;
+	}
 	ft_putstr_fd("Error.\n", 2);
-	free(ptlst);
-	ptlst = NULL;
-	return (ptlst);
+	return (NULL);
 }
 
 t_dll	**lst_evalpoint(char *s, t_dll **ptlst)
@@ -82,7 +86,7 @@ size_t	a_changestate(char c, size_t state)
 	return (ostate);
 }
 
-t_dll	**a_parse(char *s, t_dll **ptlst)
+t_dll	**a_parse(char *txt, t_dll **ptlst)
 {
 	size_t	i;
 	size_t	state;
@@ -91,19 +95,19 @@ t_dll	**a_parse(char *s, t_dll **ptlst)
 
 	i = 0;
 	state = 0;
-	while (s[i] != '\0')
+	while (txt[i] != '\0')
 	{
-		ostate = a_changestate(s[i], state);
+		ostate = a_changestate(txt[i], state);
 		if ((state == 0 || state == 4) && (ostate == 2 || ostate == 3))
 			init_pt = i;
-		if ((state == 3 && ostate == 4) || (ostate == 3 && s[i + 1] == '\0'))
+		if ((state == 3 && ostate == 4) || (ostate == 3 && txt[i + 1] == '\0'))
 		{
-			ptlst = lst_evalpoint(ft_substr(s, init_pt, (i - init_pt) + 1), ptlst);
+			ptlst = lst_evalpoint(ft_substr(txt, init_pt, (i - init_pt) + 1), ptlst);
 			if (!ptlst)
 				return (NULL);
 		}
-		if (ostate == 1 || (ostate < 3 && s[i + 1] == '\0'))
-			lst_evalerror(ptlst);
+		if (ostate == 1 || (ostate < 3 && txt[i + 1] == '\0'))
+			ptlst = lst_evalerror(ptlst);
 		state = ostate;
 		i++;
 	}

@@ -15,8 +15,11 @@ NAME=		fdf
 #HRDS=
 
 SRCS=		main.c \
+<<<<<<< HEAD
 			parse_automata.c \
 			map_init.c
+=======
+>>>>>>> 1f5c588 (updated .gitmodules' url)
 
 SRCS_DIR=	./srcs/
 

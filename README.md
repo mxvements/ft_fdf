@@ -109,6 +109,7 @@ At 42 School, it is expected that almost every project is written in accordance 
 ## Aknowledgments
 
 + [MiniLibX Documentation](https://harm-smits.github.io/42docs/libs/minilibx/introduction.html)
++ [MannBell blog about the project](https://m4nnb3ll.medium.com/fil-de-fer-fdf-the-first-graphical-project-at-42-the-network-5cce69203448)
 
 # License
 [MIT License](https://github.com/mxvements/ft_license/blob/main/LICENSE.txt)

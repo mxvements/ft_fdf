@@ -24,6 +24,17 @@
 # define HEIGHT		500
 # define KEY_ESC    53
 
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*mlx_wndw;
+	void	*img;
+	char	*img_addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_mlx;
+
 typedef struct s_point
 {
 	int	xyz[3]; //{x, y, z}
@@ -35,8 +46,10 @@ typedef struct s_map
 	int		x_dim;
 	int		y_dim;
 	t_pt	**map;
+	t_mlx	mlx_data;
 }	t_map;
 
+void 	*map_evalerror(t_map *map);
 t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
 t_map	*map_buildptmap(t_map	*map, t_dll **lst);
 t_map	*map_init(t_dll **lst, char *txt);

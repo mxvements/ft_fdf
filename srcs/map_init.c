@@ -103,14 +103,15 @@ t_map	*map_init(t_dll **ptlst, char *txt)
 		return (NULL);
 	}
 	map->x_dim = (ptlst_size / map->y_dim);
-
-	//TO DElETE
+	//TO DElETE THIS PRINTS
 	ft_putnbr_fd(map->x_dim, 1);
 	write(1, " - ", 3);
 	ft_putnbr_fd(map->y_dim, 1);
 	write(1, "\n", 1);
 	//Update point map
 	map = map_buildptmap(map, ptlst);
+	//TODO: update map view to default (isometric projection)
+	///GENERATE IMG/WDW and so on..
 	ft_dllfree(ptlst);
 	free(ptlst);
 	return (map);

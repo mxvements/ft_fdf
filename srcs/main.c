@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 16:58:27 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/30 23:11:01 by luciama2         ###   ########.fr       */
+/*   Updated: 2023/12/31 19:45:00 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,47 +43,31 @@ char	*readfile(char *path)
 	return (txt);
 }
 
-void	printlst(t_dll **head)
-{
-	t_ptcont	*cntnt;
-	t_dll		*ptnode;
-	int			i;
-
-	ptnode = *head;
-	i = 0;
-	while (ptnode)
-	{
-		cntnt = ptnode->content;
-		write(1, "(", 1);
-		ft_putnbr_fd(i, 1);
-		write(1, ") ", 2);
-		ft_putnbr_fd(cntnt->height, 1);
-		write(1, "//", 2);
-		ft_putnbr_fd(cntnt->color, 1);
-		write(1, "\n", 1);
-		i++;
-		ptnode = ptnode->next;
-	}
-	return ;
-}
-
-t_dll	**initlst(void)
+void	fdf(char *txt)
 {
 	t_dll	**ptlst;
-
-	ptlst = (t_dll**)malloc(sizeof(t_dll*));
-	if (!ptlst)
-		return (NULL);
-	*ptlst = NULL;
-	return (ptlst);
+	t_map	*map;
+	
+	//get list of point info from txt
+	ptlst = lst_init();
+	ptlst = a_parse(txt, ptlst);
+	//MAP init
+	map = map_init(ptlst, txt);
+	//MAP print
+	if (map)
+		pt_print(map->map, map->x_dim, map->y_dim);
+	//end MLX
+	ft_dllfree(ptlst);
+	free(ptlst);
+	mlx_loop((map->mlx_data).mlx);
+	free((map->mlx_data).mlx);
 }
+
 
 int main(void)
 {
-	char	*path = "./test_maps/ERR_simple_pyramid.fdf";
+	char	*path = "./test_maps/simple_pyramid.fdf";
 	char	*txt;
-	t_dll	**ptlst;
-	t_map	*map;
 
 	txt = readfile(path);
 	if (!txt)
@@ -91,14 +75,7 @@ int main(void)
 		ft_putstr_fd("Error.\n", 2);
 		return (0);
 	}
-	//get list of point info from txt
-	ptlst = initlst();
-	a_parse(txt, ptlst); //updates ptlst with all ptinfo on the file
-	//printlst(ptlst);
-	
-	//MAP init
-	map = map_init(ptlst, txt);
-
+	fdf(txt);
 	free(txt);
 	system("leaks -q fdf");
 	return (0);

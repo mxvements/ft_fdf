@@ -15,11 +15,11 @@ NAME=		fdf
 #HRDS=
 
 SRCS=		main.c \
-<<<<<<< HEAD
-			parse_automata.c \
-			map_init.c
-=======
->>>>>>> 1f5c588 (updated .gitmodules' url)
+			automata.c \
+			automata_aux.c \
+			map_init1.c \
+			map_init2.c \
+			pt_aux.c
 
 SRCS_DIR=	./srcs/
 
@@ -44,7 +44,7 @@ MY_OBJECTS+=$(addprefix $(GNL_DIR), ${GNL_SRCS:%.c=%.o})
 
 ###############################################################################
 
-all: $(NAME) mac
+all: $(NAME) linux
 
 $(NAME): $(MY_OBJECTS)
 	make extra -C $(LIBFT_DIR)

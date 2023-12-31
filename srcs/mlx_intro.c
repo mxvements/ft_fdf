@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:57:13 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/26 23:39:08 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2023/12/31 22:43:49 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 //In linux we use KEYSYM in mac.. keycode?
 int	handle_input(int keysym, t_data *data)
 {
-	if (keysym == KEY_ESC) //Linux: XK_Escape
+	if (keysym == XK_Escape) //Linux: XK_Escape mAC key 53
 	{
 		write(1, "(EXC)\n", 6);
 		mlx_destroy_window(data->mlx, data->mlx_win);
@@ -73,9 +73,9 @@ int	main(void)
 	* 17 -> on_destroy
 	*/
 	
-	/*
+	
 	// Alias hooking functions, for expose event, key event, and mouse event
-	mlx_key_hook(data.mlx_win, handle_input, &data);*/
+	//mlx_key_hook(data.mlx_win, handle_input, &data);
 	
 
 	

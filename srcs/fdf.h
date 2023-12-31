@@ -3,31 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
+/*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:40:54 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/27 17:40:55 by luciama2         ###   ########.fr       */
+/*   Updated: 2023/12/31 23:24:38 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include <mlx.h>
-# include <fcntl.h>
+//MAC
+//# include <mlx.h>
 
+//LINUX
+# include "../mlx_linux/mlx.h"
+# include "./fdf_linux_keys.h"
+
+# include <fcntl.h>
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
 # include "automata.h"
 
+# define ANSICOLOR_CYAN		"\x1b[36m"
+# define ANSICOLOR_RED		"\x1b[31m"
+# define ANSICOLOR_GREEN	"\x1b[32m"
+# define ANSICOLOR_YELLOW	"\x1b[33m"
+# define ANSICOLOR_BLUE		"\x1b[34m"
+# define ANSICOLOR_MAGENTA	"\x1b[35m"
+# define ANSICOLOR_RESET	"\x1b[0m"
+
 # define WIDTH		500
 # define HEIGHT		500
-# define KEY_ESC    53
+# define PADDING	5 //5%
 
 typedef struct s_mlx
 {
 	void	*mlx;
-	void	*mlx_wndw;
+	void	*mlx_win;
 	void	*img;
 	char	*img_addr;
 	int		bpp;
@@ -49,9 +62,15 @@ typedef struct s_map
 	t_mlx	mlx_data;
 }	t_map;
 
+//pt functions
+void	pt_print(t_pt **ptarr, int xdim, int ydim);
+//MLX
+t_map	*map_initmlx(t_map *map);
+//map  init
 void 	*map_evalerror(t_map *map);
 t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
-t_map	*map_buildptmap(t_map	*map, t_dll **lst);
+t_map	*map_initdptmap(t_map	*map, t_dll **lst);
+t_map	*map_initsize(t_dll **ptlst, char *txt, t_map *map);
 t_map	*map_init(t_dll **lst, char *txt);
 
 #endif

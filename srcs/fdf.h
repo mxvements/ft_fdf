@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:40:54 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/31 23:24:38 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/02 10:30:01 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,15 @@
 # define ANSICOLOR_MAGENTA	"\x1b[35m"
 # define ANSICOLOR_RESET	"\x1b[0m"
 
-# define WIDTH		500
-# define HEIGHT		500
-# define PADDING	5 //5%
+# define WIDTH				500
+# define HEIGHT				500
+# define PADDING			10 //5%
+
+# if WIDTH >= HEIGHT
+#	define MIN_SIDE			HEIGHT
+# else
+#	define MIN_SIDE			WIDTH
+# endif
 
 typedef struct s_mlx
 {
@@ -58,6 +64,8 @@ typedef struct s_map
 {
 	int		x_dim;
 	int		y_dim;
+	int		offset_pixel;
+	int		first_pixel[2];
 	t_pt	**map;
 	t_mlx	mlx_data;
 }	t_map;

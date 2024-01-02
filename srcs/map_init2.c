@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 16:27:32 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/31 23:39:43 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/02 10:27:35 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	fdf_show_menu(void)
 int	fdf_handle_input(int keysym, t_mlx *mlx_data)
 {
 	write(1, ANSICOLOR_GREEN, 6);
-	if (keysym == XK_Escape)
+	if (keysym == KEY_ESC)
 	{
 		write(1, "(EXC)\n", 6);
 		mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
@@ -37,9 +37,31 @@ int	fdf_handle_input(int keysym, t_mlx *mlx_data)
 	write(1, ANSICOLOR_RESET, 5);
 	return (0);
 }
-void	fdf_isometric(t_map *map)
+/*
+void	map_isometric(t_map *map)
 {
+		
+}*/
 
+
+void	map_initpxldata(t_map *map)
+{
+	int	map_min_side;
+	int	canvas_size;
+	
+	if (MIN_SIDE == HEIGHT)
+		map_min_side = map->y_dim;
+	else
+		map_min_side = map->x_dim;
+	canvas_size = HEIGHT * (1 - (PADDING / 100));
+	map->offset_pixel = canvas_size / (map_min_side - 1);
+	map->first_pixel[0] = ((WIDTH - canvas_size) / 2);
+	map->first_pixel[1] = ((HEIGHT - canvas_size) / 2);
+	printf("canvas_size: %d\n", canvas_size);
+	ft_putnbr_fd((map->first_pixel)[0], 1);
+	write(1, " - ", 3);
+	ft_putnbr_fd((map->first_pixel)[1], 1);
+	write(1, "\n", 1);
 }
 
 t_map	*map_initmlx(t_map *map)
@@ -64,7 +86,6 @@ t_map	*map_initmlx(t_map *map)
 								&(map->mlx_data).bpp,
 								&(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-		
-	//WRITE PIXELS -> fdf_isometric(map)
+	map_initpxldata(map);
 	return (map);
 }

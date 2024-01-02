@@ -14,11 +14,12 @@
 # define FDF_H
 
 //MAC
-//# include <mlx.h>
+# include <mlx.h>
+# include "./fdf_mac_keys.h"
 
-//LINUX
-# include "../mlx_linux/mlx.h"
-# include "./fdf_linux_keys.h"
+//LINUX 
+//# include "../mlx_linux/mlx.h"
+//# include "./fdf_linux_keys.h"
 
 # include <fcntl.h>
 # include "../libft/libft.h"
@@ -33,9 +34,9 @@
 # define ANSICOLOR_MAGENTA	"\x1b[35m"
 # define ANSICOLOR_RESET	"\x1b[0m"
 
-# define WIDTH				500
-# define HEIGHT				500
-# define PADDING			10 //5%
+# define WIDTH				1280
+# define HEIGHT				720
+# define PADDING			100
 
 # if WIDTH >= HEIGHT
 #	define MIN_SIDE			HEIGHT
@@ -65,7 +66,7 @@ typedef struct s_map
 	int		x_dim;
 	int		y_dim;
 	int		offset_pixel;
-	int		first_pixel[2];
+	
 	t_pt	**map;
 	t_mlx	mlx_data;
 }	t_map;

@@ -16,7 +16,7 @@ typedef struct	s_data {
 	void	*mlx;
 	void	*mlx_win;
 	void	*img;
-	char	*addr;
+	char	*img_addr;
 	int		bits_pixel;
 	int		line_length;
 	int		endian;
@@ -24,21 +24,21 @@ typedef struct	s_data {
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	int	dst;
+	int		dst;
 	int		line_length;
 	int 	bpp;
 	
 	line_length = data->line_length;
 	bpp = data->bits_pixel;
 	dst = (y * line_length + x * (bpp / 8));
-	*((unsigned int*)(dst + data->addr)) = color;
+	*((unsigned int*)(dst + data->img_addr)) = color;
 }
 
 //everytime a key is pressed this funct is called
 //In linux we use KEYSYM in mac.. keycode?
 int	handle_input(int keysym, t_data *data)
 {
-	if (keysym == XK_Escape) //Linux: XK_Escape mAC key 53
+	if (keysym == KEY_ESC) //Linux: XK_Escape mAC key 53
 	{
 		write(1, "(EXC)\n", 6);
 		mlx_destroy_window(data->mlx, data->mlx_win);
@@ -82,7 +82,7 @@ int	main(void)
 	
 	
 	data.img = mlx_new_image(data.mlx, WIDTH, WIDTH);
-	data.addr = mlx_get_data_addr(data.img, &data.bits_pixel, &data.line_length,
+	data.img_addr = mlx_get_data_addr(data.img, &data.bits_pixel, &data.line_length,
 								&data.endian);
 	color = 0x00FF0000; //red
 	y = 0;

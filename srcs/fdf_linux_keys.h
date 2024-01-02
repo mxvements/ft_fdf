@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef FDF_LINUX_KEYS_H
-# define FFDF_LINUX_KEYS_H
+# define FDF_LINUX_KEYS_H
 
-# include "../mlx_linux/mlx_int.h"
+//# include "../mlx_linux/mlx_int.h"
 //LINUX->KEYSYM
 //https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h
 # define KEY_ESC	XK_Escape

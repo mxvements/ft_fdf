@@ -37,31 +37,42 @@ int	fdf_handle_input(int keysym, t_mlx *mlx_data)
 	write(1, ANSICOLOR_RESET, 5);
 	return (0);
 }
-/*
-void	map_isometric(t_map *map)
-{
-		
-}*/
 
-
-void	map_initpxldata(t_map *map)
+void	fdf_pixelput(t_mlx *mlx, int x, int y, int color)
 {
-	int	map_min_side;
-	int	canvas_size;
+	int		dist;
+	int		line_length;
+	int 	bpp;
 	
-	if (MIN_SIDE == HEIGHT)
-		map_min_side = map->y_dim;
-	else
-		map_min_side = map->x_dim;
-	canvas_size = HEIGHT * (1 - (PADDING / 100));
-	map->offset_pixel = canvas_size / (map_min_side - 1);
-	map->first_pixel[0] = ((WIDTH - canvas_size) / 2);
-	map->first_pixel[1] = ((HEIGHT - canvas_size) / 2);
-	printf("canvas_size: %d\n", canvas_size);
-	ft_putnbr_fd((map->first_pixel)[0], 1);
-	write(1, " - ", 3);
-	ft_putnbr_fd((map->first_pixel)[1], 1);
-	write(1, "\n", 1);
+	line_length = mlx->line_len;
+	bpp = mlx->bpp;
+	dist = (y * line_length) + (x * (bpp / 8));
+	*((unsigned int*)(dist + mlx->img_addr)) = color;
+}
+void	map_prinftop(t_map *map)
+{
+	int x;
+	int y;
+	int offset;
+	t_pt	pt;
+
+	//map->offset_pixel = 32;
+	offset = 32;
+	x = 0;
+	while(x < (map->x_dim * 32))
+	{
+		y = 0;
+		while(y < (map->y_dim * 32))
+		{
+			pt = map->map[x/32][y/32];
+			fdf_pixelput(&(map->mlx_data), x, y, pt.color);
+			y += 32;
+		}
+		x += 32;
+	}
+	mlx_put_image_to_window(map->mlx_data.mlx, 
+							map->mlx_data.mlx_win, 
+							map->mlx_data.img, 10, 10);
 }
 
 t_map	*map_initmlx(t_map *map)
@@ -80,12 +91,13 @@ t_map	*map_initmlx(t_map *map)
 	key_input = mlx_key_hook(mlx_win, fdf_handle_input, &map->mlx_data);
 	if (key_input == 1)
 		return (NULL);
+	//¿IMG SIZE?
 	map->mlx_data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	map->mlx_data.img_addr = mlx_get_data_addr(
 								(map->mlx_data).img,
 								&(map->mlx_data).bpp,
 								&(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-	map_initpxldata(map);
+	map_prinftop(map);
 	return (map);
 }

@@ -17,8 +17,11 @@ NAME=		fdf
 SRCS=		main.c \
 			automata.c \
 			automata_aux.c \
+			fdf_aux.c \
 			map_init1.c \
 			map_init2.c \
+			matrix_aux1.c \
+			matrix_aux2.c \
 			pt_aux.c
 
 SRCS_DIR=	./srcs/

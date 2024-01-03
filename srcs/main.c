@@ -63,7 +63,6 @@ void	fdf(char *txt)
 	free((map->mlx_data).mlx);
 }
 
-
 int main(void)
 {
 	char	*path = "./test_maps/simple_pyramid.fdf";

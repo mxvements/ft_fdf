@@ -22,6 +22,7 @@
 //# include "./fdf_linux_keys.h"
 
 # include <fcntl.h>
+# include <math.h>
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
 # include "automata.h"
@@ -61,18 +62,38 @@ typedef struct s_point
 	int color;
 }	t_pt;
 
+typedef struct s_view
+{
+	double	scale_factor;
+	double	rotate_angle_z;
+	double	rotate_angle_y;
+	double	rotate_angle_x;
+	double	move_dist;
+	double	view[3][3];
+}	t_view;
+
 typedef struct s_map
 {
 	int		x_dim;
 	int		y_dim;
 	int		offset_pixel;
-	
+	t_view	vw;
 	t_pt	**map;
 	t_mlx	mlx_data;
 }	t_map;
 
-//pt functions
+//pt/arr functions
 void	pt_print(t_pt **ptarr, int xdim, int ydim);
+void	arrdbl_print_3x3(double m[3][3]);
+void	arrdbl_mult_3x3(double m1[3][3], double m2[3][3], double rslt[3][3]);
+void	arrdbl_free(double **arr, int x_dim);
+double	**arrdbl_init(int x_dim, int y_dim);
+double	**arrdbl_cpy_3x3(double **arr);
+
+//fdf aux functions
+void	fdf_show_menu(void);
+int		fdf_handle_input(int keysym, t_mlx *mlx_data);
+void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
 //MLX
 t_map	*map_initmlx(t_map *map);
 //map  init

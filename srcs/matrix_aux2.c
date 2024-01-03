@@ -46,3 +46,7 @@ void	arrint_translate(t_view *vw)
 	}
 }
 
+void	arrint_rotate(t_view *vw)
+{
+	//multiplication of the rotation matrices
+}

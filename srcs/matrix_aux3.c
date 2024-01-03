@@ -12,30 +12,30 @@
 
 #include "fdf.h"
 
-void	arrdbl_rotate_z(t_view *vw)
+void	arrdbl_rot_z(t_view *vw)
 {
 	int				x;
 	int				y;
 	int				**cpy;
 	const double	rot_z[][3] = {\
-		{cos(vw->rotate_angle_z), -sin(vw->rotate_angle_z), 0},\
-		{sin(vw->rotate_angle_z), cos(vw->rotate_angle_z), 0},\
+		{cos(vw->rotate_angle_z), -sin(vw->rotate_angle_z), 0}, \
+		{sin(vw->rotate_angle_z), cos(vw->rotate_angle_z), 0}, \
 		{0, 0, 1}
 	};
-	
+
 	cpy = arrdbl_cpy_3x3(vw->view);
 	arrdbl_mult_3x3(cpy, rot_z, vw->view);
 	arrdbl_free(cpy, 3);
 }
 
-void	arrdbl_rotate_y(t_view *vw)
+void	arrdbl_rot_y(t_view *vw)
 {
 	int				x;
 	int				y;
 	int				**cpy;
 	const double	rot_y[][3] = {\
-		{cos(vw->rotate_angle_z), 0, sin(vw->rotate_angle_z)},\
-		{0, 1, 0},\
+		{cos(vw->rotate_angle_z), 0, sin(vw->rotate_angle_z)}, \
+		{0, 1, 0}, \
 		{-sin(vw->rotate_angle_z), 0, cos(vw->rotate_angle_z)}
 	};
 
@@ -44,14 +44,14 @@ void	arrdbl_rotate_y(t_view *vw)
 	arrdbl_free(cpy, 3);
 }
 
-void	arrdbl_rotate_x(t_view *vw)
+void	arrdbl_rot_x(t_view *vw)
 {
 	int				x;
 	int				y;
 	int				**cpy;
 	const double	rot_x[][3] = {\
-		{1, 0, 0},\
-		{0, cos(vw->rotate_angle_z), -sin(vw->rotate_angle_z)},\
+		{1, 0, 0}, \
+		{0, cos(vw->rotate_angle_z), -sin(vw->rotate_angle_z)}, \
 		{0, sin(vw->rotate_angle_z), cos(vw->rotate_angle_z)}
 	};
 

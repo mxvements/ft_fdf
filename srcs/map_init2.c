@@ -12,6 +12,12 @@
 
 #include "fdf.h"
 
+/* TODO:
+** set initview (to isometric)
+** set top & side view, reset view at the beginning
+** control changes with keys
+** change how the pixels are positioned on the canvas
+*/
 void	map_printtop(t_map *map)
 {
 	int x;

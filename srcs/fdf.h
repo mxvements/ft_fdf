@@ -64,7 +64,7 @@ typedef struct s_point
 
 typedef struct s_view
 {
-	double	scale_factor;
+	double	scale_factor; //DO CHECK VIEW, scala cannot be zero
 	double	rotate_angle_z;
 	double	rotate_angle_y;
 	double	rotate_angle_x;
@@ -82,8 +82,9 @@ typedef struct s_map
 	t_mlx	mlx_data;
 }	t_map;
 
-//pt/arr functions
+//pt/
 void	pt_print(t_pt **ptarr, int xdim, int ydim);
+//arr functions
 void	arrdbl_print_3x3(double m[3][3]);
 void	arrdbl_mult_3x3(double m1[3][3], double m2[3][3], double rslt[3][3]);
 void	arrdbl_free(double **arr, int x_dim);

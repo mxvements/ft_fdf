@@ -18,34 +18,38 @@
 ** control changes with keys
 ** change how the pixels are positioned on the canvas
 */
-void	map_printtop(t_map *map)
+void	map_printview(t_map *map)
 {
-	int x;
-	int y;
-	int offset;
+	int		x;
+	int		y;
+	int		px_x;
+	int		px_y;
 	t_pt	pt;
+	t_view	*vw;
 
-	//map->offset_pixel = 32;
-	offset = 32; //SCALE
+	vw = map->vw;
 	x = 0;
-	while(x < (map->x_dim * 32))
+	while(x < (map->x_dim))
 	{
 		y = 0;
-		while(y < (map->y_dim * 32))
+		while(y < (map->y_dim))
 		{
-			pt = map->map[x/32][y/32];
-			fdf_pixelput(&(map->mlx_data), pt.xyz[1] * 32, pt.xyz[2] * 32, pt.color);
-			y += 32;
+			pt = map->map[x][y];
+			px_x = pt.xyz[0] * vw->scale_factor; //ERROR, view NULL
+			px_y = pt.xyz[1] * vw->scale_factor;
+			fdf_pixelput(&(map->mlx_data), px_x, px_y, pt.color);
+			y++;
 		}
-		x += 32;
+		x++;
 	}
 	mlx_put_image_to_window(map->mlx_data.mlx, 
 							map->mlx_data.mlx_win, 
 							map->mlx_data.img, 10, 10);
 }
 
+
 t_map	*map_initmlx(t_map *map)
-{	
+{
 	void	*mlx;
 	void	*mlx_win;
 	int		key_input;
@@ -67,6 +71,6 @@ t_map	*map_initmlx(t_map *map)
 								&(map->mlx_data).bpp,
 								&(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-	map_printtop(map);
+	map_printview(map);
 	return (map);
 }

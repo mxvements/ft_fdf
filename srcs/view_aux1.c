@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_aux2.c                                      :+:      :+:    :+:   */
+/*   view_aux1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,12 +15,17 @@
 /* Must do some check view funct
 ** scale cannnot be 0
 */
-void	arrint_scale(t_view *vw)
+void	view_scale(t_view *vw)
 {
 	int x;
 	int y;
 
 	x = 0;
+	if (vw->scale_factor == 0 || vw->scale_factor == 1) //this should not be needed
+	{
+		vw->scale_factor = 1;
+		return ;
+	}
 	while (x < 3)
 	{
 		y = 0;
@@ -31,22 +36,50 @@ void	arrint_scale(t_view *vw)
 		}
 		x++;
 	}
+	vw->scale_factor = 1;
 }
 
-void	arrint_translate(t_view *vw)
+void	view_translate(t_view *vw)
 {
 	int	x;
-	int y;
+	int	y;
 
 	x = 0;
+	if (vw->move_dist == 0)
+		return ;
 	while (x < 3)
 	{
-		vw->view[x][x] = vw->view[x][x] + vw->move_dist;
+		y = 0;
+		while (y < 3)
+		{
+			vw->view[x][y] = vw->view[x][y] + vw->move_dist;
+			y++;
+		}
 		x++;
 	}
+	vw->move_dist = 0;
 }
 
-void	arrint_rotate(t_view *vw)
+void	view_rotate(t_view *vw)
 {
-	//multiplication of the rotation matrices
+	if (vw->rotate_angle_z != 0)
+		view_rot_z(vw);
+	if (vw->rotate_angle_y != 0)
+		view_rot_y(vw);
+	if (vw->rotate_angle_x != 0)
+		view_rot_x(vw);
+	vw->rotate_angle_z = 0;
+	vw->rotate_angle_y = 0;
+	vw->rotate_angle_x = 0;
+}
+
+void	view_isometric(t_view *vw)
+{
+	vw->rotate_angle_z = (M_PI / 4);
+	vw->rotate_angle_y = 0;
+	vw->rotate_angle_z = (1 / tan(sqrt(2)));
+	vw->scale_factor = 10;
+	vw->move_dist = 0;
+	view_rotate(vw);
+	view_scale(vw);
 }

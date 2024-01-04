@@ -12,10 +12,9 @@
 
 #include "fdf.h"
 
-void 	*map_evalerror(t_map *map)
+void 	*map_evalerror(t_map *map, int x)
 {
-	int	x;
-
+	//TODO: free view struct if it's not NULL
 	write(1, ANSICOLOR_RED, 6);
 	ft_putstr_fd("Error.\n", 2);
 	write(1, ANSICOLOR_RESET, 5);
@@ -25,8 +24,7 @@ void 	*map_evalerror(t_map *map)
 		map = NULL;
 		return (map);
 	}
-	x = 0;
-	while (x < map->x_dim)
+	while (--x >= 0)
 	{
 		if (!map->map[x])
 			break ;
@@ -71,7 +69,7 @@ t_map	*map_initdptmap(t_map *map, t_dll **ptlst)
 	{
 		map->map[x] = (t_pt*)malloc(sizeof(t_pt) * map->y_dim);
 		if (!map->map[x])
-			return ((t_map *)map_evalerror(map));
+			return ((t_map *)map_evalerror(map, x));
 		y = 0;
 		while (y < map->y_dim)
 		{
@@ -81,7 +79,7 @@ t_map	*map_initdptmap(t_map *map, t_dll **ptlst)
 		x++;
 	}
 	if (ptnode)
-		return ((t_map *)map_evalerror(map));
+		return ((t_map *)map_evalerror(map, map->x_dim));
 	return (map);
 }
 
@@ -93,12 +91,24 @@ t_map	*map_initsize(t_dll **ptlst, char *txt, t_map *map)
 	if (map->y_dim == 0 || ptlst_size == 0)
 	{
 		map->map = NULL;
-		map = map_evalerror(map);
+		map = map_evalerror(map, map->x_dim);
 		ft_dllfree(ptlst);
 		free(ptlst);
 		return (NULL);
 	}
 	map->x_dim = (ptlst_size / map->y_dim);
+	return (map);
+}
+
+t_map	*map_initview(t_map *map)
+{
+	t_view	*vw;
+
+	vw = (t_view*)malloc(sizeof(t_view) * 1);
+	if (!vw)
+		return (map_evalerror(map, map->x_dim));
+	vw->view = arrdbl_init(3, 3);
+	view_isometric(vw);
 	return (map);
 }
 
@@ -111,6 +121,9 @@ t_map	*map_init(t_dll **ptlst, char *txt)
 		return ((t_map*)lst_evalerror(ptlst));
 	map = map_initsize(ptlst, txt, map);
 	map = map_initdptmap(map, ptlst);
+
+	map = map_initview(map);
+
 	map = map_initmlx(map);
 	return (map);
 }

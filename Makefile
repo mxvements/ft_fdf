@@ -21,7 +21,8 @@ SRCS=		main.c \
 			map_init1.c \
 			map_init2.c \
 			matrix_aux1.c \
-			matrix_aux2.c \
+			view_aux1.c \
+			view_aux2.c \
 			pt_aux.c
 
 SRCS_DIR=	./srcs/

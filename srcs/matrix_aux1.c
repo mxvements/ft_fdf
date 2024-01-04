@@ -33,7 +33,7 @@ void	arrdbl_print_3x3(double m[3][3])
 	write(1, "\n", 1);
 }
 
-void	arrdbl_mult_3x3(double m1[3][3], double m2[3][3], double rslt[3][3])
+void	arrdbl_mult_3x3(double **m1, double **m2, double **rslt)
 {
 	int		i;
 	int		j;
@@ -123,4 +123,5 @@ double	**arrdbl_cpy_3x3(double **arr)
 		}
 		x++;
 	}
+	return (rslt);
 }

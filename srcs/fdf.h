@@ -69,16 +69,15 @@ typedef struct s_view
 	double	rotate_angle_y;
 	double	rotate_angle_x;
 	double	move_dist;
-	double	view[3][3];
+	double	**view; //array of 3x3
 }	t_view;
 
 typedef struct s_map
 {
 	int		x_dim;
 	int		y_dim;
-	int		offset_pixel;
-	t_view	vw;
-	t_pt	**map;
+	t_view	*vw;
+	t_pt	**map; //double array of points of x_dim and y_dim of map
 	t_mlx	mlx_data;
 }	t_map;
 
@@ -86,11 +85,18 @@ typedef struct s_map
 void	pt_print(t_pt **ptarr, int xdim, int ydim);
 //arr functions
 void	arrdbl_print_3x3(double m[3][3]);
-void	arrdbl_mult_3x3(double m1[3][3], double m2[3][3], double rslt[3][3]);
+void	arrdbl_mult_3x3(double **m1, double **m2, double **rslt);
 void	arrdbl_free(double **arr, int x_dim);
 double	**arrdbl_init(int x_dim, int y_dim);
 double	**arrdbl_cpy_3x3(double **arr);
-
+//view funct
+void	view_rot_z(t_view *vw);
+void	view_rot_y(t_view *vw);
+void	view_rot_x(t_view *vw);
+void	view_scale(t_view *vw);
+void	view_translate(t_view *vw);
+void	view_rotate(t_view *vw);
+void	view_isometric(t_view *vw);
 //fdf aux functions
 void	fdf_show_menu(void);
 int		fdf_handle_input(int keysym, t_mlx *mlx_data);
@@ -98,7 +104,7 @@ void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
 //MLX
 t_map	*map_initmlx(t_map *map);
 //map  init
-void 	*map_evalerror(t_map *map);
+void 	*map_evalerror(t_map *map, int x);
 t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
 t_map	*map_initdptmap(t_map	*map, t_dll **lst);
 t_map	*map_initsize(t_dll **ptlst, char *txt, t_map *map);

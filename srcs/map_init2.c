@@ -33,8 +33,8 @@ void	map_printview(t_map *map)
 		y = 0;
 		while(y < (map->y_dim))
 		{
-			px_x = (map->map[x][y].vw_xyz[0]) * vw->scale_factor;
-			px_y = (map->map[x][y].vw_xyz[1]) * vw->scale_factor;
+			px_x = (WIDTH / 2) + ((map->map[x][y].vw_xyz[0]) * vw->scale_f);
+			px_y = (HEIGHT / 2) + ((map->map[x][y].vw_xyz[1]) * vw->scale_f);
 			fdf_pixelput(&(map->mlx_data), px_x, px_y, map->map[x][y].color);
 			y++;
 		}

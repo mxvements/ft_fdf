@@ -65,11 +65,11 @@ typedef struct s_point
 
 typedef struct s_view
 {
-	double	scale_factor; //DO CHECK VIEW, scala cannot be zero
-	double	rotate_angle_z;
-	double	rotate_angle_y;
-	double	rotate_angle_x;
-	double	move_dist;
+	double	scale_f; //DO CHECK VIEW, scala cannot be zero
+	double	rotate_rads_z;
+	double	rotate_rads_y;
+	double	rotate_rads_x;
+	double	move_d;
 	double	**view; //array of 3x3
 }	t_view;
 

@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:40:54 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/05 22:44:07 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:19:15 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_point
 {
 	int	xyz[3]; //{x, y, z}
 	int	vw_xyz[3];
-	int	pixel_xy[2];
+	int	px_xy[2];
 	int color;
 }	t_pt;
 

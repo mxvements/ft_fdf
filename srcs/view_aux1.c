@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 17:06:19 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/05 22:42:15 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/05 22:56:55 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	view_rotate(t_view *vw)
 
 void	view_isometric(t_view *vw)
 {
-	vw->rotate_rads_z = (0.7854);
+	vw->rotate_rads_z = (M_PI_4);
 	vw->rotate_rads_y = 0;
 	vw->rotate_rads_x = (1/(tan(sqrt(2))));
 	vw->scale_f = 100;

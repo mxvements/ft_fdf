@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 16:27:32 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/05 22:44:15 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/05 23:21:10 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_map	*map_pixelptmap(t_map *map)
 {
 	int		x;
 	int		y;
-	t_pt	pt;
+	t_pt	*pt;
 
 	x = 0;
 	while(x < (map->x_dim))
@@ -60,10 +60,10 @@ t_map	*map_pixelptmap(t_map *map)
 		y = 0;
 		while(y < (map->y_dim))
 		{
-			pt = map->map[x][y];
-			pt.pixel_xy[0] = (WIDTH / 2) + ((pt.vw_xyz[0]));
-			pt.pixel_xy[1] = (HEIGHT / 2) + ((pt.vw_xyz[1]));
-			printf("point: {%d, %d}\n", pt.pixel_xy[0], pt.pixel_xy[0]);
+			pt = &(map->map[x][y]);
+			pt->px_xy[0] = (WIDTH / 2) + ((pt->vw_xyz[0]));
+			pt->px_xy[1] = (HEIGHT / 2) + ((pt->vw_xyz[1]));
+			printf("point: {%d, %d}\n", pt->pixel_xy[0], pt->pixel_xy[0]);
 			y++;
 		}
 		x++;
@@ -84,8 +84,7 @@ void	map_printview(t_map *map)
 		while(y < (map->y_dim))
 		{
 			pt = map->map[x][y];
-			printf("point: {%d, %d}\n", pt.pixel_xy[0], pt.pixel_xy[0]);
-			fdf_pixelput(&(map->mlx_data), pt.pixel_xy[0], pt.pixel_xy[1], map->map[x][y].color);
+			fdf_pixelput(&(map->mlx_data), pt.px_xy[0], pt.px_xy[1], pt.color);
 			y++;
 		}
 		x++;

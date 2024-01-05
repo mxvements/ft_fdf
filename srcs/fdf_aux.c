@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_aux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
+/*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:55:41 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/03 16:55:51 by luciama2         ###   ########.fr       */
+/*   Updated: 2024/01/06 00:03:43 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,20 @@ void	fdf_pixelput(t_mlx *mlx, int x, int y, int color)
 	*((unsigned int*)(dist + mlx->img_addr)) = color;
 }
 
-void	fdf_lineBresenham(int x1, int y1, int x2, int y2)
+void	fdf_lineBresenham(int *px1, int *px2, t_map *map)
 {
-	int	x;
-	int	y;
-	const int	dx = (x2 - x1);
-	const int	dy = (y2 - y1);
+	int			x;
+	int			y;
+	const int	dx = (px2[0] - px1[0]);
+	const int	dy = (px2[1] - px1[1]);
 	int p;
 
-	x = x1;
-	y = y1;
+	x = px1[0];
+	y = px1[1];
 	p = 2 * dy - dx;
-	while (x <= x2)
+	while (x <= px2[0])
 	{
-		//putpixel(x,y)
+		fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
 		x++;
 		if (p < 0)
 			p = p + 2 * dy;
@@ -73,4 +73,23 @@ void	fdf_lineBresenham(int x1, int y1, int x2, int y2)
 			y++;
 		}
 	}
+}
+
+void	fdf_lineBresenham_wrapper(t_map *map, int x, int y)
+{
+	t_pt	*pt;
+	t_pt	*pt_right;
+	t_pt	*pt_down;
+
+	pt = &(map->map[x][y]);
+	if (y != (map->y_dim - 1))
+	{
+		pt_down = &(map->map[x][y + 1]);
+		fdf_lineBresenham(pt->px_xy, pt_down->px_xy, map);
+	}
+	if (x != (map->x_dim - 1))
+	{
+		pt_right = &(map->map[x + 1][y]);
+		fdf_lineBresenham(pt->px_xy, pt_right->px_xy, map);
+	}			
 }

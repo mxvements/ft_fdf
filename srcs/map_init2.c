@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 16:27:32 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/05 23:21:10 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/06 00:09:06 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_map	*map_pixelptmap(t_map *map)
 			pt = &(map->map[x][y]);
 			pt->px_xy[0] = (WIDTH / 2) + ((pt->vw_xyz[0]));
 			pt->px_xy[1] = (HEIGHT / 2) + ((pt->vw_xyz[1]));
-			printf("point: {%d, %d}\n", pt->pixel_xy[0], pt->pixel_xy[0]);
+			printf("point: {%d, %d}\n", pt->px_xy[0], pt->px_xy[0]);
 			y++;
 		}
 		x++;
@@ -85,6 +85,7 @@ void	map_printview(t_map *map)
 		{
 			pt = map->map[x][y];
 			fdf_pixelput(&(map->mlx_data), pt.px_xy[0], pt.px_xy[1], pt.color);
+			//fdf_lineBresenham_wrapper(map, x, y);
 			y++;
 		}
 		x++;

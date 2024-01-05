@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:40:54 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/05 23:19:15 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/06 00:01:58 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ void	view_isometric(t_view *vw);
 void	fdf_show_menu(void);
 int		fdf_handle_input(int keysym, t_mlx *mlx_data);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
-void	fdf_lineBresenham(int x1, int y1, int x2, int y2);
+void	fdf_lineBresenham(int *px1, int *px2, t_map *map);
+void	fdf_lineBresenham_wrapper(t_map *map, int x, int y);
 //MLX
 t_map	*map_mlx(t_map *map);
 //map  init

@@ -60,6 +60,7 @@ typedef struct s_point
 {
 	int	xyz[3]; //{x, y, z}
 	int	vw_xyz[3];
+	int	pixel_xy[2];
 	int color;
 }	t_pt;
 
@@ -103,13 +104,17 @@ void	view_isometric(t_view *vw);
 void	fdf_show_menu(void);
 int		fdf_handle_input(int keysym, t_mlx *mlx_data);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
+void	fdf_lineBresenham(int x1, int y1, int x2, int y2);
 //MLX
-t_map	*map_initmlx(t_map *map);
+t_map	*map_mlx(t_map *map);
 //map  init
 void 	*map_evalerror(t_map *map, int x);
 t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
-t_map	*map_initdptmap(t_map	*map, t_dll **lst);
-t_map	*map_initsize(t_dll **ptlst, char *txt, t_map *map);
+t_map	*map_ptmap(t_map *map, t_dll **lst);
+t_map	*map_pixelptmap(t_map *map);
+t_map	*map_viewptmap(t_map *map);
+t_map	*map_view(t_map *map);
+t_map	*map_size(t_dll **ptlst, char *txt, t_map *map);
 t_map	*map_init(t_dll **lst, char *txt);
 
 #endif

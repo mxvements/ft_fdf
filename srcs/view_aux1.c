@@ -12,9 +12,6 @@
 
 #include "fdf.h"
 
-/* Must do some check view funct
-** scale cannnot be 0
-*/
 void	view_scale(t_view *vw)
 {
 	int x;
@@ -84,7 +81,7 @@ void	view_isometric(t_view *vw)
 	vw->rotate_rads_z = (0.7854);
 	vw->rotate_rads_y = 0;
 	vw->rotate_rads_x = (1/(tan(sqrt(2))));
-	vw->scale_f = 42;
+	vw->scale_f = 100;
 	vw->move_d = 0;
 	view_rotate(vw);
 	view_scale(vw);

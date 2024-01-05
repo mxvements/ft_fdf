@@ -54,7 +54,7 @@ t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y)
 	return (ptnode);
 }
 
-t_map	*map_initdptmap(t_map *map, t_dll **ptlst)
+t_map	*map_ptmap(t_map *map, t_dll **ptlst)
 {
 	int			x;
 	int	 		y;
@@ -83,7 +83,7 @@ t_map	*map_initdptmap(t_map *map, t_dll **ptlst)
 	return (map);
 }
 
-t_map	*map_initsize(t_dll **ptlst, char *txt, t_map *map)
+t_map	*map_size(t_dll **ptlst, char *txt, t_map *map)
 {
 	const int	ptlst_size = ft_dllsize(*ptlst);
 	
@@ -100,41 +100,6 @@ t_map	*map_initsize(t_dll **ptlst, char *txt, t_map *map)
 	return (map);
 }
 
-t_map	*map_initview(t_map *map)
-{
-	t_view	*vw;
-
-	vw = (t_view*)malloc(sizeof(t_view) * 1);
-	if (!vw)
-		return (map_evalerror(map, map->x_dim));
-	map->vw = vw;
-	vw->view = arrdbl_init(3, 3, 1);
-	view_isometric(vw);
-	return (map);
-}
-t_map	*map_initviewptmap(t_map *map)
-{
-	t_view	*vw;
-	t_pt	*pt;
-	int		x;
-	int		y;
-
-	vw = map->vw;
-	x = 0;
-	while (x < map->x_dim)
-	{
-		y = 0;
-		while (y < map->y_dim)
-		{
-			pt = &(map->map[x][y]);
-			pt_transform(pt, vw);
-			y++;
-		}
-		x++;
-	}
-	return (map);
-}
-
 t_map	*map_init(t_dll **ptlst, char *txt)
 {
 	t_map		*map;
@@ -142,10 +107,11 @@ t_map	*map_init(t_dll **ptlst, char *txt)
 	map = (t_map*)malloc(sizeof(t_map));
 	if (!map)
 		return ((t_map*)lst_evalerror(ptlst));
-	map = map_initsize(ptlst, txt, map);
-	map = map_initdptmap(map, ptlst);
-	map = map_initview(map);
-	map = map_initviewptmap(map);
-	map = map_initmlx(map);
+	map = map_size(ptlst, txt, map);
+	map = map_ptmap(map, ptlst);
+	map = map_view(map);
+	map = map_viewptmap(map);
+	map = map_pixelptmap(map);
+	map = map_mlx(map);
 	return (map);
 }

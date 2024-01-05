@@ -12,40 +12,90 @@
 
 #include "fdf.h"
 
-/* TODO:
-** set initview (to isometric)
-** set top & side view, reset view at the beginning
-** control changes with keys
-** change how the pixels are positioned on the canvas
-*/
-void	map_printview(t_map *map)
+t_map	*map_view(t_map *map)
+{
+	t_view	*vw;
+
+	vw = (t_view*)malloc(sizeof(t_view) * 1);
+	if (!vw)
+		return (map_evalerror(map, map->x_dim));
+	map->vw = vw;
+	vw->view = arrdbl_init(3, 3, 1);
+	view_isometric(vw);
+	return (map);
+}
+
+t_map	*map_viewptmap(t_map *map)
+{
+	t_view	*vw;
+	t_pt	*pt;
+	int		x;
+	int		y;
+
+	vw = map->vw;
+	x = 0;
+	while (x < map->x_dim)
+	{
+		y = 0;
+		while (y < map->y_dim)
+		{
+			pt = &(map->map[x][y]);
+			pt_transform(pt, vw);
+			y++;
+		}
+		x++;
+	}
+	return (map);
+}
+
+t_map	*map_pixelptmap(t_map *map)
 {
 	int		x;
 	int		y;
-	int		px_x;
-	int		px_y;
-	t_view	*vw;
+	t_pt	pt;
 
-	vw = map->vw;
 	x = 0;
 	while(x < (map->x_dim))
 	{
 		y = 0;
 		while(y < (map->y_dim))
 		{
-			px_x = (WIDTH / 2) + ((map->map[x][y].vw_xyz[0]) * vw->scale_f);
-			px_y = (HEIGHT / 2) + ((map->map[x][y].vw_xyz[1]) * vw->scale_f);
-			fdf_pixelput(&(map->mlx_data), px_x, px_y, map->map[x][y].color);
+			pt = map->map[x][y];
+			pt.pixel_xy[0] = (WIDTH / 2) + ((pt.vw_xyz[0]));
+			pt.pixel_xy[1] = (HEIGHT / 2) + ((pt.vw_xyz[1]));
+			printf("point: {%d, %d}\n", pt.pixel_xy[0], pt.pixel_xy[0]);
+			y++;
+		}
+		x++;
+	}
+	return (map);
+}
+
+void	map_printview(t_map *map)
+{
+	int		x;
+	int		y;
+	t_pt	pt;
+
+	x = 0;
+	while(x < (map->x_dim))
+	{
+		y = 0;
+		while(y < (map->y_dim))
+		{
+			pt = map->map[x][y];
+			printf("point: {%d, %d}\n", pt.pixel_xy[0], pt.pixel_xy[0]);
+			fdf_pixelput(&(map->mlx_data), pt.pixel_xy[0], pt.pixel_xy[1], map->map[x][y].color);
 			y++;
 		}
 		x++;
 	}
 	mlx_put_image_to_window(map->mlx_data.mlx, 
 							map->mlx_data.mlx_win, 
-							map->mlx_data.img, 10, 10);
+							map->mlx_data.img, 0, 0);
 }
 
-t_map	*map_initmlx(t_map *map)
+t_map	*map_mlx(t_map *map)
 {
 	void	*mlx;
 	void	*mlx_win;

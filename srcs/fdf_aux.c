@@ -49,3 +49,28 @@ void	fdf_pixelput(t_mlx *mlx, int x, int y, int color)
 	dist = (y * line_length) + (x * (bpp / 8));
 	*((unsigned int*)(dist + mlx->img_addr)) = color;
 }
+
+void	fdf_lineBresenham(int x1, int y1, int x2, int y2)
+{
+	int	x;
+	int	y;
+	const int	dx = (x2 - x1);
+	const int	dy = (y2 - y1);
+	int p;
+
+	x = x1;
+	y = y1;
+	p = 2 * dy - dx;
+	while (x <= x2)
+	{
+		//putpixel(x,y)
+		x++;
+		if (p < 0)
+			p = p + 2 * dy;
+		else
+		{
+			p = p + (2 * dy) - (2 * dx);
+			y++;
+		}
+	}
+}

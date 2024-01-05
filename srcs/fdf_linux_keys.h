@@ -6,14 +6,14 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 21:35:26 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/31 22:45:37 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/04 22:08:15 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_LINUX_KEYS_H
 # define FDF_LINUX_KEYS_H
 
-//# include "../mlx_linux/mlx_int.h"
+# include "../mlx_linux/mlx_int.h"
 //LINUX->KEYSYM
 //https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h
 # define KEY_ESC	XK_Escape

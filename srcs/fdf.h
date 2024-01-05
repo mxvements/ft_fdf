@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:40:54 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/02 10:30:01 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/05 22:42:17 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define FDF_H
 
 //MAC
-# include <mlx.h>
-# include "./fdf_mac_keys.h"
+//# include <mlx.h>
+//# include "./fdf_mac_keys.h"
 
 //LINUX 
-//# include "../mlx_linux/mlx.h"
-//# include "./fdf_linux_keys.h"
+# include "../mlx_linux/mlx.h"
+# include "./fdf_linux_keys.h"
 
 # include <fcntl.h>
 # include <math.h>

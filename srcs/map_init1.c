@@ -107,8 +107,31 @@ t_map	*map_initview(t_map *map)
 	vw = (t_view*)malloc(sizeof(t_view) * 1);
 	if (!vw)
 		return (map_evalerror(map, map->x_dim));
-	vw->view = arrdbl_init(3, 3);
+	map->vw = vw;
+	vw->view = arrdbl_init(3, 3, 1);
 	view_isometric(vw);
+	return (map);
+}
+t_map	*map_initviewptmap(t_map *map)
+{
+	t_view	*vw;
+	t_pt	*pt;
+	int		x;
+	int		y;
+
+	vw = map->vw;
+	x = 0;
+	while (x < map->x_dim)
+	{
+		y = 0;
+		while (y < map->y_dim)
+		{
+			pt = &(map->map[x][y]);
+			pt_transform(pt, vw);
+			y++;
+		}
+		x++;
+	}
 	return (map);
 }
 
@@ -121,9 +144,8 @@ t_map	*map_init(t_dll **ptlst, char *txt)
 		return ((t_map*)lst_evalerror(ptlst));
 	map = map_initsize(ptlst, txt, map);
 	map = map_initdptmap(map, ptlst);
-
 	map = map_initview(map);
-
+	map = map_initviewptmap(map);
 	map = map_initmlx(map);
 	return (map);
 }

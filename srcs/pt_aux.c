@@ -31,11 +31,40 @@ void	pt_print(t_pt **ptarr, int xdim, int ydim) //need to change this funct
 			ft_putnbr_fd(pt.xyz[1], 1);
 			write(1, ", ", 1);
 			ft_putnbr_fd(pt.xyz[2], 1);
+			ft_putstr_fd("}, proy: {", 1);
+			ft_putnbr_fd(pt.vw_xyz[0], 1);
+			write(1, ", ", 1);
+			ft_putnbr_fd(pt.vw_xyz[1], 1);
+			write(1, ", ", 1);
+			ft_putnbr_fd(pt.vw_xyz[2], 1);
 			ft_putstr_fd("}, color: ", 1);
 			ft_putnbr_fd(pt.color, 1);
 			write(1, "\n", 1);
 			y++;
 		}
+		x++;
+	}
+}
+
+void	pt_transform(t_pt *pt, t_view *vw)
+{
+	double	**view_arr;
+	int		x;
+	int		y;
+	int		nbr;
+
+	view_arr = vw->view;
+	x = 0;
+	while (x < 3)
+	{
+		y = 0;
+		nbr = 0;
+		while (y < 3)
+		{
+			nbr += view_arr[x][y] * pt->xyz[y];
+			y++;
+		}
+		pt->vw_xyz[x] = nbr;
 		x++;
 	}
 }

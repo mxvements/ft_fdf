@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	arrdbl_print_3x3(double m[3][3])
+void	arrdbl_print_3x3(double **m)
 {
 	const int	x_dim = 3;
 	const int	y_dim = 3;
@@ -20,12 +20,13 @@ void	arrdbl_print_3x3(double m[3][3])
 	int			y;
 
 	x = 0;
+	write(1, "print array: \n", 14);
 	while (x < x_dim)
 	{
 		y = 0;
 		while (y < y_dim)
 		{
-			printf("%f", m[x][y]);
+			printf("%d, %d: %f\n", x, y, m[x][y]);
 			y++;
 		}
 		x++;
@@ -74,7 +75,7 @@ void	arrdbl_free(double **arr, int x_dim)
 	free(arr);
 }
 
-double	**arrdbl_init(int x_dim, int y_dim)
+double	**arrdbl_init(int x_dim, int y_dim, int nbr)
 {
 	double	**arr;
 	int		x;
@@ -88,14 +89,14 @@ double	**arrdbl_init(int x_dim, int y_dim)
 	{
 		arr[x] = (double*)malloc(sizeof(double) * y_dim);
 		if (!arr[x])
-		{
-			arrdbl_free(arr, x);
-			return (NULL);
-		}
+			return (arrdbl_free(arr, x), NULL);
 		y = 0;
 		while (y < y_dim)
 		{
-			arr[x][y] = 0;
+			if (x == y)
+				arr[x][y] = nbr;
+			else
+				arr[x][y] = 0;
 			y++;
 		}
 		x++;
@@ -109,7 +110,7 @@ double	**arrdbl_cpy_3x3(double **arr)
 	int		x;
 	int		y;
 
-	rslt = arrdbl_init(3, 3);
+	rslt = arrdbl_init(3, 3, 1);
 	if (!rslt)
 		return (NULL);
 	x = 0;

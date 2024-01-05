@@ -17,7 +17,7 @@ void	view_rot_z(t_view *vw)
 	double	**cpy;
 	double	**rot_z;
 
-	rot_z = arrdbl_init(3,3);
+	rot_z = arrdbl_init(3, 3, 1);
 	rot_z[0][0] = cos(vw->rotate_angle_z);
 	rot_z[0][1] = -sin(vw->rotate_angle_z);
 	rot_z[0][2] = 0;
@@ -37,7 +37,7 @@ void	view_rot_y(t_view *vw)
 	double	**cpy;
 	double	**rot_y;
 
-	rot_y = arrdbl_init(3,3);
+	rot_y = arrdbl_init(3, 3, 1);
 	rot_y[0][0] = cos(vw->rotate_angle_z);
 	rot_y[0][1] = 0;
 	rot_y[0][2] = sin(vw->rotate_angle_z);
@@ -57,7 +57,7 @@ void	view_rot_x(t_view *vw)
 	double	**cpy;
 	double	**rot_x;
 
-	rot_x = arrdbl_init(3,3);
+	rot_x = arrdbl_init(3, 3, 1);
 	rot_x[0][0] = 1;
 	rot_x[0][1] = 0;
 	rot_x[0][2] = 0;

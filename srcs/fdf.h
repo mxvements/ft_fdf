@@ -59,6 +59,7 @@ typedef struct s_mlx
 typedef struct s_point
 {
 	int	xyz[3]; //{x, y, z}
+	int	vw_xyz[3];
 	int color;
 }	t_pt;
 
@@ -83,11 +84,12 @@ typedef struct s_map
 
 //pt/
 void	pt_print(t_pt **ptarr, int xdim, int ydim);
+void	pt_transform(t_pt *pt, t_view *vw);
 //arr functions
-void	arrdbl_print_3x3(double m[3][3]);
+void	arrdbl_print_3x3(double **m);
 void	arrdbl_mult_3x3(double **m1, double **m2, double **rslt);
 void	arrdbl_free(double **arr, int x_dim);
-double	**arrdbl_init(int x_dim, int y_dim);
+double	**arrdbl_init(int x_dim, int y_dim, int nbr);
 double	**arrdbl_cpy_3x3(double **arr);
 //view funct
 void	view_rot_z(t_view *vw);

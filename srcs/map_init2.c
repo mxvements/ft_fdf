@@ -24,7 +24,6 @@ void	map_printview(t_map *map)
 	int		y;
 	int		px_x;
 	int		px_y;
-	t_pt	pt;
 	t_view	*vw;
 
 	vw = map->vw;
@@ -34,10 +33,9 @@ void	map_printview(t_map *map)
 		y = 0;
 		while(y < (map->y_dim))
 		{
-			pt = map->map[x][y];
-			px_x = pt.xyz[0] * vw->scale_factor; //ERROR, view NULL
-			px_y = pt.xyz[1] * vw->scale_factor;
-			fdf_pixelput(&(map->mlx_data), px_x, px_y, pt.color);
+			px_x = (map->map[x][y].vw_xyz[0]) * vw->scale_factor;
+			px_y = (map->map[x][y].vw_xyz[1]) * vw->scale_factor;
+			fdf_pixelput(&(map->mlx_data), px_x, px_y, map->map[x][y].color);
 			y++;
 		}
 		x++;
@@ -46,7 +44,6 @@ void	map_printview(t_map *map)
 							map->mlx_data.mlx_win, 
 							map->mlx_data.img, 10, 10);
 }
-
 
 t_map	*map_initmlx(t_map *map)
 {

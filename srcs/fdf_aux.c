@@ -50,32 +50,78 @@ void	fdf_pixelput(t_mlx *mlx, int x, int y, int color)
 	*((unsigned int*)(dist + mlx->img_addr)) = color;
 }
 
-void	fdf_lineBresenham(int *px1, int *px2, t_map *map)
+void	fdf_lineBresenham_opc1(int *x1, int *x2, t_map *map)
 {
 	int			x;
 	int			y;
-	const int	dx = (px2[0] - px1[0]);
-	const int	dy = (px2[1] - px1[1]);
+	const int	dx = (x2[0] - x1[0]);
+	const int	dy = (x2[1] - x1[1]);
 	int p;
 
-	x = px1[0];
-	y = px1[1];
-	p = 2 * dy - dx;
-	while (x <= px2[0])
+	x = x1[0];
+	y = x1[1];
+	p = (2 * dy) - dx;
+	while (x <= x2[0])
 	{
 		fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
 		x++;
 		if (p < 0)
-			p = p + 2 * dy;
+			p = p + (2 * dy);
 		else
 		{
-			p = p + (2 * dy) - (2 * dx);
+			p = p + (2 * (dy - dx));
 			y++;
 		}
 	}
 }
 
-void	fdf_lineBresenham_wrapper(t_map *map, int x, int y)
+void	fdf_lineBresenham_opc2(int *x1, int *x2, t_map *map)
+{
+	int			x;
+	int			y;
+	const int	dx = (x2[0] - x1[0]);
+	const int	dy = (x2[1] - x1[1]);
+	int p;
+
+	x = x1[0];
+	y = x1[1];
+	p = (2 * dx) - dy;
+	while (x <= x2[0])
+	{
+		fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
+		x++;
+		if (p < 0)
+			p = p + (2 * dx);
+		else
+		{
+			p = p + (2 * (dx - dy));
+			y--;
+		}
+	}
+}
+
+void	fdf_lineBresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
+{
+	int			fx;
+	int			fy;
+
+	fx = 1;
+	if (pt2->px_xy[0] < pt1->px_xy[0])
+		fx = -1;
+	fy = 1;
+	if (pt2->px_xy[1] < pt1->px_xy[1])
+		fy = -1;
+	if ((fx == 1) && (fy == 1))
+		fdf_lineBresenham_opc1(pt1->px_xy, pt2->px_xy, map);
+	else if ((fx = 1) && (fy == -1))
+		fdf_lineBresenham_opc2(pt1->px_xy, pt2->px_xy, map);
+	else if((fx == -1) && (fy == -1))
+		fdf_lineBresenham_opc1(pt2->px_xy, pt1->px_xy, map);
+	else
+		fdf_lineBresenham_opc2(pt2->px_xy, pt1->px_xy, map);
+}
+
+void	fdf_putlines(t_map *map, int x, int y)
 {
 	t_pt	*pt;
 	t_pt	*pt_right;
@@ -85,11 +131,11 @@ void	fdf_lineBresenham_wrapper(t_map *map, int x, int y)
 	if (y != (map->y_dim - 1))
 	{
 		pt_down = &(map->map[x][y + 1]);
-		fdf_lineBresenham(pt->px_xy, pt_down->px_xy, map);
+		fdf_lineBresenham_wrapper(map, pt, pt_down);
 	}
 	if (x != (map->x_dim - 1))
 	{
 		pt_right = &(map->map[x + 1][y]);
-		fdf_lineBresenham(pt->px_xy, pt_right->px_xy, map);
+		fdf_lineBresenham_wrapper(map, pt, pt_right);
 	}			
 }

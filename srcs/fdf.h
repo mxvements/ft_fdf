@@ -104,8 +104,9 @@ void	view_isometric(t_view *vw);
 void	fdf_show_menu(void);
 int		fdf_handle_input(int keysym, t_mlx *mlx_data);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
-void	fdf_lineBresenham(int *px1, int *px2, t_map *map);
-void	fdf_lineBresenham_wrapper(t_map *map, int x, int y);
+void	fdf_lineBresenham_opc1(int *px1, int *px2, t_map *map);
+void	fdf_lineBresenham_opc2(int *px1, int *px2, t_map *map);
+void	fdf_putlines(t_map *map, int x, int y);
 //MLX
 t_map	*map_mlx(t_map *map);
 //map  init

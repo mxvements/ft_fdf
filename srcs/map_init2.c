@@ -63,7 +63,7 @@ t_map	*map_pixelptmap(t_map *map)
 			pt = &(map->map[x][y]);
 			pt->px_xy[0] = (WIDTH / 2) + ((pt->vw_xyz[0]));
 			pt->px_xy[1] = (HEIGHT / 2) + ((pt->vw_xyz[1]));
-			printf("point: {%d, %d}\n", pt->px_xy[0], pt->px_xy[0]);
+			printf("point: {%d, %d}\n", pt->px_xy[0], pt->px_xy[1]);
 			y++;
 		}
 		x++;
@@ -85,7 +85,7 @@ void	map_printview(t_map *map)
 		{
 			pt = map->map[x][y];
 			fdf_pixelput(&(map->mlx_data), pt.px_xy[0], pt.px_xy[1], pt.color);
-			fdf_lineBresenham_wrapper(map, x, y);
+			fdf_putlines(map, x, y);
 			y++;
 		}
 		x++;
@@ -111,7 +111,6 @@ t_map	*map_mlx(t_map *map)
 	key_input = mlx_key_hook(mlx_win, fdf_handle_input, &map->mlx_data);
 	if (key_input == 1)
 		return (NULL);
-	//¿IMG SIZE?
 	map->mlx_data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	map->mlx_data.img_addr = mlx_get_data_addr(
 								(map->mlx_data).img,

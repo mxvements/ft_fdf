@@ -85,7 +85,7 @@ void	map_printview(t_map *map)
 		{
 			pt = map->map[x][y];
 			fdf_pixelput(&(map->mlx_data), pt.px_xy[0], pt.px_xy[1], pt.color);
-			//fdf_lineBresenham_wrapper(map, x, y);
+			fdf_lineBresenham_wrapper(map, x, y);
 			y++;
 		}
 		x++;

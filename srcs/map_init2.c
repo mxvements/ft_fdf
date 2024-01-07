@@ -61,7 +61,7 @@ t_map	*map_pixelptmap(t_map *map)
 		while(y < (map->y_dim))
 		{
 			pt = &(map->map[x][y]);
-			pt->px_xy[0] = (WIDTH / 2) + ((pt->vw_xyz[0]));
+			pt->px_xy[0] = (WIDTH / 2) + ((pt->vw_xyz[0])); //TODO: fix position
 			pt->px_xy[1] = (HEIGHT / 2) + ((pt->vw_xyz[1]));
 			printf("point: {%d, %d}\n", pt->px_xy[0], pt->px_xy[1]);
 			y++;

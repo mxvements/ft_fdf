@@ -6,11 +6,12 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 17:06:19 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/05 22:56:55 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/08 22:51:24 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <math.h>
 
 void	view_scale(t_view *vw)
 {
@@ -33,7 +34,7 @@ void	view_scale(t_view *vw)
 		}
 		x++;
 	}
-	vw->scale_f = 1;
+	//vw->scale_f = 1;
 }
 
 void	view_translate(t_view *vw)
@@ -54,7 +55,7 @@ void	view_translate(t_view *vw)
 		}
 		x++;
 	}
-	vw->move_d = 0;
+	//vw->move_d = 0;
 }
 
 void	view_rotate(t_view *vw)
@@ -71,17 +72,17 @@ void	view_rotate(t_view *vw)
 		view_rot_x(vw);
 	//printf("rot_x: \n");
 	//arrdbl_print_3x3(vw->view);
-	vw->rotate_rads_z = 0;
-	vw->rotate_rads_y = 0;
-	vw->rotate_rads_x = 0;
+	//vw->rotate_rads_z = 0;
+	//vw->rotate_rads_y = 0;
+	//vw->rotate_rads_x = 0;
 }
 
-void	view_isometric(t_view *vw)
+void	view_isometric(t_view *vw, int scale)
 {
 	vw->rotate_rads_z = (M_PI_4);
 	vw->rotate_rads_y = 0;
 	vw->rotate_rads_x = (1/(tan(sqrt(2))));
-	vw->scale_f = 100;
+	vw->scale_f = scale;
 	vw->move_d = 0;
 	view_rotate(vw);
 	view_scale(vw);

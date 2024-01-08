@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:55:41 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/06 00:03:43 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/08 22:47:37 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,88 +50,85 @@ void	fdf_pixelput(t_mlx *mlx, int x, int y, int color)
 	*((unsigned int*)(dist + mlx->img_addr)) = color;
 }
 
-void	fdf_lineBresenham_opc1(int *p1, int *p2, t_map *map, int sx, int sy)
+void	fdf_lineBresenham_opc1(int *p1, int *p2, t_map *map)
 {
-	int			x;
-	int			y;
-	int	dx = (p2[0] - p1[0]);
-	int	dy = (p2[1] - p1[1]);
-	int p;
+	int		x;
+	int		y;
+	int		dx;
+	int		dy;
+	int		p;
 
 	x = p1[0];
 	y = p1[1];
-	dx = abs(dx);
-	dy = abs(dy);
+	dx = abs((p2[0] - p1[0]));
+	dy = abs((p2[1] - p1[1]));
 	p = (2 * dy) - dx;
 	while ((x - p1[0]) * (x - p2[0]) <= 0)
 	{
 		if (x <= WIDTH && y <= HEIGHT)
 			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		x += sx;
+		x += ((p2[0] - p1[0]) / dx);
 		if (p < 0)
 			p = p + (2 * dy);
 		else
 		{
 			p = p + (2 * (dy - dx));
-			y += sy;
+			y += ((p2[1] - p1[1]) / dy);
 		}
 	}
 }
 
 void	fdf_lineBresenham_opc2(int *p1, int *p2, t_map *map)
 {
-	int			x;
-	int			y;
-	int	dx = (p2[0] - p1[0]);
-	int	dy = (p2[1] - p1[1]);
-	int sign_dx = (dx > 0) ? 1 : -1;
-    int sign_dy = (dy > 0) ? 1 : -1;
-	int p;
+	int		x;
+	int		y;
+	int		dx;
+	int		dy;
+	int		p;
 
 	x = p1[0];
 	y = p1[1];
-	dx = abs(dx);
-	dy = abs(dy);
+	dx = abs((p2[0] - p1[0]));
+	dy = abs((p2[1] - p1[1]));
 	p = (2 * dx) - dy;
-	while (y != p2[1])
+	while ((y - p1[1]) * (y - p2[1]) <= 0)
 	{
-		fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		y += sign_dy; // THIS IS for the way the pixels
+		if (x <= WIDTH && y <= HEIGHT)
+			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
+		y += ((p2[1] - p1[1]) / dy);
 		if (p < 0)
 			p = p + (2 * dx);
 		else
 		{
 			p = p + (2 * (dx - dy));
-			x += sign_dx;
+			x += ((p2[0] - p1[0]) / dx);
 		}
 	}
 }
 
 void	fdf_lineBresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
 {
-	int	dx;
-	int	dy;
-	int sign_dx;
-    int sign_dy;
+	const int	dx = abs(pt1->px_xy[0] - pt2->px_xy[0]);
+	const int	dy = abs(pt1->px_xy[1] - pt2->px_xy[1]);
+	
+	if (dx >= dy)
+	{
+		//opcion 1. x crece antes que y
+		if ((pt1->px_xy[0] <= pt2->px_xy[0]))
+			fdf_lineBresenham_opc1(pt1->px_xy, pt2->px_xy, map);
+		if ((pt1->px_xy[0] > pt2->px_xy[0]))
+			fdf_lineBresenham_opc1(pt2->px_xy, pt1->px_xy, map);
+	}
+	else if( dy > dx)
+	{
+		//opcion 2, y crece antes que x
+		if (pt1->px_xy[0] <= pt2->px_xy[0])
+			fdf_lineBresenham_opc2(pt1->px_xy, pt2->px_xy, map);
+		if (pt1->px_xy[0] > pt2->px_xy[0])
+			fdf_lineBresenham_opc2(pt2->px_xy, pt1->px_xy, map);
+	}
 
-	dx = (pt2->px_xy[0] - pt1->px_xy[0]);
-	dy = (pt2->px_xy[1] - pt1->px_xy[1]);
-	sign_dx = 1;
-	if (dx < 0)
-		sign_dx = -1;
-	sign_dy = 1;
-	if (dy < 0)
-		sign_dy = -1;
-	fdf_lineBresenham_opc1(pt1->px_xy, pt2->px_xy, map, sign_dx, sign_dy);
-	/*/
-	if ((pt1->vw_xyz[0] < pt2->vw_xyz[0]) && (pt1->vw_xyz[1] < pt2->vw_xyz[1]))
-		fdf_lineBresenham_opc1(pt1->px_xy, pt2->px_xy, map);
-	if ((pt1->vw_xyz[0] < pt2->vw_xyz[0]) && (pt2->vw_xyz[1] < pt1->vw_xyz[1]))
-		fdf_lineBresenham_opc1(pt1->px_xy, pt2->px_xy, map);
-	if((pt2->vw_xyz[0] < pt1->vw_xyz[0]) && (pt2->vw_xyz[1] < pt1->vw_xyz[1]))
-		fdf_lineBresenham_opc1(pt2->px_xy, pt1->px_xy, map);
-	if ((pt2->vw_xyz[0] < pt1->vw_xyz[0]) && (pt1->vw_xyz[1] < pt2->vw_xyz[1]))
-		fdf_lineBresenham_opc1(pt2->px_xy, pt1->px_xy, map);*/
+	
 }
 
 void	fdf_putlines(t_map *map, int x, int y)

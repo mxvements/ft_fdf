@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 09:39:12 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/05 22:44:44 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/08 21:15:14 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	pt_print(t_pt **ptarr, int xdim, int ydim) //need to change this funct
 			ft_putnbr_fd(pt.vw_xyz[1], 1);
 			write(1, ", ", 1);
 			ft_putnbr_fd(pt.vw_xyz[2], 1);
+			ft_putstr_fd("}, pixel: {", 1);
+			ft_putnbr_fd(pt.px_xy[0], 1);
+			write(1, ", ", 1);
+			ft_putnbr_fd(pt.px_xy[1], 1);
 			ft_putstr_fd("}, color: ", 1);
 			ft_putnbr_fd(pt.color, 1);
 			write(1, "\n", 1);

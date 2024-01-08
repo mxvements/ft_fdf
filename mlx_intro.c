@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:57:13 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/31 22:43:49 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/08 19:59:57 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	
 	line_length = data->line_length;
 	bpp = data->bits_pixel;
-	dst = (y * line_length + x * (bpp / 8));
+	dst = (y * line_length) + (x * (bpp / 8));
 	*((unsigned int*)(dst + data->img_addr)) = color;
 }
 

@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:40:54 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/06 00:01:58 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/08 22:05:37 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define FDF_H
 
 //MAC
-# include <mlx.h>
-# include "./fdf_mac_keys.h"
+//# include <mlx.h>
+//# include "./fdf_mac_keys.h"
 
 //LINUX 
-//# include "../mlx_linux/mlx.h"
-//# include "./fdf_linux_keys.h"
+# include "../mlx_linux/mlx.h"
+# include "./fdf_linux_keys.h"
 
 # include <fcntl.h>
 # include <math.h>
@@ -99,12 +99,12 @@ void	view_rot_x(t_view *vw);
 void	view_scale(t_view *vw);
 void	view_translate(t_view *vw);
 void	view_rotate(t_view *vw);
-void	view_isometric(t_view *vw);
+void	view_isometric(t_view *vw, int scale);
 //fdf aux functions
 void	fdf_show_menu(void);
 int		fdf_handle_input(int keysym, t_mlx *mlx_data);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
-void	fdf_lineBresenham_opc1(int *px1, int *px2, t_map *map, int sx, int sy);
+void	fdf_lineBresenham_opc1(int *px1, int *px2, t_map *map);
 void	fdf_lineBresenham_opc2(int *px1, int *px2, t_map *map);
 void	fdf_putlines(t_map *map, int x, int y);
 //MLX

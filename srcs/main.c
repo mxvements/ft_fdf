@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 16:58:27 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/08 22:48:03 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:09:37 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	fdf(char *txt)
 
 int main(void)
 {
-	char	*path = "./test_maps/42.fdf";
+	char	*path = "./test_maps/truncated_pyramid.fdf";
 	char	*txt;
 
 	txt = readfile(path);

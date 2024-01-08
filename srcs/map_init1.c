@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 14:20:15 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/08 22:52:05 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:08:15 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y)
 	ptcont = ptnode->content;
 	(map->map[x][y]).xyz[0] = x;
 	(map->map[x][y]).xyz[1] = y;
-	(map->map[x][y]).xyz[2] = ptcont->height / 2; //SCALE Z
+	(map->map[x][y]).xyz[2] = ptcont->height / 1; //SCALE Z
 	(map->map[x][y]).color = ptcont->color;
 	ptnode = ptnode->next;
 	return (ptnode);

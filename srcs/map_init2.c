@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 16:27:32 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/08 20:36:12 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/11 23:10:29 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ void	map_printview(t_map *map)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(map->mlx_data.mlx, 
-							map->mlx_data.mlx_win, 
+	mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.mlx_win, 
 							map->mlx_data.img, 0, 0);
 }
 
@@ -118,7 +117,7 @@ t_map	*map_mlx(t_map *map)
 	map_printview(map);
 
 	//handle output from keyboard
-	mlx_key_hook(mlx_win, fdf_key_input, &map->mlx_data);
+	mlx_key_hook(mlx_win, fdf_key_input, map);
 
 	return (map);
 }

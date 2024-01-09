@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:55:41 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/08 22:47:37 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/12 00:21:54 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ void	fdf_show_menu(void)
 	write(1, ANSICOLOR_RESET, 5);
 }
 
-int	fdf_key_input(int keysym, t_mlx *mlx_data)
+int	fdf_change_map(void)
+{
+	printf("change map\n");
+	return (0);
+}
+
+int	fdf_key_input(int keysym, t_map *map)
 {
 	static int	key_tra;
 	static int	key_ax;
@@ -37,21 +43,28 @@ int	fdf_key_input(int keysym, t_mlx *mlx_data)
 		key_nbr = 0;
 	write(1, ANSICOLOR_RESET, 5);
 	if (keysym == KEY_ESC)
-		return (fdf_handle_input_ESC(mlx_data));
+		return (fdf_handle_input_ESC(map));
 	if (key_tra == 0 && (keysym == KEY_r || keysym == KEY_s || keysym == KEY_t))
 		key_tra = fdf_handle_input_RST(keysym);
-	if ((key_ax == 0 && key_tra != 0) && (keysym == KEY_x || keysym == KEY_y || keysym == KEY_z))
+	if ((key_ax == 0 && key_tra != 0)
+		&& (keysym == KEY_x || keysym == KEY_y || keysym == KEY_z))
 		key_ax = fdf_handle_input_XYZ(keysym);
 	if ((key_ax != 0 && key_tra != 0) && (fdf_handle_input_NBR(keysym) != -1))
 	{
 		key_nbr *= 10;
 		key_nbr += fdf_handle_input_NBR(keysym);
 	}
+	if (keysym == KEY_ENTER)
+		return (fdf_change_map());
 	return (keysym);
 }
 
-int	fdf_handle_input_ESC(t_mlx *mlx_data)
+int	fdf_handle_input_ESC(t_map *map)
 {
+	t_mlx	*mlx_data;
+
+	mlx_data = &(map->mlx_data);
+	//FREE THINGS?
 	write(1, ANSICOLOR_MAGENTA, 6);
 	write(1, "(EXC)\n", 6);
 	mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
@@ -130,5 +143,5 @@ int	fdf_handle_input_NBR(int keysym)
 		return (8);
 	if (keysym == KEY_9)
 		return (9);
-return (-1);
+	return (-1);
 }

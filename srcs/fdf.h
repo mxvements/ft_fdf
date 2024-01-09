@@ -6,7 +6,7 @@
 /*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:40:54 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/08 22:05:37 by lmmielgo         ###   ########.fr       */
+/*   Updated: 2024/01/11 23:41:27 by lmmielgo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define FDF_H
 
 //MAC
-# include <mlx.h>
-# include "./fdf_mac_keys.h"
+//# include <mlx.h>
+//# include "./fdf_mac_keys.h"
 
 //LINUX 
-//# include "../mlx_linux/mlx.h"
-//# include "./fdf_linux_keys.h"
+# include "../mlx_linux/mlx.h"
+# include "./fdf_linux_keys.h"
 
 # include <fcntl.h>
 # include <math.h>
@@ -103,8 +103,8 @@ void	view_rotate(t_view *vw);
 void	view_isometric(t_view *vw, int scale);
 //fdf aux functions
 void	fdf_show_menu(void);
-int		fdf_key_input(int keysym, t_mlx *mlx_data);
-int		fdf_handle_input_ESC(t_mlx *mlx_data);
+int		fdf_key_input(int keysym, t_map *map);
+int		fdf_handle_input_ESC(t_map *map);
 int		fdf_handle_input_RST(int keysym);
 int		fdf_handle_input_XYZ(int keysym);
 int		fdf_handle_input_NBR(int keysym);

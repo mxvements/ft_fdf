@@ -49,7 +49,7 @@ MY_OBJECTS+=$(addprefix $(GNL_DIR), ${GNL_SRCS:%.c=%.o})
 
 ###############################################################################
 
-all: $(NAME) mac
+all: $(NAME) linux
 
 $(NAME): $(MY_OBJECTS)
 	make extra -C $(LIBFT_DIR)

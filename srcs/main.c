@@ -55,7 +55,7 @@ void	fdf(char *txt)
 	map = map_init(ptlst, txt);
 	//MAP print
 	if (map)
-		pt_print(map->map, map->x_dim, map->y_dim);
+		pt_print(map->map, map->y_dim, map->x_dim);
 	//end MLX
 	ft_dllfree(ptlst);
 	free(ptlst);
@@ -65,7 +65,7 @@ void	fdf(char *txt)
 
 int main(void)
 {
-	char	*path = "./test_maps/truncated_pyramid.fdf";
+	char	*path = "./test_maps/42.fdf";
 	char	*txt;
 
 	txt = readfile(path);

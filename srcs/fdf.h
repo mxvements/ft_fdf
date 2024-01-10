@@ -14,12 +14,12 @@
 # define FDF_H
 
 //MAC
-//# include <mlx.h>
-//# include "./fdf_mac_keys.h"
+# include <mlx.h>
+# include "./fdf_mac_keys.h"
 
 //LINUX 
-# include "../mlx_linux/mlx.h"
-# include "./fdf_linux_keys.h"
+//# include "../mlx_linux/mlx.h"
+//# include "./fdf_linux_keys.h"
 
 # include <fcntl.h>
 # include <math.h>

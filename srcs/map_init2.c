@@ -19,7 +19,7 @@ t_map	*map_view(t_map *map)
 
 	vw = (t_view*)malloc(sizeof(t_view) * 1);
 	if (!vw)
-		return (map_evalerror(map, map->x_dim));
+		return (map_evalerror(map, map->y_dim));
 	map->vw = vw;
 	vw->view = arrdbl_init(3, 3, 1);
 	scale = ((WIDTH * 0.4) / (map->x_dim));
@@ -35,17 +35,17 @@ t_map	*map_viewptmap(t_map *map)
 	int		y;
 
 	vw = map->vw;
-	x = 0;
-	while (x < map->x_dim)
+	y = 0;
+	while (y < map->y_dim)
 	{
-		y = 0;
-		while (y < map->y_dim)
+		x = 0;
+		while (x < map->x_dim)
 		{
-			pt = &(map->map[x][y]);
+			pt = &(map->map[y][x]);
 			pt_transform(pt, vw);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	return (map);
 }
@@ -57,19 +57,19 @@ t_map	*map_pixelptmap(t_map *map)
 	t_pt			*pt;
 	const double	f = (map->vw)->scale_f;
 
-	x = 0;
-	while(x < (map->x_dim))
+	y = 0;
+	while(y < (map->y_dim))
 	{
-		y = 0;
-		while(y < (map->y_dim))
+		x = 0;
+		while(x < (map->x_dim))
 		{
-			pt = &(map->map[x][y]);
+			pt = &(map->map[y][x]);
 			pt->px_xy[0] = (WIDTH / 2) - ((map->x_dim * f) / 8) + ((pt->vw_xyz[0])); //TODO: fix position
 			pt->px_xy[1] = (HEIGHT / 2) - ((map->y_dim * f) / 3) + ((pt->vw_xyz[1]));
 			//printf("point: {%d, %d}\n", pt->px_xy[0], pt->px_xy[1]);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	return (map);
 }
@@ -80,19 +80,19 @@ void	map_printview(t_map *map)
 	int		y;
 	t_pt	pt;
 
-	x = 0;
-	while(x < (map->x_dim))
+	y = 0;
+	while(y < (map->y_dim))
 	{
-		y = 0;
-		while(y < (map->y_dim))
+		x = 0;
+		while(x < (map->x_dim))
 		{
-			pt = map->map[x][y];
-			if (pt.px_xy[0] <= WIDTH && pt.px_xy[1] <= HEIGHT)
+			pt = map->map[y][x];
+			if (pt.px_xy[0] < WIDTH && pt.px_xy[1] < HEIGHT)
 				fdf_pixelput(&(map->mlx_data), pt.px_xy[0], pt.px_xy[1], pt.color);
 			fdf_putlines(map, x, y);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 	mlx_put_image_to_window(map->mlx_data.mlx, 
 							map->mlx_data.mlx_win, 

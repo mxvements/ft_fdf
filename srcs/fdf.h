@@ -27,12 +27,13 @@
 # include "../gnl/get_next_line.h"
 # include "automata.h"
 
-# define ANSICOLOR_CYAN		"\x1b[36m"
+# define ANSICOLOR_GRAY		"\x1b[30m"
 # define ANSICOLOR_RED		"\x1b[31m"
 # define ANSICOLOR_GREEN	"\x1b[32m"
 # define ANSICOLOR_YELLOW	"\x1b[33m"
 # define ANSICOLOR_BLUE		"\x1b[34m"
 # define ANSICOLOR_MAGENTA	"\x1b[35m"
+# define ANSICOLOR_CYAN		"\x1b[36m"
 # define ANSICOLOR_RESET	"\x1b[0m"
 
 # define WIDTH				1280
@@ -47,7 +48,7 @@
 
 typedef struct s_mlx
 {
-	void	*mlx;
+	void	*mlx; //INSTANCIA DE 
 	void	*mlx_win;
 	void	*img;
 	char	*img_addr;
@@ -102,10 +103,14 @@ void	view_rotate(t_view *vw);
 void	view_isometric(t_view *vw, int scale);
 //fdf aux functions
 void	fdf_show_menu(void);
-int		fdf_handle_input(int keysym, t_mlx *mlx_data);
+int		fdf_key_input(int keysym, t_mlx *mlx_data);
+int		fdf_handle_input_ESC(t_mlx *mlx_data);
+int		fdf_handle_input_RST(int keysym);
+int		fdf_handle_input_XYZ(int keysym, int key_transf);
+int		fdf_is_key_nbr(int keysym, int key_transf);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
-void	fdf_lineBresenham_opc1(int *px1, int *px2, t_map *map);
-void	fdf_lineBresenham_opc2(int *px1, int *px2, t_map *map);
+void	fdf_lineBresenham_x(int *px1, int *px2, t_map *map);
+void	fdf_lineBresenham_y(int *px1, int *px2, t_map *map);
 void	fdf_putlines(t_map *map, int x, int y);
 //MLX
 t_map	*map_mlx(t_map *map);
@@ -118,5 +123,6 @@ t_map	*map_viewptmap(t_map *map);
 t_map	*map_view(t_map *map);
 t_map	*map_size(t_dll **ptlst, char *txt, t_map *map);
 t_map	*map_init(t_dll **lst, char *txt);
+int		map_key_input_wrapper(t_map *map);
 
 #endif

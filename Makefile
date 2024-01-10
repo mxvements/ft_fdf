@@ -18,6 +18,7 @@ SRCS=		main.c \
 			automata.c \
 			automata_aux.c \
 			fdf_aux.c \
+			fdf_putlines.c \
 			map_init1.c \
 			map_init2.c \
 			matrix_aux1.c \

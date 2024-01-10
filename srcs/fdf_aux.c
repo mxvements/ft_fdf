@@ -14,8 +14,8 @@
 
 void	fdf_show_menu(void)
 {
-	write(1, ANSICOLOR_CYAN, 6);
-	ft_putstr_fd("*************** fdf ***************\n", 1);
+	write(1, ANSICOLOR_BLUE, 6);
+	ft_putstr_fd("********************** fdf **********************\n", 1);
 	ft_putstr_fd("Press (ESC) to close window\n", 1);
 	ft_putstr_fd("Press (r) to rotate (WIP)\n", 1);
 	ft_putstr_fd("Press (s) to scale (WIP)\n", 1);
@@ -23,133 +23,113 @@ void	fdf_show_menu(void)
 	write(1, ANSICOLOR_RESET, 5);
 }
 
-int	fdf_handle_input(int keysym, t_mlx *mlx_data)
+int	fdf_key_input(int keysym, t_mlx *mlx_data)
 {
-	write(1, ANSICOLOR_GREEN, 6);
+	static int key_tr;
+
+	if (!key_tr)
+		key_tr = 0;
 	if (keysym == KEY_ESC)
+		return (fdf_handle_input_ESC(mlx_data));
+	if (key_tr == 0 && (keysym == KEY_r || keysym == KEY_s || keysym == KEY_t))
 	{
-		write(1, "(EXC)\n", 6);
-		mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
+		write(1, ANSICOLOR_CYAN, 6);
+		key_tr = fdf_handle_input_RST(keysym);
 		write(1, ANSICOLOR_RESET, 5);
-		return (1);
+		return (key_tr);
 	}
+	if (keysym == KEY_x || keysym == KEY_y || keysym == KEY_z)
+		return (fdf_handle_input_XYZ(keysym, key_tr));
+	if (fdf_is_key_nbr(keysym, key_tr) != -1)
+		return (fdf_is_key_nbr(keysym, key_tr));
+	if (keysym == KEY_F1)
+		return (keysym);
+	write(1, ANSICOLOR_GRAY, 6);
 	printf("Key: (%d)\n", keysym);
 	write(1, ANSICOLOR_RESET, 5);
+	return (key_tr);
+}
+
+int	fdf_handle_input_ESC(t_mlx *mlx_data)
+{
+	write(1, ANSICOLOR_MAGENTA, 6);
+	write(1, "(EXC)\n", 6);
+	mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
+	write(1, ANSICOLOR_RESET, 5);
+	return (-1);
+}
+
+int	fdf_handle_input_RST(int keysym)
+{
+	if (keysym == KEY_r)
+	{
+		ft_putstr_fd("********************** rot **********************\n", 1);
+		ft_putstr_fd("Press (x) to rotate the X axis\n", 1);
+		ft_putstr_fd("Press (y) to rotate the Y axis\n", 1);
+		ft_putstr_fd("Press (z) to rotate the Z axis\n", 1);
+		return ('r');
+	}
+	if (keysym == KEY_s)
+	{
+		ft_putstr_fd("********************** scl **********************\n", 1);
+		ft_putstr_fd("Press number to scale on the X axis\n", 1);
+		return ('s');
+	}
+	if (keysym == KEY_t)
+	{
+		ft_putstr_fd("********************** mov **********************\n", 1);
+		ft_putstr_fd("Press (x) to move on the X axis\n", 1);
+		ft_putstr_fd("Press (y) to move on the Y axis\n", 1);
+		ft_putstr_fd("Press (z) to move on the Z axis\n", 1);
+		return ('t');
+	}
 	return (0);
 }
 
-void	fdf_pixelput(t_mlx *mlx, int x, int y, int color)
+int	fdf_handle_input_XYZ(int keysym, int key_transf)
 {
-	int		dist;
-	int		line_length;
-	int 	bpp;
-	
-	line_length = mlx->line_len;
-	bpp = mlx->bpp;
-	dist = (y * line_length) + (x * (bpp / 8));
-	*((unsigned int*)(dist + mlx->img_addr)) = color;
+	if (key_transf == 'r' || key_transf == 's' || key_transf == 't')
+	{
+		if (keysym == KEY_x)
+			return ('x');
+		if (keysym == KEY_y)
+			return ('y');
+		if (keysym == KEY_z)
+			return ('z');
+	}
+	else
+	{
+		write(1, ANSICOLOR_MAGENTA, 6);
+		ft_putstr_fd("Press R-S-T to choose transformation first\n", 1);
+		write(1, ANSICOLOR_RESET, 5);
+	}
+	return (0);
 }
 
-void	fdf_lineBresenham_opc1(int *p1, int *p2, t_map *map)
+int	fdf_is_key_nbr(int keysym, int key_transf)
 {
-	int		x;
-	int		y;
-	int		dx;
-	int		dy;
-	int		p;
-
-	x = p1[0];
-	y = p1[1];
-	dx = abs((p2[0] - p1[0]));
-	dy = abs((p2[1] - p1[1]));
-	p = (2 * dy) - dx;
-	while ((x - p1[0]) * (x - p2[0]) <= 0)
+	if (key_transf == 'x' || key_transf == 'y' || key_transf == 'z')
 	{
-		if (x < WIDTH && y < HEIGHT)
-			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		x += ((p2[0] - p1[0]) / dx);
-		if (p < 0)
-			p = p + (2 * dy);
-		else
-		{
-			p = p + (2 * (dy - dx));
-			y += ((p2[1] - p1[1]) / dy);
-		}
+		if (keysym == KEY_0)
+			return (0);
+		if (keysym == KEY_1)
+			return (1);
+		if (keysym == KEY_2)
+			return (2);
+		if (keysym == KEY_3)
+			return (3);
+		if (keysym == KEY_4)
+			return (4);
+		if (keysym == KEY_5)
+			return (5);
+		if (keysym == KEY_6)
+			return (6);
+		if (keysym == KEY_7)
+			return (7);
+		if (keysym == KEY_8)
+			return (8);
+		if (keysym == KEY_9)
+			return (9);
 	}
-}
-
-void	fdf_lineBresenham_opc2(int *p1, int *p2, t_map *map)
-{
-	int		x;
-	int		y;
-	int		dx;
-	int		dy;
-	int		p;
-
-	x = p1[0];
-	y = p1[1];
-	dx = abs((p2[0] - p1[0]));
-	dy = abs((p2[1] - p1[1]));
-	p = (2 * dx) - dy;
-	while ((y - p1[1]) * (y - p2[1]) <= 0)
-	{
-		if (x < WIDTH && y < HEIGHT)
-			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		y += ((p2[1] - p1[1]) / dy);
-		if (p < 0)
-			p = p + (2 * dx);
-		else
-		{
-			p = p + (2 * (dx - dy));
-			x += ((p2[0] - p1[0]) / dx);
-		}
-	}
-}
-
-void	fdf_lineBresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
-{
-	const int	dx = abs(pt1->px_xy[0] - pt2->px_xy[0]);
-	const int	dy = abs(pt1->px_xy[1] - pt2->px_xy[1]);
-	
-	/*printf("fdf_lineBresenham_Wrapper: \n");
-	printf("pt1: (%d, %d, %d) en (%d, %d)\n", pt1->xyz[0], pt1->xyz[1], pt1->xyz[2], pt1->px_xy[0], pt1->px_xy[1]);
-	printf("pt2: (%d, %d, %d) en (%d, %d)\n", pt2->xyz[0], pt2->xyz[1], pt1->xyz[2], pt2->px_xy[0], pt2->px_xy[1]);
-	*/
-	if (dx >= dy)
-	{
-		//opcion 1. x crece antes que y
-		if ((pt1->px_xy[0] <= pt2->px_xy[0]))
-			fdf_lineBresenham_opc1(pt1->px_xy, pt2->px_xy, map);
-		if ((pt1->px_xy[0] > pt2->px_xy[0]))
-			fdf_lineBresenham_opc1(pt2->px_xy, pt1->px_xy, map);
-	}
-	else if( dy > dx)
-	{
-		//opcion 2, y crece antes que x
-		if (pt1->px_xy[0] <= pt2->px_xy[0])
-			fdf_lineBresenham_opc2(pt1->px_xy, pt2->px_xy, map);
-		if (pt1->px_xy[0] > pt2->px_xy[0])
-			fdf_lineBresenham_opc2(pt2->px_xy, pt1->px_xy, map);
-	}
-
-	
-}
-
-void	fdf_putlines(t_map *map, int x, int y)
-{
-	t_pt	*pt;
-	t_pt	*pt_right;
-	t_pt	*pt_down;
-
-	pt = &(map->map[y][x]);
-	if (x != (map->x_dim - 1))
-	{
-		pt_down = &(map->map[y][x + 1]);
-		fdf_lineBresenham_wrapper(map, pt, pt_down);
-	}
-	if (y != (map->y_dim - 1))
-	{
-		pt_right = &(map->map[y + 1][x]);
-		fdf_lineBresenham_wrapper(map, pt, pt_right);
-	}			
+	return (-1);
 }

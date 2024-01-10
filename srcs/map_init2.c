@@ -99,11 +99,43 @@ void	map_printview(t_map *map)
 							map->mlx_data.img, 0, 0);
 }
 
+int	map_key_input_wrapper(t_map *map)
+{
+	int n_tr;
+	int n_val;
+	int n_ax;
+	int	key_in;
+	//int	key_out;
+
+	key_in = mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, &map->mlx_data);
+	if (key_in == -1) //return from ESC
+		return (-1);
+	if (ft_strchr("rst", key_in) != 0)
+	{
+		n_tr = key_in;
+		n_ax = 0;
+		printf("n_tr: %d\n", n_tr);
+	}
+	if (ft_strchr("xyz", key_in) != 0)
+		n_val = key_in;
+	if (ft_strchr("0123456789", key_in) != 0)
+	{
+		n_ax *= 10;
+		n_ax += key_in;
+		printf("n_ax: %d\n", n_ax);
+	}
+	if (key_in == KEY_F1 && (n_tr != 0 && n_val != 0 && n_ax != 0))
+	{
+		printf("TODO: redo map / n_tr: %d, n_val: %d, n_ax: %d\n", n_tr, n_val, n_ax);
+	}
+	return (-1);
+}
+
 t_map	*map_mlx(t_map *map)
 {
 	void	*mlx;
 	void	*mlx_win;
-	int		key_input;
+	int		key_in;
 	
 	map->mlx_data.mlx = mlx_init();
 	mlx = map->mlx_data.mlx;
@@ -112,9 +144,6 @@ t_map	*map_mlx(t_map *map)
 	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "fdf");
 	map->mlx_data.mlx_win = mlx_win;
 	fdf_show_menu();
-	key_input = mlx_key_hook(mlx_win, fdf_handle_input, &map->mlx_data);
-	if (key_input == 1)
-		return (NULL);
 	map->mlx_data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	map->mlx_data.img_addr = mlx_get_data_addr(
 								(map->mlx_data).img,
@@ -122,5 +151,11 @@ t_map	*map_mlx(t_map *map)
 								&(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
 	map_printview(map);
+
+	//handle output from keyboard
+	/*key_input = mlx_key_hook(mlx_win, fdf_key_input, &map->mlx_data);
+	if (key_input == -1) //return from ESC
+		return (NULL);*/
+	key_in = map_key_input_wrapper(map);
 	return (map);
 }

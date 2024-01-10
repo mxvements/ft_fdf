@@ -54,8 +54,8 @@ void	fdf(char *txt)
 	//MAP init
 	map = map_init(ptlst, txt);
 	//MAP print
-	if (map)
-		pt_print(map->map, map->y_dim, map->x_dim);
+	/*if (map)
+		pt_print(map->map, map->y_dim, map->x_dim);*/
 	//end MLX
 	ft_dllfree(ptlst);
 	free(ptlst);

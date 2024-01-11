@@ -25,29 +25,29 @@ void	fdf_show_menu(void)
 
 int	fdf_key_input(int keysym, t_mlx *mlx_data)
 {
-	static int key_tr;
+	static int	key_tra;
+	static int	key_ax;
+	static int	key_nbr;
 
-	if (!key_tr)
-		key_tr = 0;
+	if (!key_tra)
+		key_tra = 0;
+	if (!key_ax)
+		key_ax = 0;
+	if (!key_nbr)
+		key_nbr = 0;
+	write(1, ANSICOLOR_RESET, 5);
 	if (keysym == KEY_ESC)
 		return (fdf_handle_input_ESC(mlx_data));
-	if (key_tr == 0 && (keysym == KEY_r || keysym == KEY_s || keysym == KEY_t))
+	if (key_tra == 0 && (keysym == KEY_r || keysym == KEY_s || keysym == KEY_t))
+		key_tra = fdf_handle_input_RST(keysym);
+	if ((key_ax == 0 && key_tra != 0) && (keysym == KEY_x || keysym == KEY_y || keysym == KEY_z))
+		key_ax = fdf_handle_input_XYZ(keysym);
+	if ((key_ax != 0 && key_tra != 0) && (fdf_handle_input_NBR(keysym) != -1))
 	{
-		write(1, ANSICOLOR_CYAN, 6);
-		key_tr = fdf_handle_input_RST(keysym);
-		write(1, ANSICOLOR_RESET, 5);
-		return (key_tr);
+		key_nbr *= 10;
+		key_nbr += fdf_handle_input_NBR(keysym);
 	}
-	if (keysym == KEY_x || keysym == KEY_y || keysym == KEY_z)
-		return (fdf_handle_input_XYZ(keysym, key_tr));
-	if (fdf_is_key_nbr(keysym, key_tr) != -1)
-		return (fdf_is_key_nbr(keysym, key_tr));
-	if (keysym == KEY_F1)
-		return (keysym);
-	write(1, ANSICOLOR_GRAY, 6);
-	printf("Key: (%d)\n", keysym);
-	write(1, ANSICOLOR_RESET, 5);
-	return (key_tr);
+	return (keysym);
 }
 
 int	fdf_handle_input_ESC(t_mlx *mlx_data)
@@ -61,6 +61,7 @@ int	fdf_handle_input_ESC(t_mlx *mlx_data)
 
 int	fdf_handle_input_RST(int keysym)
 {
+	write(1, ANSICOLOR_CYAN, 6);
 	if (keysym == KEY_r)
 	{
 		ft_putstr_fd("********************** rot **********************\n", 1);
@@ -86,50 +87,48 @@ int	fdf_handle_input_RST(int keysym)
 	return (0);
 }
 
-int	fdf_handle_input_XYZ(int keysym, int key_transf)
+int	fdf_handle_input_XYZ(int keysym)
 {
-	if (key_transf == 'r' || key_transf == 's' || key_transf == 't')
+	write(1, ANSICOLOR_CYAN, 6);
+	if (keysym == KEY_x)
 	{
-		if (keysym == KEY_x)
-			return ('x');
-		if (keysym == KEY_y)
-			return ('y');
-		if (keysym == KEY_z)
-			return ('z');
+		ft_putstr_fd("+ Press (nbrs) to move on the X axis\n", 1);
+		return ('x');
 	}
-	else
+	if (keysym == KEY_y)
 	{
-		write(1, ANSICOLOR_MAGENTA, 6);
-		ft_putstr_fd("Press R-S-T to choose transformation first\n", 1);
-		write(1, ANSICOLOR_RESET, 5);
+		ft_putstr_fd("+ Press (nbrs) to move on the Y axis\n", 1);
+		return ('y');
+	}
+	if (keysym == KEY_z)
+	{
+		ft_putstr_fd("+ Press (nbrs) to move on the Z axis\n", 1);
+		return ('z');
 	}
 	return (0);
 }
 
-int	fdf_is_key_nbr(int keysym, int key_transf)
+int	fdf_handle_input_NBR(int keysym)
 {
-	if (key_transf == 'x' || key_transf == 'y' || key_transf == 'z')
-	{
-		if (keysym == KEY_0)
-			return (0);
-		if (keysym == KEY_1)
-			return (1);
-		if (keysym == KEY_2)
-			return (2);
-		if (keysym == KEY_3)
-			return (3);
-		if (keysym == KEY_4)
-			return (4);
-		if (keysym == KEY_5)
-			return (5);
-		if (keysym == KEY_6)
-			return (6);
-		if (keysym == KEY_7)
-			return (7);
-		if (keysym == KEY_8)
-			return (8);
-		if (keysym == KEY_9)
-			return (9);
-	}
-	return (-1);
+	if (keysym == KEY_0)
+		return (0);
+	if (keysym == KEY_1)
+		return (1);
+	if (keysym == KEY_2)
+		return (2);
+	if (keysym == KEY_3)
+		return (3);
+	if (keysym == KEY_4)
+		return (4);
+	if (keysym == KEY_5)
+		return (5);
+	if (keysym == KEY_6)
+		return (6);
+	if (keysym == KEY_7)
+		return (7);
+	if (keysym == KEY_8)
+		return (8);
+	if (keysym == KEY_9)
+		return (9);
+return (-1);
 }

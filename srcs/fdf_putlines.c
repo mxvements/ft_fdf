@@ -29,13 +29,13 @@ void	fdf_lineBresenham_x(int *p1, int *p2, t_map *map)
 	{
 		if (x < WIDTH && y < HEIGHT)
 			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		x += ((p2[0] - p1[0]) / dx);
+		x += ((p2[0] - p1[0]) / dx); //!DIV0
 		if (p < 0)
 			p = p + (2 * dy);
 		else
 		{
 			p = p + (2 * (dy - dx));
-			y += ((p2[1] - p1[1]) / dy);
+			y += ((p2[1] - p1[1]) / dy);//!DIV0
 		}
 	}
 }
@@ -57,13 +57,13 @@ void	fdf_lineBresenham_y(int *p1, int *p2, t_map *map)
 	{
 		if (x < WIDTH && y < HEIGHT)
 			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		y += ((p2[1] - p1[1]) / dy);
+		y += ((p2[1] - p1[1]) / dy);//!DIV0
 		if (p < 0)
 			p = p + (2 * dx);
 		else
 		{
 			p = p + (2 * (dx - dy));
-			x += ((p2[0] - p1[0]) / dx);
+			x += ((p2[0] - p1[0]) / dx);//!DIV0
 		}
 	}
 }

@@ -81,7 +81,7 @@ void	view_isometric(t_view *vw, int scale)
 {
 	vw->rotate_rads_z = (M_PI_4);
 	vw->rotate_rads_y = 0;
-	vw->rotate_rads_x = (M_PI_4);
+	vw->rotate_rads_x = (atan(sqrt(2)));
 	vw->scale_f = scale;
 	vw->move_d = 0;
 	view_rotate(vw);

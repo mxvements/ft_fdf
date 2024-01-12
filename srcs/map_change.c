@@ -33,6 +33,6 @@ int	map_change(t_keyin *keys, t_map *map)
 	printf("key_tra:  %d, key_ax: %d, key_nbr. %d\n", keys->key_tr, keys->key_ax, keys->key_nbr);
 	fdf_keystruct_reset(keys);
 	printf("key_tra:  %d, key_ax: %d, key_nbr. %d\n", keys->key_tr, keys->key_ax, keys->key_nbr);
-	printf("first point: %d, %dd", map->map[0]->px_xy[0], map->map[0]->px_xy[1]);
+	printf("1st point: %d, %dd", map->map[0]->px_xy[0], map->map[0]->px_xy[1]);
 	return (0);
 }

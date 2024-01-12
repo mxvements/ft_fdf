@@ -126,7 +126,7 @@ void	fdf_putlines(t_map *map, int x, int y);
 //MLX
 t_map	*map_mlx(t_map *map);
 //map  init
-void 	*map_evalerror(t_map *map, int x);
+void 	*map_evalerror_pt(t_map *map, int x);
 t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
 t_map	*map_ptmap(t_map *map, t_dll **lst);
 t_map	*map_pixelptmap(t_map *map);

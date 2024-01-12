@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void 	*map_evalerror(t_map *map, int x)
+void 	*map_evalerror_pt(t_map *map, int x)
 {
 	//TODO: free view struct if it's not NULL
 	write(1, ANSICOLOR_RED, 6);
@@ -69,7 +69,7 @@ t_map	*map_ptmap(t_map *map, t_dll **ptlst)
 	{
 		map->map[y] = (t_pt*)malloc(sizeof(t_pt) * map->x_dim);
 		if (!map->map[y])
-			return ((t_map *)map_evalerror(map, x));
+			return ((t_map *)map_evalerror_pt(map, x));
 		x = 0;
 		while (x < map->x_dim)
 		{
@@ -79,7 +79,7 @@ t_map	*map_ptmap(t_map *map, t_dll **ptlst)
 		y++;
 	}
 	if (ptnode)
-		return ((t_map *)map_evalerror(map, map->y_dim));
+		return ((t_map *)map_evalerror_pt(map, map->y_dim));
 	return (map);
 }
 
@@ -91,7 +91,7 @@ t_map	*map_size(t_dll **ptlst, char *txt, t_map *map)
 	if (map->y_dim == 0 || ptlst_size == 0)
 	{
 		map->map = NULL;
-		map = map_evalerror(map, map->x_dim);
+		map = map_evalerror_pt(map, map->x_dim);
 		ft_dllfree(ptlst);
 		free(ptlst);
 		return (NULL);

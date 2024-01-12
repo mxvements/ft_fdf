@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_aux.c                                          :+:      :+:    :+:   */
+/*   fdf_aux2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/03 16:55:41 by luciama2          #+#    #+#             */
-/*   Updated: 2024/01/12 00:21:54 by lmmielgo         ###   ########.fr       */
+/*   Created: 2024/01/12 11:33:24 by luciama2          #+#    #+#             */
+/*   Updated: 2024/01/12 11:33:26 by luciama2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,58 +23,34 @@ void	fdf_show_menu(void)
 	write(1, ANSICOLOR_RESET, 5);
 }
 
-int	fdf_change_map(void)
+void	fdf_show_transformation(t_keyin *keys)
 {
-	printf("change map\n");
-	return (0);
-}
+	const int	transf = keys->key_tr;
+	const int	axis = keys->key_ax;
+	const int	nbr = keys->key_nbr;
 
-int	fdf_key_input(int keysym, t_map *map)
-{
-	static int	key_tra;
-	static int	key_ax;
-	static int	key_nbr;
-
-	if (!key_tra)
-		key_tra = 0;
-	if (!key_ax)
-		key_ax = 0;
-	if (!key_nbr)
-		key_nbr = 0;
-	write(1, ANSICOLOR_RESET, 5);
-	if (keysym == KEY_ESC)
-		return (fdf_handle_input_ESC(map));
-	if (key_tra == 0 && (keysym == KEY_r || keysym == KEY_s || keysym == KEY_t))
-		key_tra = fdf_handle_input_RST(keysym);
-	if ((key_ax == 0 && key_tra != 0)
-		&& (keysym == KEY_x || keysym == KEY_y || keysym == KEY_z))
-		key_ax = fdf_handle_input_XYZ(keysym);
-	if ((key_ax != 0 && key_tra != 0) && (fdf_handle_input_NBR(keysym) != -1))
-	{
-		key_nbr *= 10;
-		key_nbr += fdf_handle_input_NBR(keysym);
-	}
-	if (keysym == KEY_ENTER)
-		return (fdf_change_map());
-	return (keysym);
-}
-
-int	fdf_handle_input_ESC(t_map *map)
-{
-	t_mlx	*mlx_data;
-
-	mlx_data = &(map->mlx_data);
-	//FREE THINGS?
 	write(1, ANSICOLOR_MAGENTA, 6);
-	write(1, "(EXC)\n", 6);
-	mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
+	if (transf == 'r')
+		ft_putstr_fd("+ ROTATING in ", 1);
+	else if (transf == 's')
+		ft_putstr_fd("+ SCALING ", 1);
+	else if (transf == 't')
+		ft_putstr_fd("+ TRASLATING in ", 1);
+	if (axis == 'x')
+		ft_putstr_fd("axis (X) ", 1);
+	else if (axis == 'y')
+		ft_putstr_fd("axis (Y) ", 1);
+	else if (axis == 'z')
+		ft_putstr_fd("axis (Z) ", 1);
+	ft_putnbr_fd(nbr, 1);
+	ft_putstr_fd("px\n", 1);
 	write(1, ANSICOLOR_RESET, 5);
-	return (-1);
 }
 
-int	fdf_handle_input_RST(int keysym)
+int	fdf_handle_input_rst(int keysym)
 {
-	write(1, ANSICOLOR_CYAN, 6);
+	write(1, ANSICOLOR_RESET, 5);
+	write(1, ANSICOLOR_BLUE, 6);
 	if (keysym == KEY_r)
 	{
 		ft_putstr_fd("********************** rot **********************\n", 1);
@@ -100,48 +76,60 @@ int	fdf_handle_input_RST(int keysym)
 	return (0);
 }
 
-int	fdf_handle_input_XYZ(int keysym)
+int	fdf_handle_input_xyz(int keysym, t_keyin *keys)
 {
-	write(1, ANSICOLOR_CYAN, 6);
+	const int	transf = keys->key_tr;
+	int			axis;
+
+	write(1, ANSICOLOR_BLUE, 6);
+	axis = 0;
+	if (transf == 's') //TODO: change to case-switch as it would be more readable
+		return (axis);
 	if (keysym == KEY_x)
-	{
-		ft_putstr_fd("+ Press (nbrs) to move on the X axis\n", 1);
-		return ('x');
-	}
-	if (keysym == KEY_y)
-	{
-		ft_putstr_fd("+ Press (nbrs) to move on the Y axis\n", 1);
-		return ('y');
-	}
-	if (keysym == KEY_z)
-	{
-		ft_putstr_fd("+ Press (nbrs) to move on the Z axis\n", 1);
-		return ('z');
-	}
-	return (0);
+		axis = 'x';
+	else if (keysym == KEY_y)
+		axis = 'y';
+	else if (keysym == KEY_z)
+		axis = 'z';
+	if (transf == 'r')
+		ft_putstr_fd("+ Press (nbrs) to ROTATE ", 1);
+	if (transf == 't')
+		ft_putstr_fd("+ Press (nbrs) to MOVE ", 1);
+	if (axis == 'x')
+		ft_putstr_fd("on the X axis\n", 1);
+	else if (axis == 'y')
+		ft_putstr_fd("on the Y axis\n", 1);
+	else if (axis == 'z')
+		ft_putstr_fd("on the Z axis\n", 1);
+	write(1, ANSICOLOR_RESET, 5);
+	return (axis);
 }
 
-int	fdf_handle_input_NBR(int keysym)
+int	fdf_is_input_nbr(int keysym)
 {
+	int	nbr;
+
+	nbr = -1;
+	write(1, ANSICOLOR_RESET, 5);
 	if (keysym == KEY_0)
-		return (0);
+		nbr = 0;
 	if (keysym == KEY_1)
-		return (1);
+		nbr = 1;
 	if (keysym == KEY_2)
-		return (2);
+		nbr = 2;
 	if (keysym == KEY_3)
-		return (3);
+		nbr = 3;
 	if (keysym == KEY_4)
-		return (4);
+		nbr = 4;
 	if (keysym == KEY_5)
-		return (5);
+		nbr = 5;
 	if (keysym == KEY_6)
-		return (6);
+		nbr = 6;
 	if (keysym == KEY_7)
-		return (7);
+		nbr = 7;
 	if (keysym == KEY_8)
-		return (8);
+		nbr = 8;
 	if (keysym == KEY_9)
-		return (9);
-	return (-1);
+		nbr = 9;
+	return (nbr);
 }

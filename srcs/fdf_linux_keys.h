@@ -36,5 +36,9 @@
 # define KEY_x			XK_x
 # define KEY_y			XK_y
 # define KEY_z			XK_z
+# define KEY_left		XK
+# define KEY_right		
+# define KEY_down		
+# define KEY_up			
 
 #endif

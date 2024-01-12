@@ -17,10 +17,13 @@ NAME=		fdf
 SRCS=		main.c \
 			automata.c \
 			automata_aux.c \
-			fdf_aux.c \
+			fdf_aux1.c \
+			fdf_aux2.c \
+			fdf_aux3.c \
 			fdf_putlines.c \
 			map_init1.c \
 			map_init2.c \
+			map_change.c \
 			matrix_aux1.c \
 			view_aux1.c \
 			view_aux2.c \
@@ -49,7 +52,7 @@ MY_OBJECTS+=$(addprefix $(GNL_DIR), ${GNL_SRCS:%.c=%.o})
 
 ###############################################################################
 
-all: $(NAME) linux
+all: $(NAME) mac
 
 $(NAME): $(MY_OBJECTS)
 	make extra -C $(LIBFT_DIR)

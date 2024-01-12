@@ -14,12 +14,12 @@
 # define FDF_H
 
 //MAC
-//# include <mlx.h>
-//# include "./fdf_mac_keys.h"
+# include <mlx.h>
+# include "./fdf_mac_keys.h"
 
 //LINUX 
-# include "../mlx_linux/mlx.h"
-# include "./fdf_linux_keys.h"
+//# include "../mlx_linux/mlx.h"
+//# include "./fdf_linux_keys.h"
 
 # include <fcntl.h>
 # include <math.h>
@@ -84,6 +84,13 @@ typedef struct s_map
 	t_mlx	mlx_data;
 }	t_map;
 
+typedef struct s_keyin
+{
+	int key_tr;
+	int key_ax;
+	int key_nbr;
+}	t_keyin;
+
 //pt/
 void	pt_print(t_pt **ptarr, int xdim, int ydim);
 void	pt_transform(t_pt *pt, t_view *vw);
@@ -103,11 +110,15 @@ void	view_rotate(t_view *vw);
 void	view_isometric(t_view *vw, int scale);
 //fdf aux functions
 void	fdf_show_menu(void);
+void	fdf_show_transformation(t_keyin *keys);
+int		fdf_handle_input_rst(int keysym);
+int		fdf_handle_input_xyz(int keysym, t_keyin *keys);
+int		fdf_hanlde_input_zoom(int keysym, t_keyin *keys, t_map *map);
+int		fdf_handle_input_pan(int keysym, t_keyin *keys, t_map *map);
+int		fdf_is_input_nbr(int keysym);
 int		fdf_key_input(int keysym, t_map *map);
-int		fdf_handle_input_ESC(t_map *map);
-int		fdf_handle_input_RST(int keysym);
-int		fdf_handle_input_XYZ(int keysym);
-int		fdf_handle_input_NBR(int keysym);
+void	fdf_keystruct_init(t_keyin *keys);
+void	fdf_keystruct_reset(t_keyin *keys);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
 void	fdf_lineBresenham_x(int *px1, int *px2, t_map *map);
 void	fdf_lineBresenham_y(int *px1, int *px2, t_map *map);
@@ -124,5 +135,8 @@ t_map	*map_view(t_map *map);
 t_map	*map_size(t_dll **ptlst, char *txt, t_map *map);
 t_map	*map_init(t_dll **lst, char *txt);
 int		map_key_input_wrapper(t_map *map);
+//map change
+int		map_escape(t_map *map);
+int		map_change(t_keyin *keys, t_map *map);
 
 #endif

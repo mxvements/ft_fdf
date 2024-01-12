@@ -16,7 +16,7 @@
 //MAC -> KEYCODES
 # define KEY_ESC	53
 # define KEY_TAB	48
-# define kEY_ENTER	76
+# define KEY_ENTER	76
 # define KEY_F1		122
 # define KEY_0		82
 # define KEY_1		83
@@ -34,5 +34,10 @@
 # define KEY_x		7
 # define KEY_y		16
 # define KEY_z		6
-
+# define KEY_left	123
+# define KEY_right	124
+# define KEY_down	125
+# define KEY_up		126
+# define KEY_minus	78
+# define KEY_plus	69
 #endif

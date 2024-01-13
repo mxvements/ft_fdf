@@ -75,21 +75,23 @@ typedef struct s_view
 	double	**view; //array of 3x3
 }	t_view;
 
+typedef struct s_keyin
+{
+	int *keysym;
+	int key_tr;
+	int key_ax;
+	int key_nbr;
+}	t_keyin;
+
 typedef struct s_map
 {
 	int		x_dim;
 	int		y_dim;
 	t_view	*vw;
+	t_keyin	keys;
 	t_pt	**map; //double array of points of x_dim and y_dim of map
 	t_mlx	mlx_data;
 }	t_map;
-
-typedef struct s_keyin
-{
-	int key_tr;
-	int key_ax;
-	int key_nbr;
-}	t_keyin;
 
 //pt/
 void	pt_print(t_pt **ptarr, int xdim, int ydim);
@@ -111,11 +113,11 @@ void	view_isometric(t_view *vw, int scale);
 //fdf aux functions
 void	fdf_show_menu(void);
 void	fdf_show_transformation(t_keyin *keys);
-int		fdf_handle_input_rst(int keysym);
-int		fdf_handle_input_xyz(int keysym, t_keyin *keys);
-int		fdf_hanlde_input_zoom(int keysym, t_keyin *keys, t_map *map);
-int		fdf_handle_input_pan(int keysym, t_keyin *keys, t_map *map);
-int		fdf_is_input_nbr(int keysym);
+int		fdf_handle_input_rst(t_map *map);
+int		fdf_handle_input_xyz(t_map *map);
+int		fdf_handle_input_nbr(t_map *map);
+int		fdf_handle_input_zoom(t_map *map);
+int		fdf_handle_input_pan(t_map *map);
 int		fdf_key_input(int keysym, t_map *map);
 void	fdf_keystruct_init(t_keyin *keys);
 void	fdf_keystruct_reset(t_keyin *keys);
@@ -137,6 +139,6 @@ t_map	*map_init(t_dll **lst, char *txt);
 int		map_key_input_wrapper(t_map *map);
 //map change
 int		map_escape(t_map *map);
-int		map_change(t_keyin *keys, t_map *map);
+int		map_change(t_map *map);
 
 #endif

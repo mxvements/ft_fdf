@@ -47,89 +47,88 @@ void	fdf_show_transformation(t_keyin *keys)
 	write(1, ANSICOLOR_RESET, 5);
 }
 
-int	fdf_handle_input_rst(int keysym)
+int	fdf_handle_input_rst(t_map *map)
 {
-	write(1, ANSICOLOR_RESET, 5);
 	write(1, ANSICOLOR_BLUE, 6);
-	if (keysym == KEY_r)
+	if (*(map->keys.keysym) == KEY_r && map->keys.key_tr == 0)
 	{
 		ft_putstr_fd("********************** rot **********************\n", 1);
 		ft_putstr_fd("Press (x) to rotate the X axis\n", 1);
 		ft_putstr_fd("Press (y) to rotate the Y axis\n", 1);
 		ft_putstr_fd("Press (z) to rotate the Z axis\n", 1);
-		return ('r');
+		map->keys.key_tr = 'r';
 	}
-	if (keysym == KEY_s)
+	if (*(map->keys.keysym) == KEY_s && map->keys.key_tr == 0)
 	{
 		ft_putstr_fd("********************** scl **********************\n", 1);
 		ft_putstr_fd("Press number to scale on the X axis\n", 1);
-		return ('s');
+		map->keys.key_tr = 's';
 	}
-	if (keysym == KEY_t)
+	if (*(map->keys.keysym) == KEY_t && map->keys.key_tr == 0)
 	{
 		ft_putstr_fd("********************** mov **********************\n", 1);
 		ft_putstr_fd("Press (x) to move on the X axis\n", 1);
 		ft_putstr_fd("Press (y) to move on the Y axis\n", 1);
 		ft_putstr_fd("Press (z) to move on the Z axis\n", 1);
-		return ('t');
+		map->keys.key_tr = 'r';
 	}
-	return (0);
+	write(1, ANSICOLOR_RESET, 5);
+	return (map->keys.key_tr);
 }
 
-int	fdf_handle_input_xyz(int keysym, t_keyin *keys)
+int	fdf_handle_input_xyz(t_map *map)
 {
-	const int	transf = keys->key_tr;
-	int			axis;
-
 	write(1, ANSICOLOR_BLUE, 6);
-	axis = 0;
-	if (transf == 's') //TODO: change to case-switch as it would be more readable
-		return (axis);
-	if (keysym == KEY_x)
-		axis = 'x';
-	else if (keysym == KEY_y)
-		axis = 'y';
-	else if (keysym == KEY_z)
-		axis = 'z';
-	if (transf == 'r')
+	if (map->keys.key_tr == 's') //TODO: change to case-switch as it would be more readable
+		return (map->keys.key_ax);
+	else if (map->keys.key_tr != 0)
+	{
+		if (*(map->keys.keysym) == KEY_x)
+			map->keys.key_ax = 'x';
+		else if (*(map->keys.keysym) == KEY_y)
+			map->keys.key_ax = 'y';
+		else if (*(map->keys.keysym) == KEY_z)
+			map->keys.key_ax = 'z';
+	}
+	if (map->keys.key_tr == 'r')
 		ft_putstr_fd("+ Press (nbrs) to ROTATE ", 1);
-	if (transf == 't')
+	if (map->keys.key_tr == 't')
 		ft_putstr_fd("+ Press (nbrs) to MOVE ", 1);
-	if (axis == 'x')
+	if (map->keys.key_ax == 'x')
 		ft_putstr_fd("on the X axis\n", 1);
-	else if (axis == 'y')
+	else if (map->keys.key_ax == 'y')
 		ft_putstr_fd("on the Y axis\n", 1);
-	else if (axis == 'z')
+	else if (map->keys.key_ax == 'z')
 		ft_putstr_fd("on the Z axis\n", 1);
 	write(1, ANSICOLOR_RESET, 5);
-	return (axis);
+	return (map->keys.key_ax);
 }
 
-int	fdf_is_input_nbr(int keysym)
+int	fdf_handle_input_nbr(t_map *map)
 {
-	int	nbr;
-
-	nbr = -1;
-	write(1, ANSICOLOR_RESET, 5);
-	if (keysym == KEY_0)
-		nbr = 0;
-	if (keysym == KEY_1)
-		nbr = 1;
-	if (keysym == KEY_2)
-		nbr = 2;
-	if (keysym == KEY_3)
-		nbr = 3;
-	if (keysym == KEY_4)
-		nbr = 4;
-	if (keysym == KEY_5)
-		nbr = 5;
-	if (keysym == KEY_6)
-		nbr = 6;
-	if (keysym == KEY_7)
-		nbr = 7;
-	if (keysym == KEY_8)
-		nbr = 8;
-	if (keysym == KEY_9)
-		nbr = 9;
-	return (nbr);
+	if ((map->keys.key_tr == 's' && map->keys.key_ax == 0) 
+		|| (map->keys.key_tr != 0 && map->keys.key_ax != 0))
+	{
+		if (*(map->keys.keysym) == KEY_0)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 0;
+		if (*(map->keys.keysym) == KEY_1)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 1;
+		if (*(map->keys.keysym) == KEY_2)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 2;
+		if (*(map->keys.keysym) == KEY_3)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 3;
+		if (*(map->keys.keysym) == KEY_4)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 4;
+		if (*(map->keys.keysym) == KEY_5)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 5;
+		if (*(map->keys.keysym) == KEY_6)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 6;
+		if (*(map->keys.keysym) == KEY_7)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 7;
+		if (*(map->keys.keysym) == KEY_8)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 8;
+		if (*(map->keys.keysym) == KEY_9)
+			map->keys.key_nbr = (map->keys.key_nbr * 10) + 9;
+	}
+	return (map->keys.key_nbr);
 }

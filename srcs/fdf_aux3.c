@@ -12,29 +12,39 @@
 
 #include "fdf.h"
 
-int	fdf_hanlde_input_zoom(int keysym, t_keyin *keys, t_map *map)
+int	fdf_handle_input_zoom(t_map *map)
 {
-	keys->key_tr = 's';
+	t_keyin	keys;
+	int		keysym;
+
+	keys = map->keys;
+	keysym = *(map->keys.keysym);
+	keys.key_tr = 's';
 	if (keysym == KEY_minus)
-		(keys->key_nbr)--;
+		(keys.key_nbr)--;
 	if (keysym == KEY_plus)
-		(keys->key_nbr)++;
-	return (map_change(keys, map));
+		(keys.key_nbr)++;
+	return (map_change(map));
 }
 
-int	fdf_handle_input_pan(int keysym, t_keyin *keys, t_map *map)
+int	fdf_handle_input_pan(t_map *map)
 {
+	t_keyin	keys;
+	int		keysym;
+
+	keys = map->keys;
+	keysym = *(map->keys.keysym);
 	if (keysym == KEY_left || keysym == KEY_right)
-		keys->key_ax = 'x'; //For default Plane (XY)
+		keys.key_ax = 'x'; //For default Plane (XY)
 	else if (keysym == KEY_up || keysym == KEY_down)
-		keys->key_ax = 'y'; //For default Plane (XY)
+		keys.key_ax = 'y'; //For default Plane (XY)
 	if (keysym == KEY_left)
-		(keys->key_nbr)--;
+		(keys.key_nbr)--;
 	else if (keysym == KEY_right)
-		(keys->key_nbr)++;
+		(keys.key_nbr)++;
 	else if (keysym == KEY_up)
-		(keys->key_nbr)++;
+		(keys.key_nbr)++;
 	else if (keysym == KEY_down)
-		(keys->key_nbr)--;
-	return (map_change(keys, map));
+		(keys.key_nbr)--;
+	return (map_change(map));
 }

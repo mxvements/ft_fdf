@@ -29,45 +29,47 @@ void	fdf_keystruct_init(t_keyin *keys)
 		keys->key_nbr = 0;
 }
 
-int	fdf_is_input_arrows(int keysym, t_keyin *keys)
+int	fdf_get_key_index(int k)
 {
-	int	nbr;
-
-	nbr = -1;
-	keys->key_tr = 'm';
-	if (keysym == KEY_left 
-		|| keysym == KEY_right 
-		|| keysym == KEY_up
-		|| keysym == KEY_down)
-		nbr = 0;
-	return (nbr);
+	if (k == KEY_ESC)
+		return (0);
+	else if (k == KEY_ENTER)
+		return (1);
+	else if (k == KEY_minus || k == KEY_plus)
+		return (2);
+	else if (k == KEY_left || k == KEY_right || k == KEY_up || k == KEY_down)
+		return (3);
+	else if (k == KEY_r || k == KEY_s || k == KEY_t)
+		return (4);
+	else if (k == KEY_x || k == KEY_y || k == KEY_z)
+		return (5);
+	else if (k == KEY_0 || k == KEY_1 || k == KEY_2 || k == KEY_3 || k == KEY_4
+		|| k == KEY_5 || k == KEY_6 || k == KEY_7 || k == KEY_8 || k == KEY_9)
+		return (6);
+	return (-1);
 }
- 
+
 int	fdf_key_input(int keysym, t_map *map)
 {
-	static t_keyin	keys;
+	int	key_index;
 
-	fdf_keystruct_init(&keys);
-	if (keysym == KEY_ESC)
+	fdf_keystruct_init(&(map->keys));
+	map->keys.keysym = &keysym;
+	key_index = fdf_get_key_index(keysym);
+	if (key_index == 0) //esc
 		return (map_escape(map));
-	if (keys.key_tr == 0 
-		&& (keysym == KEY_r || keysym == KEY_s || keysym == KEY_t))
-		keys.key_tr = fdf_handle_input_rst(keysym);
-	if ((keys.key_ax == 0 && (keys.key_tr != 0 || keys.key_tr != 's'))
-		&& (keysym == KEY_x || keysym == KEY_y || keysym == KEY_z))
-		keys.key_ax = fdf_handle_input_xyz(keysym, &keys);
-	if (((keys.key_ax == 0 && keys.key_tr == 's')
-		|| (keys.key_ax != 0 && keys.key_tr != 0))
-		&& (fdf_is_input_nbr(keysym) != -1))
-	{
-		keys.key_nbr *= 10;
-		keys.key_nbr += fdf_is_input_nbr(keysym);
-	}
-	if (keys.key_tr == 0 && (keysym == KEY_minus || keysym == KEY_plus))
-		return (fdf_hanlde_input_zoom(keysym, &keys, map));
-	if (keys.key_tr == 0 && fdf_is_input_arrows(keysym, &keys) != -1)
-		return (fdf_handle_input_pan(keysym, &keys, map));
-	if (keysym == KEY_ENTER)
-		return (map_change(&keys, map));
-	return (keysym);
+	else if (key_index == 1) //enter keypad
+		return (map_change(map));
+	else if (key_index == 2) //+- in keypad
+		return (fdf_handle_input_zoom(map));
+	else if (key_index == 3) //arrowpad
+		return (fdf_handle_input_pan(map));
+	else if (key_index == 4) //rst
+		return (fdf_handle_input_rst(map));
+	else if (key_index == 5) //xyz
+		return (fdf_handle_input_xyz(map));
+	else if (key_index == 6) //nbrs
+		return (fdf_handle_input_nbr(map));
+	else
+		return (-1);
 }

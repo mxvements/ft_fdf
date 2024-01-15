@@ -109,7 +109,11 @@ t_map	*map_init(t_dll **ptlst, char *txt)
 		return ((t_map*)lst_evalerror(ptlst));
 	map = map_size(ptlst, txt, map);
 	map = map_ptmap(map, ptlst);
+	//protect map since there's a malloc
 	map = map_view(map);
+	//protect map since there's a malloc
+	fdf_keystruct_init(&(map->keys));
+	fdf_show_menu();
 	map = map_viewptmap(map);
 	map = map_pixelptmap(map);
 	map = map_mlx(map);

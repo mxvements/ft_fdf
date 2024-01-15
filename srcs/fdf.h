@@ -38,7 +38,8 @@
 
 # define WIDTH				1280
 # define HEIGHT				720
-# define PADDING			100
+# define SCALE				26
+
 
 # if WIDTH >= HEIGHT
 #	define MIN_SIDE			HEIGHT
@@ -71,7 +72,9 @@ typedef struct s_view
 	double	rotate_rads_z;
 	double	rotate_rads_y;
 	double	rotate_rads_x;
-	double	move_d;
+	double	move_d_z; //NOT NEEDED
+	double	move_d_y;
+	double	move_d_x;
 	double	**view; //array of 3x3
 }	t_view;
 
@@ -95,7 +98,7 @@ typedef struct s_map
 
 //pt/
 void	pt_print(t_pt **ptarr, int xdim, int ydim);
-void	pt_transform(t_pt *pt, t_view *vw);
+void	pt_rotate(t_pt *pt, t_view *vw);
 //arr functions
 void	arrdbl_print_3x3(double **m);
 void	arrdbl_mult_3x3(double **m1, double **m2, double **rslt);
@@ -106,10 +109,9 @@ double	**arrdbl_cpy_3x3(double **arr);
 void	view_rot_z(t_view *vw);
 void	view_rot_y(t_view *vw);
 void	view_rot_x(t_view *vw);
-void	view_scale(t_view *vw);
-void	view_translate(t_view *vw);
+void	view_scale(t_view *vw, double scale);
 void	view_rotate(t_view *vw);
-void	view_isometric(t_view *vw, int scale);
+void	view_isometric(t_map *map);
 //fdf aux functions
 void	fdf_show_menu(void);
 void	fdf_show_transformation(t_keyin *keys);
@@ -128,6 +130,7 @@ void	fdf_lineBresenham_y(int *px1, int *px2, t_map *map);
 void	fdf_putlines(t_map *map, int x, int y);
 //MLX
 t_map	*map_mlx(t_map *map);
+void	map_printview(t_map *map);
 //map  init
 void 	*map_evalerror_pt(t_map *map, int x);
 t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
@@ -137,7 +140,6 @@ t_map	*map_viewptmap(t_map *map);
 t_map	*map_view(t_map *map);
 t_map	*map_size(t_dll **ptlst, char *txt, t_map *map);
 t_map	*map_init(t_dll **lst, char *txt);
-int		map_key_input_wrapper(t_map *map);
 //map change
 int		map_escape(t_map *map);
 int		map_change(t_map *map);

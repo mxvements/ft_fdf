@@ -57,7 +57,7 @@ void	fdf(char *txt)
 	//end MLX
 	ft_dllfree(ptlst);
 	free(ptlst);
-	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map);
+	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map); //map change
 	mlx_loop((map->mlx_data).mlx);
 	free((map->mlx_data).mlx);
 }

@@ -51,7 +51,7 @@ int	fdf_get_key_index(int k)
 
 int	fdf_key_input(int keysym, t_map *map)
 {
-	int	key_index;
+	int				key_index;
 
 	fdf_keystruct_init(&(map->keys));
 	map->keys.keysym = &keysym;

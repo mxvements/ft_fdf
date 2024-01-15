@@ -15,15 +15,16 @@
 t_map	*map_view(t_map *map)
 {
 	t_view	*vw;
-	int		scale;
+	//int		scale;
 
 	vw = (t_view*)malloc(sizeof(t_view) * 1);
 	if (!vw)
 		return (map_evalerror_pt(map, map->y_dim));
 	map->vw = vw;
 	vw->view = arrdbl_init(3, 3, 1);
-	scale = ((WIDTH * 0.4) / (map->x_dim));
-	view_isometric(vw, scale);
+	//scale = ((WIDTH * 0.4) / (map->x_dim)); //SCALE OF DRAWING
+	//printf("scale in map_view: %d\n", SCALE);
+	view_isometric(map);
 	return (map);
 }
 
@@ -42,7 +43,7 @@ t_map	*map_viewptmap(t_map *map)
 		while (x < map->x_dim)
 		{
 			pt = &(map->map[y][x]);
-			pt_transform(pt, vw);
+			pt_rotate(pt, vw);
 			x++;
 		}
 		y++;
@@ -67,6 +68,8 @@ t_map	*map_pixelptmap(t_map *map)
 			pt->px_xy[0] = (WIDTH / 2) - ((map->x_dim * f) / 8) + ((pt->vw_xyz[0])); //TODO: fix position
 			pt->px_xy[1] = (HEIGHT / 2) - ((map->y_dim * f) / 3) + ((pt->vw_xyz[1]));
 			//printf("point: {%d, %d}\n", pt->px_xy[0], pt->px_xy[1]);
+			pt->px_xy[0] += map->vw->move_d_x;
+			pt->px_xy[1] += map->vw->move_d_y;
 			x++;
 		}
 		y++;
@@ -107,7 +110,6 @@ t_map	*map_mlx(t_map *map)
 	if (!mlx)
 		return (NULL);
 	map->mlx_data.mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "fdf");
-	fdf_show_menu();
 	map->mlx_data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,

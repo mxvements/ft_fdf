@@ -70,7 +70,7 @@ int	fdf_handle_input_rst(t_map *map)
 		ft_putstr_fd("Press (x) to move on the X axis\n", 1);
 		ft_putstr_fd("Press (y) to move on the Y axis\n", 1);
 		ft_putstr_fd("Press (z) to move on the Z axis\n", 1);
-		map->keys.key_tr = 'r';
+		map->keys.key_tr = 't';
 	}
 	write(1, ANSICOLOR_RESET, 5);
 	return (map->keys.key_tr);

@@ -13,10 +13,11 @@
 #include "fdf.h"
 #include <math.h>
 
-void	view_scale(t_view *vw)
+void	view_scale(t_view *vw, double scale)
 {
 	int x;
 	int y;
+	//me falta calcular la 'antigua escala' para evitar ir multiplicando continuamente
 
 	x = 0;
 	if (vw->scale_f == 0 || vw->scale_f == 1) //this should not be needed
@@ -29,33 +30,12 @@ void	view_scale(t_view *vw)
 		y = 0;
 		while (y < 3)
 		{
-			vw->view[x][y] = vw->view[x][y] * vw->scale_f;
+			vw->view[x][y] = vw->view[x][y] * scale;
 			y++;
 		}
 		x++;
 	}
 	//vw->scale_f = 1;
-}
-
-void	view_translate(t_view *vw)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	if (vw->move_d == 0)
-		return ;
-	while (x < 3)
-	{
-		y = 0;
-		while (y < 3)
-		{
-			vw->view[x][y] = vw->view[x][y] + vw->move_d;
-			y++;
-		}
-		x++;
-	}
-	//vw->move_d = 0;
 }
 
 void	view_rotate(t_view *vw)
@@ -77,13 +57,19 @@ void	view_rotate(t_view *vw)
 	//vw->rotate_rads_x = 0;
 }
 //where α = arcsin(tan 30°) ≈ 35.264° and β = 45°. A
-void	view_isometric(t_view *vw, int scale)
+void	view_isometric(t_map *map)
 {
+	t_view	*vw;
+
+	vw = map->vw;
 	vw->rotate_rads_z = (M_PI_4);
 	vw->rotate_rads_y = 0;
 	vw->rotate_rads_x = (atan(sqrt(2)));
-	vw->scale_f = scale;
-	vw->move_d = 0;
+	vw->scale_f = 1;
+	vw->move_d_x = 0;
+	vw->move_d_y = 0;
+	vw->move_d_z = 0;
 	view_rotate(vw);
-	view_scale(vw);
+	view_scale(vw, SCALE);
+	view_scale(vw, vw->scale_f);
 }

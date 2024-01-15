@@ -38,15 +38,15 @@ void	view_rot_y(t_view *vw)
 	double	**rot_y;
 
 	rot_y = arrdbl_init(3, 3, 1);
-	rot_y[0][0] = cos(vw->rotate_rads_z);
+	rot_y[0][0] = cos(vw->rotate_rads_y);
 	rot_y[0][1] = 0;
-	rot_y[0][2] = sin(vw->rotate_rads_z);
+	rot_y[0][2] = sin(vw->rotate_rads_y);
 	rot_y[1][0] = 0;
 	rot_y[1][1] = 1;
 	rot_y[1][2] = 0;
-	rot_y[2][0] = -sin(vw->rotate_rads_z);
+	rot_y[2][0] = -sin(vw->rotate_rads_y);
 	rot_y[2][1] = 0;
-	rot_y[2][2] = cos(vw->rotate_rads_z);
+	rot_y[2][2] = cos(vw->rotate_rads_y);
 	cpy = arrdbl_cpy_3x3(vw->view);
 	arrdbl_mult_3x3(cpy, rot_y, vw->view);
 	arrdbl_free(cpy, 3);
@@ -62,11 +62,11 @@ void	view_rot_x(t_view *vw)
 	rot_x[0][1] = 0;
 	rot_x[0][2] = 0;
 	rot_x[1][0] = 0;
-	rot_x[1][1] = cos(vw->rotate_rads_z);
-	rot_x[1][2] = -sin(vw->rotate_rads_z);
+	rot_x[1][1] = cos(vw->rotate_rads_x);
+	rot_x[1][2] = -sin(vw->rotate_rads_x);
 	rot_x[2][0] = 0;
-	rot_x[2][1] = sin(vw->rotate_rads_z);
-	rot_x[2][2] = cos(vw->rotate_rads_z);
+	rot_x[2][1] = sin(vw->rotate_rads_x);
+	rot_x[2][2] = cos(vw->rotate_rads_x);
 	cpy = arrdbl_cpy_3x3(vw->view);
 	arrdbl_mult_3x3(cpy, rot_x, vw->view);
 	arrdbl_free(cpy, 3);

@@ -101,23 +101,17 @@ void	map_printview(t_map *map)
 t_map	*map_mlx(t_map *map)
 {
 	void	*mlx;
-	void	*mlx_win;
 	
 	map->mlx_data.mlx = mlx_init();
 	mlx = map->mlx_data.mlx;
 	if (!mlx)
 		return (NULL);
-	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "fdf");
-	map->mlx_data.mlx_win = mlx_win;
+	map->mlx_data.mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "fdf");
 	fdf_show_menu();
 	map->mlx_data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
 	map_printview(map);
-
-	//handle output from keyboard
-	mlx_key_hook(mlx_win, fdf_key_input, map);
-
 	return (map);
 }

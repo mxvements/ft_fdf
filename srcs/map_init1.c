@@ -48,7 +48,7 @@ t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y)
 	ptcont = ptnode->content;
 	(map->map[y][x]).xyz[0] = x;
 	(map->map[y][x]).xyz[1] = y;
-	(map->map[y][x]).xyz[2] = ptcont->height / 2; //SCALE Z
+	(map->map[y][x]).xyz[2] = ptcont->height / 6; //SCALE Z
 	(map->map[y][x]).color = ptcont->color;
 	ptnode = ptnode->next;
 	return (ptnode);

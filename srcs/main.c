@@ -48,10 +48,8 @@ void	fdf(char *txt)
 	t_dll	**ptlst;
 	t_map	*map;
 	
-	//get list of point info from txt
 	ptlst = lst_init();
 	ptlst = a_parse(txt, ptlst);
-	//MAP init
 	map = map_init(ptlst, txt);
 	//MAP print
 	/*if (map)
@@ -59,6 +57,7 @@ void	fdf(char *txt)
 	//end MLX
 	ft_dllfree(ptlst);
 	free(ptlst);
+	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map);
 	mlx_loop((map->mlx_data).mlx);
 	free((map->mlx_data).mlx);
 }

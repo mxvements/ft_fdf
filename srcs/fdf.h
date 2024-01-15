@@ -118,6 +118,7 @@ int		fdf_handle_input_xyz(t_map *map);
 int		fdf_handle_input_nbr(t_map *map);
 int		fdf_handle_input_zoom(t_map *map);
 int		fdf_handle_input_pan(t_map *map);
+int		fdf_get_key_index(int k);
 int		fdf_key_input(int keysym, t_map *map);
 void	fdf_keystruct_init(t_keyin *keys);
 void	fdf_keystruct_reset(t_keyin *keys);

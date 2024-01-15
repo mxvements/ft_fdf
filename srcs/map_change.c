@@ -35,6 +35,9 @@ int	map_change(t_map *map)
 	fdf_show_transformation(&keys);
 	printf("change map\n");
 	printf("key_tra:  %d, key_ax: %d, key_nbr. %d\n", keys.key_tr, keys.key_ax, keys.key_nbr);
+	//change map
+	
+	//reset data
 	fdf_keystruct_reset(&keys);
 	printf("key_tra:  %d, key_ax: %d, key_nbr. %d\n", keys.key_tr, keys.key_ax, keys.key_nbr);
 	printf("1st point: %d, %d\n", map->map[0]->px_xy[0], map->map[0]->px_xy[1]);

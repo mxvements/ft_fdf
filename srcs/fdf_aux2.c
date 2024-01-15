@@ -79,7 +79,7 @@ int	fdf_handle_input_rst(t_map *map)
 int	fdf_handle_input_xyz(t_map *map)
 {
 	write(1, ANSICOLOR_BLUE, 6);
-	if (map->keys.key_tr == 's') //TODO: change to case-switch as it would be more readable
+	if (map->keys.key_tr == 's')
 		return (map->keys.key_ax);
 	else if (map->keys.key_tr != 0)
 	{

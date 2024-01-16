@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_aux3.c                                         :+:      :+:    :+:   */
+/*   fdf_keyhooks1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,6 +12,53 @@
 
 #include "fdf.h"
 
+void	fdf_keystruct_reset(t_keyin *keys)
+{
+	keys->key_tr = 0;
+	keys->key_ax = 0;
+	keys->key_nbr = 0;
+	keys->key_sign = 1;
+}
+
+void	fdf_keystruct_init(t_keyin *keys)
+{
+	if (!keys->key_tr)
+		keys->key_tr = 0;
+	if (!keys->key_ax)
+		keys->key_ax = 0;
+	if (!keys->key_nbr)
+		keys->key_nbr = 0;
+	if (!keys->key_sign)
+		keys->key_nbr = 1;
+}
+
+int	fdf_key_input(int keysym, t_map *map)
+{
+	int				key_index;
+
+	fdf_keystruct_init(&(map->keys));
+	map->keys.keysym = &keysym;
+	key_index = fdf_get_key_index(keysym);
+	if (key_index == 0) //esc
+		return (map_escape(map));
+	else if (key_index == 1) //enter keypad
+		return (map_change(map));
+	else if (key_index == 2) //- in keypad, sign or zoom
+		return (fdf_handle_input_sign(map));
+	else if (key_index == 3) //+- in keypad 
+		return (fdf_handle_input_zoom(map));
+	else if (key_index == 4) //arrowpad 
+		return (fdf_handle_input_pan(map));
+	else if (key_index == 5) //rst
+		return (fdf_handle_input_rst(map));
+	else if (key_index == 6) //xyz
+		return (fdf_handle_input_xyz(map));
+	else if (key_index == 7) //nbrs
+		return (fdf_handle_input_nbr(map));
+	else
+		return (-1);
+}
+
 int	fdf_handle_input_zoom(t_map *map)
 {
 	t_keyin	*keys;
@@ -21,9 +68,9 @@ int	fdf_handle_input_zoom(t_map *map)
 	keysym = *(map->keys.keysym);
 	keys->key_tr = 's';
 	if (keysym == KEY_minus)
-		(keys->key_nbr) -= 1;
+		(keys->key_nbr) = 0.9;
 	if (keysym == KEY_plus)
-		(keys->key_nbr) += 1;
+		(keys->key_nbr) = 1.1;
 	return (map_change(map));
 }
 
@@ -46,6 +93,6 @@ int	fdf_handle_input_pan(t_map *map)
 	else if (keysym == KEY_up)
 		(keys->key_nbr) -= 1;
 	else if (keysym == KEY_down)
-		(keys->key_nbr) += 1;
+		(keys->key_nbr)+= 1;
 	return (map_change(map));
 }

@@ -38,14 +38,7 @@
 
 # define WIDTH				1280
 # define HEIGHT				720
-# define SCALE				26
-
-
-# if WIDTH >= HEIGHT
-#	define MIN_SIDE			HEIGHT
-# else
-#	define MIN_SIDE			WIDTH
-# endif
+# define SCALE				25
 
 typedef struct s_mlx
 {
@@ -83,7 +76,8 @@ typedef struct s_keyin
 	int *keysym;
 	int key_tr;
 	int key_ax;
-	int key_nbr;
+	double key_nbr;
+	int	key_sign;
 }	t_keyin;
 
 typedef struct s_map
@@ -109,7 +103,7 @@ double	**arrdbl_cpy_3x3(double **arr);
 void	view_rot_z(t_view *vw);
 void	view_rot_y(t_view *vw);
 void	view_rot_x(t_view *vw);
-void	view_scale(t_view *vw, double scale);
+void	view_scale(t_view *vw);
 void	view_rotate(t_view *vw);
 void	view_isometric(t_map *map);
 //fdf aux functions
@@ -118,6 +112,7 @@ void	fdf_show_transformation(t_keyin *keys);
 int		fdf_handle_input_rst(t_map *map);
 int		fdf_handle_input_xyz(t_map *map);
 int		fdf_handle_input_nbr(t_map *map);
+int		fdf_handle_input_sign(t_map *map);
 int		fdf_handle_input_zoom(t_map *map);
 int		fdf_handle_input_pan(t_map *map);
 int		fdf_get_key_index(int k);

@@ -17,9 +17,9 @@ NAME=		fdf
 SRCS=		main.c \
 			automata.c \
 			automata_aux.c \
-			fdf_aux1.c \
-			fdf_aux2.c \
-			fdf_aux3.c \
+			fdf_aux.c \
+			fdf_keyhooks1.c \
+			fdf_keyhooks2.c \
 			fdf_putlines.c \
 			map_init1.c \
 			map_init2.c \

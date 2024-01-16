@@ -58,13 +58,14 @@ void	fdf(char *txt)
 	ft_dllfree(ptlst);
 	free(ptlst);
 	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map); //map change
+	mlx_mouse_hook(map->mlx_data.mlx_win, fdf_mouse_input, map); //map changw
 	mlx_loop((map->mlx_data).mlx);
 	free((map->mlx_data).mlx);
 }
 
 int main(void)
 {
-	char	*path = "./test_maps/42.fdf";
+	char	*path = "./test_maps/elem2.fdf";
 	char	*txt;
 
 	txt = readfile(path);

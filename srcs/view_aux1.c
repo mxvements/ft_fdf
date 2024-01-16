@@ -13,11 +13,10 @@
 #include "fdf.h"
 #include <math.h>
 
-void	view_scale(t_view *vw, double scale)
+void	view_scale(t_view *vw)
 {
 	int x;
 	int y;
-	//me falta calcular la 'antigua escala' para evitar ir multiplicando continuamente
 
 	x = 0;
 	if (vw->scale_f == 0 || vw->scale_f == 1) //this should not be needed
@@ -30,12 +29,11 @@ void	view_scale(t_view *vw, double scale)
 		y = 0;
 		while (y < 3)
 		{
-			vw->view[x][y] = vw->view[x][y] * scale;
+			vw->view[x][y] = vw->view[x][y] * vw->scale_f;
 			y++;
 		}
 		x++;
 	}
-	//vw->scale_f = 1;
 }
 
 void	view_rotate(t_view *vw)
@@ -65,11 +63,10 @@ void	view_isometric(t_map *map)
 	vw->rotate_rads_z = (M_PI_4);
 	vw->rotate_rads_y = 0;
 	vw->rotate_rads_x = (atan(sqrt(2)));
-	vw->scale_f = 1;
+	vw->scale_f = SCALE;
 	vw->move_d_x = 0;
 	vw->move_d_y = 0;
 	vw->move_d_z = 0;
 	view_rotate(vw);
-	view_scale(vw, SCALE);
-	view_scale(vw, vw->scale_f);
+	view_scale(vw);
 }

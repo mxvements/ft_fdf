@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_aux2.c                                         :+:      :+:    :+:   */
+/*   fdf_keyhooks2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,39 +12,26 @@
 
 #include "fdf.h"
 
-void	fdf_show_menu(void)
+int	fdf_get_key_index(int k)
 {
-	write(1, ANSICOLOR_BLUE, 6);
-	ft_putstr_fd("********************** fdf **********************\n", 1);
-	ft_putstr_fd("Press (ESC) to close window\n", 1);
-	ft_putstr_fd("Press (r) to rotate (WIP)\n", 1);
-	ft_putstr_fd("Press (s) to scale (WIP)\n", 1);
-	ft_putstr_fd("Press (t) to translate (WIP)\n", 1);
-	write(1, ANSICOLOR_RESET, 5);
-}
-
-void	fdf_show_transformation(t_keyin *keys)
-{
-	const int	transf = keys->key_tr;
-	const int	axis = keys->key_ax;
-	const int	nbr = keys->key_nbr;
-
-	write(1, ANSICOLOR_MAGENTA, 6);
-	if (transf == 'r')
-		ft_putstr_fd("+ ROTATING in ", 1);
-	else if (transf == 's')
-		ft_putstr_fd("+ SCALING ", 1);
-	else if (transf == 't')
-		ft_putstr_fd("+ TRASLATING in ", 1);
-	if (axis == 'x')
-		ft_putstr_fd("axis (X) ", 1);
-	else if (axis == 'y')
-		ft_putstr_fd("axis (Y) ", 1);
-	else if (axis == 'z')
-		ft_putstr_fd("axis (Z) ", 1);
-	ft_putnbr_fd(nbr, 1);
-	ft_putstr_fd("px\n", 1);
-	write(1, ANSICOLOR_RESET, 5);
+	if (k == KEY_ESC)
+		return (0);
+	else if (k == KEY_ENTER)
+		return (1);
+	else if (k == KEY_minus)
+		return (2);
+	else if (k == KEY_plus)
+		return (3);
+	else if (k == KEY_left || k == KEY_right || k == KEY_up || k == KEY_down)
+		return (4);
+	else if (k == KEY_r || k == KEY_s || k == KEY_t)
+		return (5);
+	else if (k == KEY_x || k == KEY_y || k == KEY_z)
+		return (6);
+	else if (k == KEY_0 || k == KEY_1 || k == KEY_2 || k == KEY_3 || k == KEY_4
+		|| k == KEY_5 || k == KEY_6 || k == KEY_7 || k == KEY_8 || k == KEY_9)
+		return (7);
+	return (-1);
 }
 
 int	fdf_handle_input_rst(t_map *map)
@@ -104,13 +91,26 @@ int	fdf_handle_input_xyz(t_map *map)
 	return (map->keys.key_ax);
 }
 
+int	fdf_handle_input_sign(t_map *map)
+{
+	t_keyin	*keys;
+
+	keys = &(map->keys);
+	if (keys->key_tr != 0 && keys->key_ax !=0)
+	{
+		keys->key_sign = -1;
+		return (fdf_handle_input_nbr(map));
+	}
+	return (fdf_handle_input_zoom(map));
+}
+
 int	fdf_handle_input_nbr(t_map *map)
 {
 	if ((map->keys.key_tr == 's' && map->keys.key_ax == 0) 
 		|| (map->keys.key_tr != 0 && map->keys.key_ax != 0))
 	{
 		if (*(map->keys.keysym) == KEY_0)
-			map->keys.key_nbr = (map->keys.key_nbr * 10) + 0;
+			map->keys.key_nbr = (map->keys.key_nbr * 10);
 		if (*(map->keys.keysym) == KEY_1)
 			map->keys.key_nbr = (map->keys.key_nbr * 10) + 1;
 		if (*(map->keys.keysym) == KEY_2)

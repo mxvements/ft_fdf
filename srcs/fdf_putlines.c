@@ -14,56 +14,56 @@
 
 void	fdf_lineBresenham_x(int *p1, int *p2, t_map *map)
 {
-	int		x;
-	int		y;
-	int		dx;
-	int		dy;
-	int		p;
+	int				x;
+	int				y;
+	const int		dx = abs((p2[0] - p1[0]));
+	const int		dy = abs((p2[1] - p1[1]));
+	int				p;
 
 	x = p1[0];
 	y = p1[1];
-	dx = abs((p2[0] - p1[0]));
-	dy = abs((p2[1] - p1[1]));
 	p = (2 * dy) - dx;
 	while ((x - p1[0]) * (x - p2[0]) <= 0)
 	{
 		if (x < WIDTH && y < HEIGHT)
 			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		x += ((p2[0] - p1[0]) / dx); //!DIV0
+		if (dx != 0)
+			x += ((p2[0] - p1[0]) / dx);
 		if (p < 0)
 			p = p + (2 * dy);
 		else
 		{
 			p = p + (2 * (dy - dx));
-			y += ((p2[1] - p1[1]) / dy);//!DIV0
+			if (dy != 0)
+				y += ((p2[1] - p1[1]) / dy);
 		}
 	}
 }
 
 void	fdf_lineBresenham_y(int *p1, int *p2, t_map *map)
 {
-	int		x;
-	int		y;
-	int		dx;
-	int		dy;
-	int		p;
+	int				x;
+	int				y;
+	const int		dx = abs((p2[0] - p1[0]));
+	const int		dy = abs((p2[1] - p1[1]));
+	int				p;
 
 	x = p1[0];
 	y = p1[1];
-	dx = abs((p2[0] - p1[0]));
-	dy = abs((p2[1] - p1[1]));
 	p = (2 * dx) - dy;
 	while ((y - p1[1]) * (y - p2[1]) <= 0)
 	{
 		if (x < WIDTH && y < HEIGHT)
 			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
-		y += ((p2[1] - p1[1]) / dy);//!DIV0
+		if (dy != 0)
+			y += ((p2[1] - p1[1]) / dy);
 		if (p < 0)
 			p = p + (2 * dx);
 		else
 		{
 			p = p + (2 * (dx - dy));
-			x += ((p2[0] - p1[0]) / dx);//!DIV0
+			if (dx != 0)
+				x += ((p2[0] - p1[0]) / dx);
 		}
 	}
 }
@@ -73,10 +73,6 @@ void	fdf_lineBresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
 	const int	dx = abs(pt1->px_xy[0] - pt2->px_xy[0]);
 	const int	dy = abs(pt1->px_xy[1] - pt2->px_xy[1]);
 	
-	/*printf("fdf_lineBresenham_Wrapper: \n");
-	printf("pt1: (%d, %d, %d) en (%d, %d)\n", pt1->xyz[0], pt1->xyz[1], pt1->xyz[2], pt1->px_xy[0], pt1->px_xy[1]);
-	printf("pt2: (%d, %d, %d) en (%d, %d)\n", pt2->xyz[0], pt2->xyz[1], pt1->xyz[2], pt2->px_xy[0], pt2->px_xy[1]);
-	*/
 	if (dx >= dy)
 	{
 		//opcion 1. x crece antes que y
@@ -93,8 +89,6 @@ void	fdf_lineBresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
 		if (pt1->px_xy[0] > pt2->px_xy[0])
 			fdf_lineBresenham_y(pt2->px_xy, pt1->px_xy, map);
 	}
-
-	
 }
 
 void	fdf_putlines(t_map *map, int x, int y)

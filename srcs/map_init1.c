@@ -112,7 +112,8 @@ t_map	*map_init(t_dll **ptlst, char *txt)
 	//protect map since there's a malloc
 	map = map_view(map);
 	//protect map since there's a malloc
-	fdf_keystruct_init(&(map->keys));
+	map = fdf_keystruct_init(map);
+	//protect map since there's a malloc
 	fdf_show_menu();
 	map = map_viewptmap(map);
 	map = map_pixelptmap(map);

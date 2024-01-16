@@ -20,6 +20,7 @@ SRCS=		main.c \
 			fdf_aux.c \
 			fdf_keyhooks1.c \
 			fdf_keyhooks2.c \
+			fdf_mousehooks.c \
 			fdf_putlines.c \
 			map_init1.c \
 			map_init2.c \

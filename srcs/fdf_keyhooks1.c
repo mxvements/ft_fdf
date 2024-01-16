@@ -18,26 +18,37 @@ void	fdf_keystruct_reset(t_keyin *keys)
 	keys->key_ax = 0;
 	keys->key_nbr = 0;
 	keys->key_sign = 1;
+	keys->mouse_xy[0] = 0;
+	keys->mouse_xy[1] = 0;
+	keys->mouse_flag = 0;
 }
 
-void	fdf_keystruct_init(t_keyin *keys)
+t_map	*fdf_keystruct_init(t_map *map)
 {
-	if (!keys->key_tr)
-		keys->key_tr = 0;
-	if (!keys->key_ax)
-		keys->key_ax = 0;
-	if (!keys->key_nbr)
-		keys->key_nbr = 0;
-	if (!keys->key_sign)
-		keys->key_nbr = 1;
+	map->keys = (t_keyin *)malloc(sizeof(t_keyin) * 1);
+	if (!map->keys)
+		return (NULL);
+	map->keys->key_tr = 0;
+	map->keys->key_ax = 0;
+	map->keys->key_nbr = 0;
+	map->keys->key_nbr = 1;
+	if (!map->keys->mouse_xy[0])
+	{
+		map->keys->mouse_xy[0] = 0;
+		map->keys->mouse_xy[1] = 0;
+	}
+	if (!map->keys->mouse_flag)
+		(map->keys->mouse_flag) = 0;
+	return (map);
 }
 
+//int (*f)(int keycode, void *param)
 int	fdf_key_input(int keysym, t_map *map)
 {
 	int				key_index;
 
-	fdf_keystruct_init(&(map->keys));
-	map->keys.keysym = &keysym;
+	//fdf_keystruct_init(map);
+	map->keys->keysym = &keysym;
 	key_index = fdf_get_key_index(keysym);
 	if (key_index == 0) //esc
 		return (map_escape(map));
@@ -64,8 +75,8 @@ int	fdf_handle_input_zoom(t_map *map)
 	t_keyin	*keys;
 	int		keysym;
 
-	keys = &(map->keys);
-	keysym = *(map->keys.keysym);
+	keys = (map->keys);
+	keysym = *(map->keys->keysym);
 	keys->key_tr = 's';
 	if (keysym == KEY_minus)
 		(keys->key_nbr) = 0.9;
@@ -79,9 +90,9 @@ int	fdf_handle_input_pan(t_map *map)
 	t_keyin	*keys;
 	int		keysym;
 
-	keys = &(map->keys);
+	keys = (map->keys);
 	keys->key_tr = 't';
-	keysym = *(map->keys.keysym);
+	keysym = *(map->keys->keysym);
 	if (keysym == KEY_left || keysym == KEY_right)
 		keys->key_ax = 'x'; //For default Plane (XY)
 	else if (keysym == KEY_up || keysym == KEY_down)

@@ -58,7 +58,9 @@ void	fdf(char *txt)
 	ft_dllfree(ptlst);
 	free(ptlst);
 	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map); //map change
-	mlx_mouse_hook(map->mlx_data.mlx_win, fdf_mouse_input, map); //map changw
+	mlx_mouse_hook(map->mlx_data.mlx_win, fdf_mousedown_input, map); //map change
+	
+	//mlx_hook(map->mlx_data.mlx_win, 6, (1L<<9), fdf_mouseup_input, map);
 	mlx_loop((map->mlx_data).mlx);
 	free((map->mlx_data).mlx);
 }

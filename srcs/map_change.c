@@ -28,7 +28,7 @@ int	map_escape(t_map *map)
 
 void	map_updatevw(t_map *map)
 {
-	const t_keyin	*keys = &(map->keys);
+	const t_keyin	*keys = (map->keys);
 
 	if (keys->key_tr == 'r')
 	{
@@ -58,7 +58,7 @@ int	map_change(t_map *map)
 {
 	t_keyin *keys;
 
-	keys = &(map->keys);
+	keys = (map->keys);
 	fdf_show_transformation(keys);
 	//printf("change map\n");
 	//printf("key_tra:  %d, key_ax: %d, key_nbr. %f\n", keys->key_tr, keys->key_ax, keys->key_nbr);

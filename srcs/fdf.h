@@ -78,6 +78,8 @@ typedef struct s_keyin
 	int key_ax;
 	double key_nbr;
 	int	key_sign;
+	int	mouse_xy[2];
+	int	mouse_flag;
 }	t_keyin;
 
 typedef struct s_map
@@ -85,7 +87,7 @@ typedef struct s_map
 	int		x_dim;
 	int		y_dim;
 	t_view	*vw;
-	t_keyin	keys;
+	t_keyin	*keys;
 	t_pt	**map; //double array of points of x_dim and y_dim of map
 	t_mlx	mlx_data;
 }	t_map;
@@ -109,6 +111,7 @@ void	view_isometric(t_map *map);
 //fdf aux functions
 void	fdf_show_menu(void);
 void	fdf_show_transformation(t_keyin *keys);
+
 int		fdf_handle_input_rst(t_map *map);
 int		fdf_handle_input_xyz(t_map *map);
 int		fdf_handle_input_nbr(t_map *map);
@@ -117,7 +120,11 @@ int		fdf_handle_input_zoom(t_map *map);
 int		fdf_handle_input_pan(t_map *map);
 int		fdf_get_key_index(int k);
 int		fdf_key_input(int keysym, t_map *map);
-void	fdf_keystruct_init(t_keyin *keys);
+
+int		fdf_mousedown_input(int button, int x, int y, t_map *map);
+int		fdf_mouseup_input(int button, int x, int y, t_map *map);
+
+t_map	*fdf_keystruct_init(t_map *map);
 void	fdf_keystruct_reset(t_keyin *keys);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
 void	fdf_lineBresenham_x(int *px1, int *px2, t_map *map);

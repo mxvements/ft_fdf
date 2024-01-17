@@ -55,8 +55,8 @@ int	fdf_mousemove_input(int x, int y, t_map *map)
 		map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-		map->vw->rotate_rads_x = abs((x - keys->mouse_xy[0])) * (M_PI / 18000);
-		map->vw->rotate_rads_y = abs((y - keys->mouse_xy[1])) * (M_PI / 18000);
+		map->vw->rot_rad_x = abs((x - keys->mouse_xy[0])) * (M_PI / 18000);
+		map->vw->rot_rad_y = abs((y - keys->mouse_xy[1])) * (M_PI / 18000);
 		view_rotate(map->vw);
 		map = map_viewptmap(map); //transform points
 		map = map_pixelptmap(map); //get pixel coord

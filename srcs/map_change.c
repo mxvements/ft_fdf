@@ -26,19 +26,21 @@ int	map_escape(t_map *map)
 	return (-1);
 }
 
-void	map_updatevw(t_map *map)
+int	map_updatevw(t_map *map)
 {
 	const t_keyin	*keys = (map->keys);
 
+	arrdbl_print_3x3(map->vw->view);
 	if (keys->key_tr == 'r')
 	{
 		if (keys->key_ax == 'x')
-			map->vw->rotate_rads_x = keys->key_nbr * keys->key_sign * (M_PI / 180);
+			map->vw->rot_rad_x = keys->key_nbr * keys->key_sign * (M_PI / 180);
 		if (keys->key_ax == 'y')
-			map->vw->rotate_rads_y = keys->key_nbr * keys->key_sign * (M_PI / 180);
+			map->vw->rot_rad_y = keys->key_nbr * keys->key_sign * (M_PI / 180);
 		if (keys->key_ax == 'z')
-			map->vw->rotate_rads_z = keys->key_nbr * keys->key_sign * (M_PI / 180);
-		printf("rx: %f, ry: %f, rz: %f\n", map->vw->rotate_rads_x, map->vw->rotate_rads_y, map->vw->rotate_rads_z);
+			map->vw->rot_rad_z = keys->key_nbr * keys->key_sign * (M_PI / 180);
+		printf("rad y. %f\n", map->vw->rot_rad_y);
+		printf("keys nbr %f, keys sign %f\n", keys->key_nbr, keys->key_sign);
 		view_rotate(map->vw);
 	}
 	if (keys->key_tr == 's')
@@ -53,6 +55,8 @@ void	map_updatevw(t_map *map)
 		if (keys->key_ax == 'y')
 			map->vw->move_d_y += keys->key_nbr * 10 * keys->key_sign;
 	}
+	arrdbl_print_3x3(map->vw->view);
+	return (map_change(map));
 }
 
 int	map_change(t_map *map)
@@ -60,17 +64,15 @@ int	map_change(t_map *map)
 	t_keyin *keys;
 
 	keys = (map->keys);
-	fdf_show_transformation(keys);
-	//printf("change map\n");
-	//printf("key_tra:  %d, key_ax: %d, key_nbr. %f\n", keys->key_tr, keys->key_ax, keys->key_nbr);
-	//reset mlx
+	//fdf_show_view(map->vw);
+	arrdbl_print_3x3(map->vw->view);
 	free(map->mlx_data.img);
 	map->mlx_data.img = mlx_new_image(map->mlx_data.mlx, WIDTH, HEIGHT);
 	free(map->mlx_data.img_addr);
 	map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-	map_updatevw(map);
+	//map_updatevw(map);
 	map = map_viewptmap(map); //transform points
 	map = map_pixelptmap(map); //get pixel coord
 	map_printview(map);

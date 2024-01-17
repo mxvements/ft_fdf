@@ -39,6 +39,9 @@
 # define KEY_left		XK
 # define KEY_right		
 # define KEY_down		
-# define KEY_up			
+# define KEY_up
+# define KEY_i			
+# define KEY_p			
+# define KEY_u					
 
 #endif

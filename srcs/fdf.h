@@ -62,10 +62,10 @@ typedef struct s_point
 typedef struct s_view
 {
 	double	scale_f; //DO CHECK VIEW, scala cannot be zero
-	double	rotate_rads_z;
-	double	rotate_rads_y;
-	double	rotate_rads_x;
-	double	move_d_z; //NOT NEEDED
+	double	rot_rad_z;
+	double	rot_rad_y;
+	double	rot_rad_x;
+	//double	move_d_z; //NOT NEEDED
 	double	move_d_y;
 	double	move_d_x;
 	double	**view; //array of 3x3
@@ -77,7 +77,7 @@ typedef struct s_keyin
 	int key_tr;
 	int key_ax;
 	double key_nbr;
-	int	key_sign;
+	double	key_sign;
 	int	mouse_xy[2];
 	int	mouse_flag;
 }	t_keyin;
@@ -110,6 +110,7 @@ void	view_rotate(t_view *vw);
 void	view_isometric(t_map *map);
 //fdf aux functions
 void	fdf_show_menu(void);
+void	fdf_show_view(t_view *vw);
 void	fdf_show_transformation(t_keyin *keys);
 
 int		fdf_handle_input_rst(t_map *map);
@@ -144,6 +145,7 @@ t_map	*map_size(t_dll **ptlst, char *txt, t_map *map);
 t_map	*map_init(t_dll **lst, char *txt);
 //map change
 int		map_escape(t_map *map);
+int		map_updatevw(t_map *map);
 int		map_change(t_map *map);
 
 #endif

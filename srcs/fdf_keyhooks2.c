@@ -12,28 +12,6 @@
 
 #include "fdf.h"
 
-int	fdf_get_key_index(int k)
-{
-	if (k == KEY_ESC)
-		return (0);
-	else if (k == KEY_ENTER)
-		return (1);
-	else if (k == KEY_minus)
-		return (2);
-	else if (k == KEY_plus)
-		return (3);
-	else if (k == KEY_left || k == KEY_right || k == KEY_up || k == KEY_down)
-		return (4);
-	else if (k == KEY_r || k == KEY_s || k == KEY_t)
-		return (5);
-	else if (k == KEY_x || k == KEY_y || k == KEY_z)
-		return (6);
-	else if (k == KEY_0 || k == KEY_1 || k == KEY_2 || k == KEY_3 || k == KEY_4
-		|| k == KEY_5 || k == KEY_6 || k == KEY_7 || k == KEY_8 || k == KEY_9)
-		return (7);
-	return (-1);
-}
-
 int	fdf_handle_input_rst(t_map *map)
 {
 	write(1, ANSICOLOR_BLUE, 6);

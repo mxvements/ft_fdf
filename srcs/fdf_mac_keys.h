@@ -40,4 +40,7 @@
 # define KEY_up		126
 # define KEY_minus	78
 # define KEY_plus	69
+# define KEY_i		34
+# define KEY_p		35
+# define KEY_u		32
 #endif

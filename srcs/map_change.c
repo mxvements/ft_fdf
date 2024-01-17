@@ -33,11 +33,12 @@ void	map_updatevw(t_map *map)
 	if (keys->key_tr == 'r')
 	{
 		if (keys->key_ax == 'x')
-			map->vw->rotate_rads_x += keys->key_nbr * keys->key_sign;
+			map->vw->rotate_rads_x = keys->key_nbr * keys->key_sign * (M_PI / 180);
 		if (keys->key_ax == 'y')
-			map->vw->rotate_rads_y += keys->key_nbr * keys->key_sign;
+			map->vw->rotate_rads_y = keys->key_nbr * keys->key_sign * (M_PI / 180);
 		if (keys->key_ax == 'z')
-			map->vw->rotate_rads_z += keys->key_nbr * keys->key_sign;
+			map->vw->rotate_rads_z = keys->key_nbr * keys->key_sign * (M_PI / 180);
+		printf("rx: %f, ry: %f, rz: %f\n", map->vw->rotate_rads_x, map->vw->rotate_rads_y, map->vw->rotate_rads_z);
 		view_rotate(map->vw);
 	}
 	if (keys->key_tr == 's')

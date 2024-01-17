@@ -50,19 +50,19 @@ void	view_rotate(t_view *vw)
 	//arrdbl_print_3x3(vw->view);
 	if (vw->rotate_rads_z != 0)
 		view_rot_z(vw);
-	//vw->rotate_rads_z = 0;
-	//vw->rotate_rads_y = 0;
-	//vw->rotate_rads_x = 0;
+	vw->rotate_rads_z = 0;
+	vw->rotate_rads_y = 0;
+	vw->rotate_rads_x = 0;
 }
-//where α = arcsin(tan 30°) ≈ 35.264° and β = 45°. A
+
 void	view_isometric(t_map *map)
 {
 	t_view	*vw;
 
 	vw = map->vw;
-	vw->rotate_rads_z = (M_PI_4);
+	vw->rotate_rads_z = (0); //M_PI_4
 	vw->rotate_rads_y = 0;
-	vw->rotate_rads_x = (atan(sqrt(2)));
+	vw->rotate_rads_x = (0); //atan(sqrt(2))
 	vw->scale_f = SCALE;
 	vw->move_d_x = 0;
 	vw->move_d_y = 0;

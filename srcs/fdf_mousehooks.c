@@ -36,7 +36,7 @@ int	fdf_mousedown_input(int button, int x, int y, t_map *map)
 	}
 	else if (button == 2 && keys->mouse_flag == 1)
 		fdf_keystruct_reset(keys);
-	return (1);
+	return (0);
 }
 
 int	fdf_mousemove_input(int x, int y, t_map *map)
@@ -44,8 +44,9 @@ int	fdf_mousemove_input(int x, int y, t_map *map)
 	t_keyin	*keys;
 
 	keys = map->keys;
+	//printf("mouse: %d", keys->mouse_flag);
 	if (keys->mouse_flag == 0)
-		return (0);
+		return (1);
 	if ((x < WIDTH && y < HEIGHT) && (x > 0 && y > 0))
 	{
 		free(map->mlx_data.img);
@@ -54,8 +55,8 @@ int	fdf_mousemove_input(int x, int y, t_map *map)
 		map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-		map->vw->rotate_rads_x = ((x - keys->mouse_xy[0]) / 10000);
-		map->vw->rotate_rads_y = ((y - keys->mouse_xy[1]) / 10000);
+		map->vw->rotate_rads_x = abs((x - keys->mouse_xy[0])) * (M_PI / 18000);
+		map->vw->rotate_rads_y = abs((y - keys->mouse_xy[1])) * (M_PI / 18000);
 		view_rotate(map->vw);
 		map = map_viewptmap(map); //transform points
 		map = map_pixelptmap(map); //get pixel coord

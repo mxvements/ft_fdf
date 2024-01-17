@@ -23,7 +23,7 @@ void	fdf_lineBresenham_x(int *p1, int *p2, t_map *map)
 	x = p1[0];
 	y = p1[1];
 	p = (2 * dy) - dx;
-	while ((x - p1[0]) * (x - p2[0]) <= 0)
+	while (((x - p1[0]) * (x - p2[0]) <= 0) && (dx + dy != 0))
 	{
 		if ((x < WIDTH && y < HEIGHT && x > 0 && y > 0))
 			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
@@ -51,7 +51,7 @@ void	fdf_lineBresenham_y(int *p1, int *p2, t_map *map)
 	x = p1[0];
 	y = p1[1];
 	p = (2 * dx) - dy;
-	while ((y - p1[1]) * (y - p2[1]) <= 0)
+	while (((y - p1[1]) * (y - p2[1]) <= 0) && (dx + dy != 0))
 	{
 		if ((x < WIDTH && y < HEIGHT && x > 0 && y > 0))
 			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?

@@ -122,7 +122,7 @@ int		fdf_get_key_index(int k);
 int		fdf_key_input(int keysym, t_map *map);
 
 int		fdf_mousedown_input(int button, int x, int y, t_map *map);
-int		fdf_mouseup_input(int button, int x, int y, t_map *map);
+int		fdf_mousemove_input(int x, int y, t_map *map);
 
 t_map	*fdf_keystruct_init(t_map *map);
 void	fdf_keystruct_reset(t_keyin *keys);

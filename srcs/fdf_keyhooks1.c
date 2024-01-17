@@ -32,13 +32,9 @@ t_map	*fdf_keystruct_init(t_map *map)
 	map->keys->key_ax = 0;
 	map->keys->key_nbr = 0;
 	map->keys->key_nbr = 1;
-	if (!map->keys->mouse_xy[0])
-	{
-		map->keys->mouse_xy[0] = 0;
-		map->keys->mouse_xy[1] = 0;
-	}
-	if (!map->keys->mouse_flag)
-		(map->keys->mouse_flag) = 0;
+	map->keys->mouse_xy[0] = 0;
+	map->keys->mouse_xy[1] = 0;
+	(map->keys->mouse_flag) = 0;
 	return (map);
 }
 
@@ -47,7 +43,6 @@ int	fdf_key_input(int keysym, t_map *map)
 {
 	int				key_index;
 
-	//fdf_keystruct_init(map);
 	map->keys->keysym = &keysym;
 	key_index = fdf_get_key_index(keysym);
 	if (key_index == 0) //esc

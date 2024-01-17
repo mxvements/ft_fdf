@@ -90,7 +90,8 @@ void	map_printview(t_map *map)
 		while(x < (map->x_dim))
 		{
 			pt = map->map[y][x];
-			if (pt.px_xy[0] < WIDTH && pt.px_xy[1] < HEIGHT)
+			if ((pt.px_xy[0] < WIDTH && pt.px_xy[1] < HEIGHT)
+				&& (pt.px_xy[0] > 0 && pt.px_xy[1] > 0))
 				fdf_pixelput(&(map->mlx_data), pt.px_xy[0], pt.px_xy[1], pt.color);
 			fdf_putlines(map, x, y);
 			x++;

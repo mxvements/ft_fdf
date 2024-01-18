@@ -61,26 +61,35 @@ int	fdf_key_input(int keysym, t_map *map)
 		return (fdf_handle_input_xyz(map));
 	else if (key_index == 7) //nbrs
 		return (fdf_handle_input_nbr(map));
-	/*else if (key_index == 8)
-		return (fdf_handle_input_reset(map));*/
+	else if (key_index == 8)
+		return (fdf_handle_input_reset(map));
 	else
 		return (-1);
 }
 
-/*int	fdf_handle_input_reset(t_map *map)
+int	fdf_handle_input_reset(t_map *map)
 {
 	t_keyin	*keys;
 	int		keysym;
 
 	keys = map->keys;
-	keysym = keys->keysym;
+	keysym = *(keys->keysym);
 	if (keysym == KEY_i)
 	{
-		keys->key_ax = 'z'
+		arrdbl_free(map->vw->view, 3);
+		map->vw->view = arrdbl_init(3, 3, 1);
+		view_isometric(map);
+		return (map_change(map));
 	}
 	if (keysym == KEY_p)
-		return ()
-}*/
+	{
+		arrdbl_free(map->vw->view, 3);
+		map->vw->view = arrdbl_init(3, 3, 1);
+		view_plan(map);
+		return (map_change(map));
+	}
+	return (0);
+}
 
 int	fdf_handle_input_zoom(t_map *map)
 {

@@ -25,10 +25,12 @@ SRCS=		main.c \
 			map_init1.c \
 			map_init2.c \
 			map_change.c \
+			map_free.c \
 			matrix_aux1.c \
 			view_aux1.c \
 			view_aux2.c \
-			pt_aux.c
+			pt_aux.c \
+			keys_aux.c
 
 SRCS_DIR=	./srcs/
 

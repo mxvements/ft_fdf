@@ -12,31 +12,12 @@
 
 #include "fdf.h"
 
-void 	*map_evalerror_pt(t_map *map, int x)
+void	*map_evalerror_ptmap(t_map *map, int x)
 {
-	//TODO: free view struct if it's not NULL
 	write(1, ANSICOLOR_RED, 6);
 	ft_putstr_fd("Error.\n", 2);
 	write(1, ANSICOLOR_RESET, 5);
-	if (!map->map)
-	{
-		free(map);
-		map = NULL;
-		return (map);
-	}
-	while (--x >= 0)
-	{
-		if (!map->map[x])
-			break ;
-		free(map->map[x]);
-		map->map[x] = NULL;
-		x++;
-	}
-	free(map->map);
-	map->map = NULL;
-	free(map);
-	map = NULL;
-	return (NULL);
+	return (map_free_ptmap(map, x));
 }
 
 t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y)
@@ -48,7 +29,7 @@ t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y)
 	ptcont = ptnode->content;
 	(map->map[y][x]).xyz[0] = x;
 	(map->map[y][x]).xyz[1] = y;
-	(map->map[y][x]).xyz[2] = ptcont->height / 6; //SCALE Z
+	(map->map[y][x]).xyz[2] = ptcont->height / ZSCALE;
 	(map->map[y][x]).color = ptcont->color;
 	ptnode = ptnode->next;
 	return (ptnode);
@@ -69,7 +50,7 @@ t_map	*map_ptmap(t_map *map, t_dll **ptlst)
 	{
 		map->map[y] = (t_pt*)malloc(sizeof(t_pt) * map->x_dim);
 		if (!map->map[y])
-			return ((t_map *)map_evalerror_pt(map, x));
+			return ((t_map *)map_evalerror_ptmap(map, y));
 		x = 0;
 		while (x < map->x_dim)
 		{
@@ -79,7 +60,7 @@ t_map	*map_ptmap(t_map *map, t_dll **ptlst)
 		y++;
 	}
 	if (ptnode)
-		return ((t_map *)map_evalerror_pt(map, map->y_dim));
+		return ((t_map *)map_evalerror_ptmap(map, map->y_dim));
 	return (map);
 }
 
@@ -90,30 +71,46 @@ t_map	*map_size(t_dll **ptlst, char *txt, t_map *map)
 	map->y_dim = ft_strchr_count(txt, '\n');
 	if (map->y_dim == 0 || ptlst_size == 0)
 	{
-		map->map = NULL;
-		map = map_evalerror_pt(map, map->x_dim);
-		ft_dllfree(ptlst);
-		free(ptlst);
+		map->map = map_evalerror_ptmap(map, 0);
 		return (NULL);
 	}
 	map->x_dim = (ptlst_size / map->y_dim);
 	return (map);
 }
 
-t_map	*map_init(t_dll **ptlst, char *txt)
+void	*map_init(void)
+{
+	t_map *map;
+
+	map = (t_map*)malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->keys = NULL;
+	map->vw = NULL;
+	map->map = NULL;
+	return ((void *)map);
+
+}
+
+t_map	*fdf_init(t_dll **ptlst, char *txt)
 {
 	t_map		*map;
 	
-	map = (t_map*)malloc(sizeof(t_map));
+	map = (t_map*)map_init();
 	if (!map)
-		return ((t_map*)lst_evalerror(ptlst));
+		return (NULL);
 	map = map_size(ptlst, txt, map);
+	if (!map)
+		return (NULL);
 	map = map_ptmap(map, ptlst);
-	//protect map since there's a malloc
+	if (!map)
+		return (NULL);
 	map = map_view(map);
-	//protect map since there's a malloc
+	if (!map)
+		return (NULL);
 	map = fdf_keystruct_init(map);
-	//protect map since there's a malloc
+	if (!map)
+		return (NULL);
 	fdf_show_menu();
 	map = map_viewptmap(map);
 	map = map_pixelptmap(map);

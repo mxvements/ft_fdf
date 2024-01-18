@@ -73,13 +73,16 @@ size_t	a_getstate(int i, int j)
 size_t	a_changestate(char c, size_t state)
 {
 	size_t		ostate;
-	const char	*dict = "0123456789abcdefx,";
+	const char	*dict_m = "0123456789abcdefx,";
+	const char	*dict_M = "0123456789ABCDEFX,";
 
 	if (c == ' ')
 		ostate = a_getstate(state, 0);
 	else if(ft_issign(c) != 0)
 		ostate = a_getstate(state, 1);
-	else if(ft_strchr(dict, c) != 0)
+	else if(ft_strchr(dict_m, c) != 0)
+		ostate = a_getstate(state, 2);
+	else if(ft_strchr(dict_M, c) != 0)
 		ostate = a_getstate(state, 2);
 	else if(c == '\n')
 		ostate = a_getstate(state, 3);

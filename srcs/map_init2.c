@@ -19,7 +19,7 @@ t_map	*map_view(t_map *map)
 
 	vw = (t_view*)malloc(sizeof(t_view) * 1);
 	if (!vw)
-		return (map_evalerror_pt(map, map->y_dim));
+		return (map_free_ptmap(map, map->y_dim));
 	map->vw = vw;
 	vw->view = arrdbl_init(3, 3, 1);
 	//scale = ((WIDTH * 0.4) / (map->x_dim)); //SCALE OF DRAWING

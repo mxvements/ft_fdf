@@ -17,9 +17,15 @@ void	fdf_show_menu(void)
 	write(1, ANSICOLOR_BLUE, 6);
 	ft_putstr_fd("********************** fdf **********************\n", 1);
 	ft_putstr_fd("Press (ESC) to close window\n", 1);
-	ft_putstr_fd("Press (r) to rotate (WIP)\n", 1);
-	ft_putstr_fd("Press (s) to scale (WIP)\n", 1);
-	ft_putstr_fd("Press (t) to translate (WIP)\n", 1);
+	ft_putstr_fd("Press (r) to rotate\n", 1);
+	ft_putstr_fd("Press (s) to scale\n", 1);
+	ft_putstr_fd("Press (t) to translate\n", 1);
+	ft_putstr_fd("Press (i) to reset view to isometric\n", 1);
+	ft_putstr_fd("Press (p) to reset view to plan\n", 1);
+	ft_putstr_fd("Use arrows to move view\n", 1);
+	ft_putstr_fd("Use keypad's -+ to move zoom out/in\n", 1);
+	ft_putstr_fd("Use mouse's wheel to move zoom out/in\n", 1);
+	ft_putstr_fd("Use mouse's righnt-click to rotate view\n", 1);
 	write(1, ANSICOLOR_RESET, 5);
 }
 
@@ -45,83 +51,4 @@ void	fdf_show_transformation(t_keyin *keys)
 	ft_putnbr_fd(nbr, 1);
 	ft_putstr_fd("px\n", 1);
 	write(1, ANSICOLOR_RESET, 5);
-}
-
-static void	fdf_show_rot(t_view *vw)
-{
-	if (vw->rot_rad_x != 0)
-	{
-		ft_putstr_fd("+ ROTATING in axis (X) ", 1);
-		ft_putnbr_fd(vw->rot_rad_x, 1);
-		ft_putstr_fd("px\n", 1);
-	}
-	if (vw->rot_rad_y != 0)
-	{
-		ft_putstr_fd("+ ROTATING in axis (Y) ", 1);
-		ft_putnbr_fd(vw->rot_rad_y, 1);
-		ft_putstr_fd("px\n", 1);
-	}
-	if (vw->rot_rad_z != 0)
-	{
-		ft_putstr_fd("+ ROTATING in axis (Z) ", 1);
-		ft_putnbr_fd(vw->rot_rad_z, 1);
-		ft_putstr_fd("px\n", 1);
-	}
-}
-static void	fdf_show_move(t_view *vw)
-{
-	if (vw->move_d_x != 0)
-	{
-		ft_putstr_fd("+ MOVING in axis (X) ", 1);
-		ft_putnbr_fd(vw->move_d_x, 1);
-		ft_putstr_fd("px\n", 1);
-	}
-	if (vw->move_d_y != 0)
-	{
-		ft_putstr_fd("+ MOVING in axis (Y) ", 1);
-		ft_putnbr_fd(vw->move_d_y, 1);
-		ft_putstr_fd("px\n", 1);
-	}
-}
-
-void	fdf_show_view(t_view *vw)
-{
-	write(1, ANSICOLOR_MAGENTA, 6);
-	if (vw->rot_rad_x != 0 || vw->rot_rad_y != 0 || vw->rot_rad_z != 0)
-		fdf_show_rot(vw);
-	if (vw->scale_f != 0)
-	{
-		ft_putstr_fd("+ SCALING ", 1);
-		ft_putnbr_fd(vw->rot_rad_z, 1);
-		ft_putstr_fd("px\n", 1);
-	}
-	if (vw->move_d_x != 0 || vw->move_d_y != 0)
-		fdf_show_move(vw);
-	write(1, ANSICOLOR_RESET, 5);
-}
-
-void	fdf_keystruct_reset(t_keyin *keys)
-{
-	keys->key_tr = 0;
-	keys->key_ax = 0;
-	keys->key_nbr = 0;
-	keys->key_sign = 1;
-	keys->mouse_xy[0] = 0;
-	keys->mouse_xy[1] = 0;
-	keys->mouse_flag = 0;
-}
-
-t_map	*fdf_keystruct_init(t_map *map)
-{
-	map->keys = (t_keyin *)malloc(sizeof(t_keyin) * 1);
-	if (!map->keys)
-		return (NULL);
-	map->keys->key_tr = 0;
-	map->keys->key_ax = 0;
-	map->keys->key_nbr = 0;
-	map->keys->key_sign = 1;
-	map->keys->mouse_xy[0] = 0;
-	map->keys->mouse_xy[1] = 0;
-	(map->keys->mouse_flag) = 0;
-	return (map);
 }

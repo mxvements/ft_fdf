@@ -26,7 +26,7 @@ int	fdf_mousedown_input(int button, int x, int y, t_map *map)
 			(keys->key_nbr) = 1.1;
 		if (button == 5) //5 zoom out
 			(keys->key_nbr) = 0.9;
-		return (map_change(map));
+		return (map_updatevw(map));
 	}
 	if (button == 2 && keys->mouse_flag == 0)
 	{
@@ -49,15 +49,16 @@ int	fdf_mousemove_input(int x, int y, t_map *map)
 		return (1);
 	if ((x < WIDTH && y < HEIGHT) && (x > 0 && y > 0))
 	{
+		map->vw->rot_rad_x = abs((x - keys->mouse_xy[0])) * (M_PI / 18000);
+		map->vw->rot_rad_y = abs((y - keys->mouse_xy[1])) * (M_PI / 18000);
+		view_rotate(map->vw);
+		//TODO: todo lo de abajo está en map_change(map)
 		free(map->mlx_data.img);
 		map->mlx_data.img = mlx_new_image(map->mlx_data.mlx, WIDTH, HEIGHT);
 		free(map->mlx_data.img_addr);
 		map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-		map->vw->rot_rad_x = abs((x - keys->mouse_xy[0])) * (M_PI / 18000);
-		map->vw->rot_rad_y = abs((y - keys->mouse_xy[1])) * (M_PI / 18000);
-		view_rotate(map->vw);
 		map = map_viewptmap(map); //transform points
 		map = map_pixelptmap(map); //get pixel coord
 		map_printview(map);

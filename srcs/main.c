@@ -50,24 +50,35 @@ void	fdf(char *txt)
 	
 	ptlst = lst_init();
 	ptlst = a_parse(txt, ptlst);
-	map = map_init(ptlst, txt);
-	//MAP print
-	/*if (map)
-		pt_print(map->map, map->y_dim, map->x_dim);*/
-	//end MLX
+	map = fdf_init(ptlst, txt);
+	
 	ft_dllfree(ptlst);
 	free(ptlst);
+	ptlst = NULL;
+	if (!map)
+		return ;
 	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map); //map change
 	mlx_mouse_hook(map->mlx_data.mlx_win, fdf_mousedown_input, map); //map change
 	mlx_hook(map->mlx_data.mlx_win, 6, 0, fdf_mousemove_input, map);
 	mlx_loop((map->mlx_data).mlx);
+
 	free((map->mlx_data).mlx);
-	//map_free(map)
+	free((map->mlx_data).mlx_win);
+	free(map->mlx_data.img);
+	free(map->mlx_data.img_addr);
+
+	map = map_free(map);
+	system("leaks -q fdf");
+}
+
+void	leaks(void)
+{
+	system("leaks -q fdf");
 }
 
 int main(void)
 {
-	char	*path = "./test_maps/elem2.fdf";
+	char	*path = "./test_maps/basictest.fdf";
 	char	*txt;
 
 	txt = readfile(path);
@@ -78,6 +89,9 @@ int main(void)
 	}
 	fdf(txt);
 	free(txt);
-	system("leaks -q fdf");
+	txt = NULL;
+	path = NULL;
+	atexit(leaks);
+	//system("leaks -q fdf");
 	return (0);
 }

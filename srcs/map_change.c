@@ -30,7 +30,6 @@ int	map_updatevw(t_map *map)
 {
 	const t_keyin	*keys = (map->keys);
 
-	arrdbl_print_3x3(map->vw->view);
 	if (keys->key_tr == 'r')
 	{
 		if (keys->key_ax == 'x')
@@ -39,15 +38,9 @@ int	map_updatevw(t_map *map)
 			map->vw->rot_rad_y = keys->key_nbr * keys->key_sign * (M_PI / 180);
 		if (keys->key_ax == 'z')
 			map->vw->rot_rad_z = keys->key_nbr * keys->key_sign * (M_PI / 180);
-		printf("rad y. %f\n", map->vw->rot_rad_y);
-		printf("keys nbr %f, keys sign %f\n", keys->key_nbr, keys->key_sign);
-		view_rotate(map->vw);
 	}
 	if (keys->key_tr == 's')
-	{
 		map->vw->scale_f = keys->key_nbr * keys->key_sign;
-		view_scale(map->vw);
-	}
 	if (keys->key_tr == 't')
 	{
 		if (keys->key_ax == 'x')
@@ -55,7 +48,9 @@ int	map_updatevw(t_map *map)
 		if (keys->key_ax == 'y')
 			map->vw->move_d_y += keys->key_nbr * 10 * keys->key_sign;
 	}
-	arrdbl_print_3x3(map->vw->view);
+	view_rotate(map->vw);
+	view_scale(map->vw);
+	fdf_show_transformation(map->keys);
 	return (map_change(map));
 }
 
@@ -64,15 +59,12 @@ int	map_change(t_map *map)
 	t_keyin *keys;
 
 	keys = (map->keys);
-	//fdf_show_view(map->vw);
-	arrdbl_print_3x3(map->vw->view);
 	free(map->mlx_data.img);
 	map->mlx_data.img = mlx_new_image(map->mlx_data.mlx, WIDTH, HEIGHT);
 	free(map->mlx_data.img_addr);
 	map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-	//map_updatevw(map);
 	map = map_viewptmap(map); //transform points
 	map = map_pixelptmap(map); //get pixel coord
 	map_printview(map);

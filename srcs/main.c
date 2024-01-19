@@ -51,7 +51,7 @@ void	fdf(char *txt)
 	ptlst = lst_init();
 	ptlst = a_parse(txt, ptlst);
 	map = fdf_init(ptlst, txt);
-	
+
 	ft_dllfree(ptlst);
 	free(ptlst);
 	ptlst = NULL;
@@ -78,7 +78,7 @@ void	leaks(void)
 
 int main(void)
 {
-	char	*path = "./test_maps/basictest.fdf";
+	char	*path = "./test_maps/elem-col.fdf";
 	char	*txt;
 
 	txt = readfile(path);

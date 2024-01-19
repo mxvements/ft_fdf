@@ -39,7 +39,7 @@
 # define WIDTH				1280
 # define HEIGHT				720
 # define SCALE				15
-# define ZSCALE				1
+# define ZSCALE				5
 
 typedef struct s_mlx
 {
@@ -126,9 +126,11 @@ int		fdf_mousemove_input(int x, int y, t_map *map);
 t_map	*fdf_keystruct_init(t_map *map);
 void	fdf_keystruct_reset(t_keyin *keys);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
-void	fdf_lineBresenham_x(int *px1, int *px2, t_map *map);
+void	fdf_lineBresenham_x(int *px1, int *px2, t_map *map, int *colors);
 void	fdf_lineBresenham_y(int *px1, int *px2, t_map *map);
 void	fdf_putlines(t_map *map, int x, int y);
+//colors
+int		*fdf_putcolor_x(t_pt *pt1, t_pt *pt2);
 //MLX
 t_map	*map_mlx(t_map *map);
 void	map_printview(t_map *map);

@@ -43,10 +43,13 @@ t_dll	**lst_evalpoint(char *s, t_dll **ptlst)
 	ptinfo->height = ft_atoif(s, &atoiflag);
 	if (atoiflag < 0)
 		return (lst_evalerror(ptlst));
-	if (comma != 0)
-		ptinfo->color = 0x33FFBD; //TODO: change to the actual info
+	if (comma != -1)
+	{
+		ptinfo->color = ft_atoh(s + comma);
+		//printf("color: %d\n", ptinfo->color); //TODO: borrar
+	}
 	else
-		ptinfo->color = 0x00;
+		ptinfo->color = 0x00FF12; //TODO: default color blue
 	ptnode = ft_dllnew((void *)ptinfo);
 	if (!ptnode)
 		return (lst_evalerror(ptlst));

@@ -12,23 +12,30 @@
 
 #include "fdf.h"
 
-void	fdf_lineBresenham_x(int *p1, int *p2, t_map *map)
+void	fdf_lineBresenham_x(int *p1, int *p2, t_map *map, int *colors)
 {
 	int				x;
 	int				y;
 	const int		dx = abs((p2[0] - p1[0]));
 	const int		dy = abs((p2[1] - p1[1]));
 	int				p;
+	int				i;
 
 	x = p1[0];
 	y = p1[1];
 	p = (2 * dy) - dx;
+	i = 0;
 	while (((x - p1[0]) * (x - p2[0]) <= 0) && (dx + dy != 0))
 	{
 		if ((x < WIDTH && y < HEIGHT && x > 0 && y > 0))
-			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
+		{
+			fdf_pixelput(&(map->mlx_data), x, y, colors[i]); //COLOR?
+		}
 		if (dx != 0)
+		{
+			i++;
 			x += ((p2[0] - p1[0]) / dx);
+		}
 		if (p < 0)
 			p = p + (2 * dy);
 		else
@@ -54,7 +61,7 @@ void	fdf_lineBresenham_y(int *p1, int *p2, t_map *map)
 	while (((y - p1[1]) * (y - p2[1]) <= 0) && (dx + dy != 0))
 	{
 		if ((x < WIDTH && y < HEIGHT && x > 0 && y > 0))
-			fdf_pixelput(&(map->mlx_data), x, y, 0xFF); //COLOR?
+			fdf_pixelput(&(map->mlx_data), x, y, 0xFFFFFF); //COLOR?
 		if (dy != 0)
 			y += ((p2[1] - p1[1]) / dy);
 		if (p < 0)
@@ -72,14 +79,24 @@ void	fdf_lineBresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
 {
 	const int	dx = abs(pt1->px_xy[0] - pt2->px_xy[0]);
 	const int	dy = abs(pt1->px_xy[1] - pt2->px_xy[1]);
+	int			*colors;
 	
 	if (dx >= dy)
 	{
 		//opcion 1. x crece antes que y
 		if ((pt1->px_xy[0] <= pt2->px_xy[0]))
-			fdf_lineBresenham_x(pt1->px_xy, pt2->px_xy, map);
+		{
+			pt_print(map->map, map->y_dim, map->x_dim);
+			colors = fdf_putcolor_x(pt1, pt2);
+			fdf_lineBresenham_x(pt1->px_xy, pt2->px_xy, map, colors);
+			free(colors);
+		}
 		if ((pt1->px_xy[0] > pt2->px_xy[0]))
-			fdf_lineBresenham_x(pt2->px_xy, pt1->px_xy, map);
+		{
+			colors = fdf_putcolor_x(pt2, pt1);
+			fdf_lineBresenham_x(pt2->px_xy, pt1->px_xy, map, colors);
+			free(colors);
+		}
 	}
 	else if( dy > dx)
 	{

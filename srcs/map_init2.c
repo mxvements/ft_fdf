@@ -22,8 +22,6 @@ t_map	*map_view(t_map *map)
 		return (map_free_ptmap(map, map->y_dim));
 	map->vw = vw;
 	vw->view = arrdbl_init(3, 3, 1);
-	//scale = ((WIDTH * 0.4) / (map->x_dim)); //SCALE OF DRAWING
-	//printf("scale in map_view: %d\n", SCALE);
 	view_isometric(map);
 	return (map);
 }

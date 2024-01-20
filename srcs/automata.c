@@ -45,11 +45,11 @@ t_dll	**lst_evalpoint(char *s, t_dll **ptlst)
 		return (lst_evalerror(ptlst));
 	if (comma != -1)
 	{
-		ptinfo->color = ft_atoh(s + comma);
-		//printf("color: %d\n", ptinfo->color); //TODO: borrar
+		ptinfo->color = ft_atoh(s + comma + 1);
+		printf("color: %d\n", ptinfo->color); //TODO: borrar
 	}
 	else
-		ptinfo->color = 0x00FF12; //TODO: default color blue
+		ptinfo->color = 0xFFFFFF; //TODO: default color blue
 	ptnode = ft_dllnew((void *)ptinfo);
 	if (!ptnode)
 		return (lst_evalerror(ptlst));

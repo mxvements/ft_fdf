@@ -86,9 +86,9 @@ typedef struct s_map
 {
 	int		x_dim;
 	int		y_dim;
+	t_pt	**map; //double array of points of x_dim and y_dim of map
 	t_view	*vw;
 	t_keyin	*keys;
-	t_pt	**map; //double array of points of x_dim and y_dim of map
 	t_mlx	mlx_data;
 }	t_map;
 
@@ -126,11 +126,13 @@ int		fdf_mousemove_input(int x, int y, t_map *map);
 t_map	*fdf_keystruct_init(t_map *map);
 void	fdf_keystruct_reset(t_keyin *keys);
 void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
-void	fdf_lineBresenham_x(int *px1, int *px2, t_map *map, int *colors);
-void	fdf_lineBresenham_y(int *px1, int *px2, t_map *map);
+void	fdf_linebresenham_x(int *px1, int *px2, t_map *map, int *colors);
+void	fdf_linebresenham_y(int *px1, int *px2, t_map *map, int *colors);
 void	fdf_putlines(t_map *map, int x, int y);
 //colors
 int		*fdf_putcolor_x(t_pt *pt1, t_pt *pt2);
+int		*fdf_putcolor_y(t_pt *pt1, t_pt *pt2);
+int 	*fdf_putcolor_wrapper(t_pt *pt1, t_pt *pt2, const int dx, const int dy);
 //MLX
 t_map	*map_mlx(t_map *map);
 void	map_printview(t_map *map);

@@ -12,23 +12,32 @@
 
 #include "fdf.h"
 
+<<<<<<< HEAD
 void	fdf_linebresenham_x(int *p1, int *p2, t_map *map, int *colors)
+=======
+void	fdf_lineBresenham_x(int *p1, int *p2, t_map *map, int *colors)
+>>>>>>> 8e8550fb652ba43905e1e34244858232e95d116c
 {
 	int				x;
 	int				y;
 	const int		dx = abs((p2[0] - p1[0]));
 	const int		dy = abs((p2[1] - p1[1]));
 	int				p;
+	int				i;
 
 	x = p1[0];
 	y = p1[1];
 	p = (2 * dy) - dx;
+	i = 0;
 	while (((x - p1[0]) * (x - p2[0]) <= 0) && (dx + dy != 0))
 	{
 		if ((x < WIDTH && y < HEIGHT && x > 0 && y > 0))
 			fdf_pixelput(&(map->mlx_data), x, y, colors[abs(x - p1[0])]);
 		if (dx != 0)
+		{
+			i++;
 			x += ((p2[0] - p1[0]) / dx);
+		}
 		if (p < 0)
 			p = p + (2 * dy);
 		else

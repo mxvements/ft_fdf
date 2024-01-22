@@ -30,6 +30,7 @@ void	view_rot_z(t_view *vw)
 	cpy = arrdbl_cpy_3x3(vw->view);
 	arrdbl_mult_3x3(cpy, rot_z, vw->view);
 	arrdbl_free(cpy, 3);
+	arrdbl_free(rot_z, 3);
 }
 
 void	view_rot_y(t_view *vw)
@@ -50,6 +51,7 @@ void	view_rot_y(t_view *vw)
 	cpy = arrdbl_cpy_3x3(vw->view);
 	arrdbl_mult_3x3(cpy, rot_y, vw->view);
 	arrdbl_free(cpy, 3);
+	arrdbl_free(rot_y, 3);
 }
 
 void	view_rot_x(t_view *vw)
@@ -70,4 +72,5 @@ void	view_rot_x(t_view *vw)
 	cpy = arrdbl_cpy_3x3(vw->view);
 	arrdbl_mult_3x3(cpy, rot_x, vw->view);
 	arrdbl_free(cpy, 3);
+	arrdbl_free(rot_x, 3);
 }

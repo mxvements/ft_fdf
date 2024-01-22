@@ -1,63 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   automata.c                                         :+:      :+:    :+:   */
+/*   automata_v2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmmielgo <lmmielgo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/28 16:41:51 by luciama2          #+#    #+#             */
-/*   Updated: 2023/12/31 23:19:58 by lmmielgo         ###   ########.fr       */
+/*   Created: 2024/01/22 13:48:55 by luciama2          #+#    #+#             */
+/*   Updated: 2024/01/22 13:49:02 by luciama2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	*lst_evalerror(t_dll **ptlst)
+t_map *arr_evalpoint(char *s, t_map *map, int *x, int *y)
 {
-	if ((*ptlst))
-		ft_dllfree(ptlst);
-	if (ptlst)
-	{
-		free(ptlst);
-		*ptlst = NULL;
-	}
-	write(1, ANSICOLOR_RED, 6);
-	ft_putstr_fd("Error.\n", 2);
-	write(1, ANSICOLOR_RESET, 5);
-	return (NULL);
-}
-
-t_dll	**lst_evalpoint(char *s, t_dll **ptlst)
-{
-	const int	comma = ft_strchri(s, ',');
+	int			comma;
+	const int	sp = ft_strchri(s, ' ');
 	int			atoiflag;
-	t_ptcont	*ptinfo;
-	t_dll		*ptnode;
+	char		*ss;
+	//t_pt		pt;
+	///t_pt		**ptmap;
 
-	if (!s)
-		return (NULL); //need to protect the previous substr
+	if (!map)
+		return (NULL);
+	ss = ft_substr(s, 0, sp + 1);
+	comma = ft_strchri(ss, ',');
+	//ptmap = map->map;
+	///pt = ptmap[*y][*x];
 	atoiflag = 0;
-	ptinfo = (t_ptcont *)malloc(sizeof(t_ptcont));
-	if (!ptinfo)
-		return (lst_evalerror(ptlst));
-	ptinfo->height = ft_atoif(s, &atoiflag);
+	(map->map[*y][*x]).xyz[0] = *x;
+	(map->map[*y][*x]).xyz[1] = *y;
+	(map->map[*y][*x]).xyz[2] = ft_atoif(s, &atoiflag) / ZSCALE;
 	if (atoiflag < 0)
-		return (lst_evalerror(ptlst));
+		return (map_evalerror_ptmap(map, *x));
 	if (comma != -1)
-		ptinfo->color = ft_atoh(s + comma + 1);
+		(map->map[*y][*x]).color = ft_atoh(s + comma + 1);
 	else
-		ptinfo->color = 0xFFFFFF; //TODO: default color blue
-	ptnode = ft_dllnew((void *)ptinfo);
-	if (!ptnode)
-		return (lst_evalerror(ptlst));
-	ft_dlladd_back(ptlst, ptnode);
-	free(s);
-	return (ptlst);
+		(map->map[*y][*x]).color = 0xFFFFFF;
+	free(ss);
+	return (map);
 }
 
-size_t	a_getstate(int i, int j) //DELETE
+/*
+size_t	a_getstate(int i, int j) //OK
 {
-	const size_t	t_states[][5] = {\
+	const size_t	t_states[][6] = {\
 	// (j)
 	//   0  1  2  3  4
 	//	/s,-+, D, \n, ^	// (i)
@@ -70,7 +57,7 @@ size_t	a_getstate(int i, int j) //DELETE
 	return (t_states[i][j]);
 }
 
-size_t	a_changestate(char c, size_t state) //OK
+size_t	a_changestate(char c, size_t state, int *x, int *y) //OK
 {
 	size_t		ostate;
 	const char	*dict_m = "0123456789abcdefx,";
@@ -89,32 +76,50 @@ size_t	a_changestate(char c, size_t state) //OK
 	else
 		ostate = a_getstate(state, 4);
 	return (ostate);
+}*/
+
+static void	a_parse_updatecoord(int *x, int *y, int c)
+{
+	if (c == ' ')
+		(*x)++;
+	else if (c == '\n')
+	{
+		(*x) = 0;
+		(*y)++;
+	}
+	return ;
 }
 
-t_dll	**a_parse(char *txt, t_dll **ptlst) //DELETE
+static void	a_parse_initcoord(int *x, int *y)
 {
-	size_t	i;
-	size_t	state;
-	size_t	ostate;
-	size_t	init_pt;
+	(*x) = 0;
+	(*y) = 0;
+}
 
-	i = 0;
+t_map	*a_parse2(char *txt, t_map *map)
+{
+	int			i;
+	size_t		state;
+	size_t		ostate;
+	size_t		init_pt;
+	static int	xy[2];
+
+	i = -1;
 	state = 0;
-	while (txt[i] != '\0')
+	a_parse_initcoord(&(xy[0]), &(xy[1]));
+	while (txt[++i] != '\0')
 	{
 		ostate = a_changestate(txt[i], state);
 		if ((state == 0 || state == 4) && (ostate == 2 || ostate == 3))
 			init_pt = i;
 		if ((state == 3 && ostate == 4) || (ostate == 3 && txt[i + 1] == '\0'))
 		{
-			ptlst = lst_evalpoint(ft_substr(txt, init_pt, (i - init_pt) + 1), ptlst);
-			if (!ptlst)
-				return (NULL);
+			map = arr_evalpoint((txt + init_pt), map, &(xy[0]), &(xy[1]));
+			a_parse_updatecoord(&(xy[0]), &(xy[1]), txt[i]);
 		}
 		if (ostate == 1 || (ostate < 3 && txt[i + 1] == '\0'))
-			ptlst = lst_evalerror(ptlst);
+			map = map_evalerror_ptmap(map, xy[0]);
 		state = ostate;
-		i++;
 	}
-	return (ptlst);
+	return (map);
 }

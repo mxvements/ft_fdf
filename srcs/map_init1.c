@@ -20,7 +20,7 @@ void	*map_evalerror_ptmap(t_map *map, int x)
 	return (map_free_ptmap(map, x));
 }
 
-t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y)
+/*t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y) //ESTO CAMBIA, DELETE
 {
 	t_ptcont	*ptcont;
 
@@ -35,7 +35,7 @@ t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y)
 	return (ptnode);
 }
 
-t_map	*map_ptmap(t_map *map, t_dll **ptlst)
+t_map	*map_ptmap(t_map *map, t_dll **ptlst) //ESTO CAMBIA
 {
 	int			x;
 	int	 		y;
@@ -52,7 +52,7 @@ t_map	*map_ptmap(t_map *map, t_dll **ptlst)
 		if (!map->map[y])
 			return ((t_map *)map_evalerror_ptmap(map, y));
 		x = 0;
-		while (x < map->x_dim)
+		while (x < map->x_dim) //este while no sería necesaria, el ptmap ya está iniciado
 		{
 			ptnode = map_getptinfo(ptnode, map, x, y);
 			x++;
@@ -62,19 +62,66 @@ t_map	*map_ptmap(t_map *map, t_dll **ptlst)
 	if (ptnode)
 		return ((t_map *)map_evalerror_ptmap(map, map->y_dim));
 	return (map);
+}*/
+
+t_map	*map_ptmap_init(t_map *map) //ESTO CAMBIA
+{
+	//int			x;
+	int	 		y;
+	//t_dll		*ptnode;
+
+	//ptnode = *ptlst;
+	map->map = (t_pt **)malloc(sizeof(t_pt *) * map->y_dim);
+	if (!map->map)
+		return (NULL);
+	y = 0;
+	while (y < map->y_dim)
+	{
+		map->map[y] = (t_pt*)malloc(sizeof(t_pt) * map->x_dim);
+		if (!map->map[y])
+			return ((t_map *)map_evalerror_ptmap(map, y));
+		/*x = 0;
+		while (x < map->x_dim) //este while no sería necesaria, el ptmap ya está iniciado
+		{
+			ptnode = map_getptinfo(ptnode, map, x, y);
+			x++;
+		}*/
+		y++;
+	}
+	/*if (ptnode)
+		return ((t_map *)map_evalerror_ptmap(map, map->y_dim));*/
+	return (map);
 }
 
-t_map	*map_size(t_dll **ptlst, char *txt, t_map *map)
+static int	map_size_space(char *txt)
 {
-	const int	ptlst_size = ft_dllsize(*ptlst);
+	int			count;
+	int			i;
+	const char	*dict_m = "0123456789abcdefx,";
+	const char	*dict_M = "0123456789ABCDEFX,";
+
+	i = -1;
+	count = 0;
+	while (txt[++i] != '\0')
+	{
+		if ((ft_strchr(dict_m, txt[i]) != 0 || ft_strchr(dict_M, txt[i]) != 0)
+			&& (txt[i + 1] == ' ' || txt[i + 1] == '\0'))
+			count++;
+	}
+	return (count);
+}
+
+t_map	*map_size(char *txt, t_map *map)
+{
+	const int	txt_size = map_size_space(txt);
 	
 	map->y_dim = ft_strchr_count(txt, '\n');
-	if (map->y_dim == 0 || ptlst_size == 0)
+	if (map->y_dim == 0 || txt_size == 0)
 	{
 		map->map = map_evalerror_ptmap(map, 0);
 		return (NULL);
 	}
-	map->x_dim = (ptlst_size / map->y_dim);
+	map->x_dim = ((txt_size + (1*map->y_dim)) / map->y_dim);
 	return (map);
 }
 
@@ -92,19 +139,23 @@ void	*map_init(void)
 
 }
 
-t_map	*fdf_init(t_dll **ptlst, char *txt)
+t_map	*fdf_init(char *txt)
 {
 	t_map		*map;
 	
 	map = (t_map*)map_init();
 	if (!map)
 		return (NULL);
-	map = map_size(ptlst, txt, map);
+	map = map_size(txt, map);
 	if (!map)
 		return (NULL);
-	map = map_ptmap(map, ptlst);
+	map = map_ptmap_init(map);
 	if (!map)
 		return (NULL);
+	map = (t_map *)a_parse2(txt, (void *)map);
+	if (!map)
+		return (NULL);
+	//pt_print(map->map, map->y_dim, map->x_dim); //TODO: delete
 	map = map_view(map);
 	if (!map)
 		return (NULL);

@@ -147,11 +147,13 @@ t_map	*map_ptmap(t_map *map, t_dll **lst);
 t_map	*map_pixelptmap(t_map *map);
 t_map	*map_viewptmap(t_map *map);
 t_map	*map_view(t_map *map);
-t_map	*map_size(t_dll **ptlst, char *txt, t_map *map);
-t_map	*fdf_init(t_dll **lst, char *txt);
+t_map	*map_size(char *txt, t_map *map);
+t_map	*fdf_init(char *txt);
 //map change
 int		map_escape(t_map *map);
 int		map_updatevw(t_map *map);
 int		map_change(t_map *map);
-
+//automata
+t_map	*a_parse2(char *txt, t_map *map);
+t_map 	*arr_evalpoint(char *s, t_map *map, int *x, int *y);
 #endif

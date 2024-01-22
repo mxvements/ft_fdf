@@ -13,6 +13,7 @@
 #ifndef AUTOMATA_H
 # define AUTOMATA_H
 
+# include "fdf.h"
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
 
@@ -22,6 +23,7 @@ typedef struct s_ptcontent
 	int	color;
 }	t_ptcont;
 
+//V1
 //aux
 void	lst_print(t_dll **head);
 t_dll	**lst_init(void);
@@ -29,8 +31,11 @@ t_dll	**lst_init(void);
 t_dll	**lst_evalpoint(char *s, t_dll **ptlst);
 void	*lst_evalerror(t_dll **ptlst);
 //autoamata functs
+t_dll	**a_parse(char *s, t_dll **ptlst);
+
 size_t	a_getstate(int i, int j);
 size_t	a_changestate(char c, size_t state);
-t_dll	**a_parse(char *s, t_dll **ptlst);
+//V2
+
 
 #endif

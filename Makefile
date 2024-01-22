@@ -16,6 +16,7 @@ NAME=		fdf
 
 SRCS=		main.c \
 			automata.c \
+			automata_v2.c \
 			automata_aux.c \
 			fdf_aux.c \
 			fdf_keyhooks1.c \

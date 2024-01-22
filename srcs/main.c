@@ -45,16 +45,16 @@ char	*readfile(char *path)
 
 void	fdf(char *txt)
 {
-	t_dll	**ptlst;
+	//t_dll	**ptlst;
 	t_map	*map;
 	
-	ptlst = lst_init();
-	ptlst = a_parse(txt, ptlst);
-	map = fdf_init(ptlst, txt);
+	/*ptlst = lst_init();
+	ptlst = a_parse(txt, ptlst);*/
+	map = fdf_init(txt);
 
-	ft_dllfree(ptlst);
-	free(ptlst);
-	ptlst = NULL;
+	//ft_dllfree(ptlst);
+	//free(ptlst);
+	//ptlst = NULL;
 	if (!map)
 		return ;
 	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map); //map change
@@ -78,7 +78,7 @@ void	leaks(void)
 
 int main(void)
 {
-	char	*path = "./test_maps/elem-col.fdf";
+	char	*path = "./test_maps/mars.fdf";
 	char	*txt;
 
 	txt = readfile(path);

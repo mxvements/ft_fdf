@@ -16,21 +16,23 @@
     // (j)
 	//   0  1  2  3  4
 	//	/s,-+, D, \n, ^		// 	(i)
-		{4, 2, 3, 4, 1},	//	0	INIT
+		{4, 2, 3, 5, 1},	//	0	INIT
 		{1, 1, 1, 1, 1},	//	1	ERR
 		{1, 1, 3, 1, 1},	//	2	SIGN '-' '+'
-		{4, 1, 3, 4, 1},	//	3	DICT "0123456789abcdefx,"
-		{4, 2, 3, 4, 1}		//	4	SPACE or \n
+		{4, 1, 3, 5, 1},	//	3	DICT "0123456789abcdefx,"
+		{4, 2, 3, 1, 1}		//	4	SPACE 
+		{1, 2, 3, 1, 1}		//	5	\n
 
 */
 size_t	a_getstate(int i, int j)
 {
 	const size_t	t_states[][5] = {\
-		{4, 2, 3, 4, 1}, \
+		{4, 2, 3, 5, 1}, \
 		{1, 1, 1, 1, 1}, \
 		{1, 1, 3, 1, 1}, \
-		{4, 1, 3, 4, 1}, \
-		{4, 2, 3, 4, 1} \
+		{4, 1, 3, 5, 1}, \
+		{4, 2, 3, 1, 1}, \
+		{1, 2, 3, 1, 1} \
 	};
 
 	return (t_states[i][j]);
@@ -88,7 +90,7 @@ t_map	*a_parse(char *txt, t_map *map)
 			a_parse_updatecoord(&(xy[0]), &(xy[1]), txt[i]);
 		}
 		if (ostate == 1 || (ostate < 3 && txt[i + 1] == '\0'))
-			map = map_evalerror_ptmap(map, xy[0]);
+			return (map_evalerror_ptmap(map, map->y_dim));
 		state = ostate;
 	}
 	return (map);

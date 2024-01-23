@@ -40,19 +40,22 @@ void	*map_free_vwstruct(t_view *vw)
 	return (NULL);
 }
 
-void	*map_free_ptmap(t_map *map, int x)
+void	*map_free_ptmap(t_map *map, int y)
 {
-	while (--x >= 0)
+	int i;
+
+	i = y;
+	while (--i >= 0)
 	{
-		free(map->map[x]);
-		map->map[x] = NULL;
+		free(map->map[i]);
+		map->map[i] = NULL;
 	}
 	if (map->map)
 	{
 		free(map->map);
 		map->map = NULL;
 	}
-	if (x < (map->y_dim))
+	if (y < (map->y_dim))
 		map_free(map);
 	return (map->map);
 }

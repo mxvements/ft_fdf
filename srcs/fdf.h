@@ -33,7 +33,7 @@
 # define WIDTH				1280
 # define HEIGHT				720
 # define SCALE				15
-# define ZSCALE				5
+# define ZSCALE				1
 
 typedef struct s_mlx
 {
@@ -127,7 +127,7 @@ void	*map_free_keystruct(t_keyin *keys);
 void	*map_free_vwstruct(t_view *vw);
 void	*map_free_ptmap(t_map *map, int x);
 void	map_free_mlx(t_map *map);
-void	*map_evalerror_ptmap(t_map *map, int x);
+void	*map_evalerror_ptmap(t_map *map, int y);
 t_map	*map_pixelptmap(t_map *map);
 t_map	*map_viewptmap(t_map *map);
 t_map	*map_view(t_map *map);

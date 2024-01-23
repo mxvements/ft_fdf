@@ -12,12 +12,12 @@
 
 #include "fdf.h"
 
-void	*map_evalerror_ptmap(t_map *map, int x)
+void	*map_evalerror_ptmap(t_map *map, int y)
 {
 	write(1, ANSICOLOR_RED, 6);
 	ft_putstr_fd("Error.\n", 2);
 	write(1, ANSICOLOR_RESET, 5);
-	return (map_free_ptmap(map, x));
+	return (map_free_ptmap(map, y));
 }
 
 t_map	*map_viewptmap(t_map *map)

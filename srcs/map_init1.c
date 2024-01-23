@@ -109,10 +109,10 @@ void	fdf(char *path)
 	txt = map_read_size(path, map);
 	if (!txt)
 	{
+		write(1, ANSICOLOR_RED, 6);
 		ft_putstr_fd("Error.\n", 2);
-		free(map);
-		map = NULL;
-		return ;
+		write(1, ANSICOLOR_RESET, 5);
+		return (free(map));
 	}
 	map = map_build(txt, map);
 	free(txt);

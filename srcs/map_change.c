@@ -58,15 +58,17 @@ int	map_updatevw(t_map *map)
 
 int	map_change(t_map *map)
 {
-	t_keyin *keys;
+	t_keyin	*keys;
 
 	keys = (map->keys);
 	free(map->mlx_data.img);
 	map->mlx_data.img = mlx_new_image(map->mlx_data.mlx, WIDTH, HEIGHT);
 	free(map->mlx_data.img_addr);
-	map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
-								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
-								&(map->mlx_data).endian);
+	map->mlx_data.img_addr = mlx_get_data_addr(
+			(map->mlx_data).img,
+			&(map->mlx_data).bpp,
+			&(map->mlx_data).line_len,
+			&(map->mlx_data).endian);
 	map = map_viewptmap(map);
 	map = map_pixelptmap(map);
 	map_printview(map);

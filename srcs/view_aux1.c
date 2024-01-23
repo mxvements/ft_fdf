@@ -15,11 +15,11 @@
 
 void	view_scale(t_view *vw)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
-	if (vw->scale_f == 0 || vw->scale_f == 1) //this should not be needed
+	if (vw->scale_f == 0 || vw->scale_f == 1)
 	{
 		vw->scale_f = 1;
 		return ;
@@ -57,7 +57,7 @@ void	view_isometric(t_map *map)
 	vw = map->vw;
 	vw->rot_rad_z = (M_PI_4);
 	vw->rot_rad_y = 0;
-	vw->rot_rad_x = (atan(sqrt(2))); 
+	vw->rot_rad_x = (atan(sqrt(2)));
 	vw->scale_f = SCALE;
 	vw->move_d_x = 0;
 	vw->move_d_y = 0;
@@ -67,7 +67,7 @@ void	view_isometric(t_map *map)
 
 void	view_plan(t_map	*map)
 {
-		t_view	*vw;
+	t_view	*vw;
 
 	vw = map->vw;
 	vw->rot_rad_z = (0);

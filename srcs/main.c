@@ -12,14 +12,14 @@
 
 #include "fdf.h"
 
-void	leaks(void)
+/*void	leaks(void)
 {
 	system("leaks -q fdf");
-}
-
-int main(int argc, char **argv)
+}*/
+//atexit(leaks);
+int	main(int argc, char **argv)
 {
-	if (argc == 2 )
+	if (argc == 2)
 	{
 		fdf(argv[1]);
 	}
@@ -29,8 +29,5 @@ int main(int argc, char **argv)
 		ft_putstr_fd("Error.\n", 2);
 		write(1, ANSICOLOR_RESET, 5);
 	}
-
-	atexit(leaks);
-	//system("leaks -q fdf");
 	return (0);
 }

@@ -29,7 +29,7 @@ void	map_printview(t_map *map)
 				&& (pt.px_xy[0] > 0 && pt.px_xy[1] > 0))
 				fdf_pxput(&(map->mlx_data), pt.px_xy[0], pt.px_xy[1], pt.color);
 			fdf_putlines(map, x, y);
-			if(!map)
+			if (!map)
 				return ;
 			x++;
 		}
@@ -66,7 +66,7 @@ t_map	*map_pixelptmap(t_map *map)
 {
 	int				xy[2];
 	int				init_pt[2];
-	int				pxmap_center[2];
+	int				center[2];
 	t_pt			*pt;
 
 	xy[1] = 0;
@@ -76,12 +76,12 @@ t_map	*map_pixelptmap(t_map *map)
 		while (xy[0] < (map->x_dim))
 		{
 			pt = &(map->map[xy[1]][xy[0]]);
-			pxmap_center[0] = (map->map[map->y_dim/2][map->x_dim/2]).vw_xyz[0];
-			pxmap_center[1] = (map->map[map->y_dim/2][map->x_dim/2]).vw_xyz[1];
-			init_pt[0] = (WIDTH / 2) - pxmap_center[0];
-			init_pt[1] = (HEIGHT / 2) - pxmap_center[1];
-			pt->px_xy[0] = init_pt[0] + ((pt->vw_xyz[0])) + map->vw->move_d_x;
-			pt->px_xy[1] = init_pt[1] + ((pt->vw_xyz[1])) + map->vw->move_d_y;
+			center[0] = (map->map[map->y_dim / 2][map->x_dim / 2]).vw_xyz[0];
+			center[1] = (map->map[map->y_dim / 2][map->x_dim / 2]).vw_xyz[1];
+			init_pt[0] = (WIDTH / 2) - center[0];
+			init_pt[1] = (HEIGHT / 2) - center[1];
+			pt->px_xy[0] = init_pt[0] + (pt->vw_xyz[0]) + map->vw->move_d_x;
+			pt->px_xy[1] = init_pt[1] + (pt->vw_xyz[1]) + map->vw->move_d_y;
 			xy[0]++;
 		}
 		xy[1]++;

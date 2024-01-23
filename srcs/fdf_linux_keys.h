@@ -30,19 +30,19 @@
 # define KEY_7			XK_KP_7
 # define KEY_8			XK_KP_8
 # define KEY_9			XK_KP_9
-# define KEY_r			XK_r 
-# define KEY_s			XK_s
+# define KEY_R			XK_r 
+# define KEY_S			XK_s
 # define KEY_T			XK_t
 # define KEY_X			XK_x
 # define KEY_Y			XK_y
 # define KEY_Z			XK_z
 # define KEY_H
-# define KEY_left		
-# define KEY_right		
-# define KEY_down		
-# define KEY_up
-# define KEY_i			
-# define KEY_p			
-# define KEY_u					
+# define KEY_LEFT		
+# define KEY_RIGHT		
+# define KEY_DOWN		
+# define KEY_UP
+# define KEY_I			
+# define KEY_P			
+# define KEY_U					
 
 #endif

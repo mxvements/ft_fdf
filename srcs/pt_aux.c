@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	pt_print(t_pt **ptarr, int xdim, int ydim) //need to change this funct
+/*void	pt_print(t_pt **ptarr, int xdim, int ydim)
 {
 	int		x;
 	int		y;
@@ -48,7 +48,7 @@ void	pt_print(t_pt **ptarr, int xdim, int ydim) //need to change this funct
 		}
 		x++;
 	}
-}
+}*/
 
 void	pt_rotate(t_pt *pt, t_view *vw)
 {
@@ -57,7 +57,6 @@ void	pt_rotate(t_pt *pt, t_view *vw)
 	int		y;
 	int		nbr;
 
-	//rotate and scale points
 	view_arr = vw->view;
 	x = 0;
 	while (x < 3)

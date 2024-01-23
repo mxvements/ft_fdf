@@ -81,13 +81,13 @@ double	**arrdbl_init(int x_dim, int y_dim, int nbr)
 	int		x;
 	int		y;
 
-	arr = (double**)malloc(sizeof(double*) * x_dim);
+	arr = (double **)malloc(sizeof(double *) * x_dim);
 	if (!arr)
 		return (NULL);
 	x = 0;
 	while (x < x_dim)
 	{
-		arr[x] = (double*)malloc(sizeof(double) * y_dim);
+		arr[x] = (double *)malloc(sizeof(double) * y_dim);
 		if (!arr[x])
 			return (arrdbl_free(arr, x), NULL);
 		y = 0;

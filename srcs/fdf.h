@@ -12,20 +12,16 @@
 
 #ifndef FDF_H
 # define FDF_H
-
 //MAC
 # include <mlx.h>
 # include "./fdf_mac_keys.h"
-
 //LINUX 
 //# include "../mlx_linux/mlx.h"
 //# include "./fdf_linux_keys.h"
-
 # include <fcntl.h>
 # include <math.h>
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
-
 # define ANSICOLOR_GRAY		"\x1b[30m"
 # define ANSICOLOR_RED		"\x1b[31m"
 # define ANSICOLOR_GREEN	"\x1b[32m"
@@ -34,7 +30,6 @@
 # define ANSICOLOR_MAGENTA	"\x1b[35m"
 # define ANSICOLOR_CYAN		"\x1b[36m"
 # define ANSICOLOR_RESET	"\x1b[0m"
-
 # define WIDTH				1280
 # define HEIGHT				720
 # define SCALE				15
@@ -90,17 +85,22 @@ typedef struct s_map
 	t_keyin	*keys;
 	t_mlx	mlx_data;
 }	t_map;
-
-//pt/
-void	pt_print(t_pt **ptarr, int xdim, int ydim);
+/* ************************************************************************** */
+/*                                    pt                                      */
+/* ************************************************************************** */
+//void	pt_print(t_pt **ptarr, int xdim, int ydim);
 void	pt_rotate(t_pt *pt, t_view *vw);
-//arr functions
+/* ************************************************************************** */
+/*                                   arr                                      */
+/* ************************************************************************** */
 void	arrdbl_print_3x3(double **m);
 void	arrdbl_mult_3x3(double **m1, double **m2, double **rslt);
 void	arrdbl_free(double **arr, int x_dim);
 double	**arrdbl_init(int x_dim, int y_dim, int nbr);
 double	**arrdbl_cpy_3x3(double **arr);
-//view funct
+/* ************************************************************************** */
+/*                                    vw                                      */
+/* ************************************************************************** */
 void	view_rot_z(t_view *vw);
 void	view_rot_y(t_view *vw);
 void	view_rot_x(t_view *vw);
@@ -108,14 +108,20 @@ void	view_scale(t_view *vw);
 void	view_rotate(t_view *vw);
 void	view_isometric(t_map *map);
 void	view_plan(t_map	*map);
-//map change
+/* ************************************************************************** */
+/*                               map change                                   */
+/* ************************************************************************** */
 int		map_escape(t_map *map);
 int		map_updatevw(t_map *map);
 int		map_change(t_map *map);
-//MLX
+/* ************************************************************************** */
+/*                                   mlx                                      */
+/* ************************************************************************** */
 t_map	*map_mlx(t_map *map);
 void	map_printview(t_map *map);
-//map  init
+/* ************************************************************************** */
+/*                               init view                                    */
+/* ************************************************************************** */
 void	*map_free(t_map *map);
 void	*map_free_keystruct(t_keyin *keys);
 void	*map_free_vwstruct(t_view *vw);
@@ -129,7 +135,9 @@ t_map	*map_build(char *txt, t_map *map);
 char	*map_read_size(char *path, t_map *map);
 void	*map_init(void);
 void	fdf(char *path);
-//fdf aux functions
+/* ************************************************************************** */
+/*                        fdf aux (hooks & menu)                              */
+/* ************************************************************************** */
 void	fdf_show_menu(void);
 void	fdf_show_transformation(t_keyin *keys);
 int		fdf_handle_input_rst(t_map *map);
@@ -145,13 +153,18 @@ int		fdf_mousedown_input(int button, int x, int y, t_map *map);
 int		fdf_mousemove_input(int x, int y, t_map *map);
 t_map	*fdf_keystruct_init(t_map *map);
 void	fdf_keystruct_reset(t_keyin *keys);
-//color and lines
+/* ************************************************************************** */
+/*                           colors and lines                                 */
+/* ************************************************************************** */
 int		*fdf_putcolor_wrapper(t_pt *pt1, t_pt *pt2, const int dx, const int dy);
 t_map	*fdf_putlines(t_map *map, int x, int y);
 void	fdf_pxput(t_mlx *mlx, int x, int y, int color);
-//automata
+/* ************************************************************************** */
+/*                                  parse                                     */
+/* ************************************************************************** */
 t_map	*arr_evalpoint(char *s, t_map *map, int *x, int *y);
 size_t	a_getstate(int i, int j);
 size_t	a_changestate(char c, size_t state);
 t_map	*a_parse(char *txt, t_map *map);
+
 #endif

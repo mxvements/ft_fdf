@@ -37,7 +37,7 @@ void	view_rot_y(t_view *vw)
 {
 	double	**cpy;
 	double	**rot_y;
-	
+
 	rot_y = arrdbl_init(3, 3, 1);
 	rot_y[0][0] = cos(vw->rot_rad_y);
 	rot_y[0][1] = 0;

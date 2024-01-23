@@ -127,7 +127,7 @@ void	*map_free_keystruct(t_keyin *keys);
 void	*map_free_vwstruct(t_view *vw);
 void	*map_free_ptmap(t_map *map, int x);
 void	map_free_mlx(t_map *map);
-void	*map_evalerror_ptmap(t_map *map, int x);
+void	*map_evalerror_ptmap(t_map *map, int y);
 t_map	*map_pixelptmap(t_map *map);
 t_map	*map_viewptmap(t_map *map);
 t_map	*map_view(t_map *map);

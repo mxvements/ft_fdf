@@ -41,11 +41,8 @@ static char	*map_gnljoin(char *gnl, char *txt, int xy[2])
 		x0 = map_size_x(gnl);
 		return (gnl);
 	}
-	if (xy[0] != x0)
+	if (xy[0] != x0 || xy[0] == 0)
 	{
-		write(1, ANSICOLOR_RED, 6);
-		ft_putstr_fd("Error.\n", 2);
-		write(1, ANSICOLOR_RESET, 5);
 		free(txt);
 		free(gnl);
 		return (NULL);

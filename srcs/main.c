@@ -11,86 +11,25 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "automata.h"
-
-char	*readfile(char *path)
-{
-	char	*txt;
-	char	*gnl;
-	char	*tmp;
-	int		fd;
-
-	if (!(*path))
-		return (NULL);
-	txt = NULL;
-	fd = open(path, O_RDONLY);
-	while(1)
-	{
-		gnl = get_next_line(fd);
-		if (gnl == NULL)
-			break ;
-		if (!txt)
-			txt = gnl;
-		else
-		{
-			tmp = ft_strjoin(txt, gnl);
-			free(txt);
-			free(gnl);
-			txt = tmp;
-		}
-	}
-	close(fd);
-	return (txt);
-}
-
-void	fdf(char *txt)
-{
-	//t_dll	**ptlst;
-	t_map	*map;
-	
-	/*ptlst = lst_init();
-	ptlst = a_parse(txt, ptlst);*/
-	map = fdf_init(txt);
-
-	//ft_dllfree(ptlst);
-	//free(ptlst);
-	//ptlst = NULL;
-	if (!map)
-		return ;
-	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map); //map change
-	mlx_mouse_hook(map->mlx_data.mlx_win, fdf_mousedown_input, map); //map change
-	mlx_hook(map->mlx_data.mlx_win, 6, 0, fdf_mousemove_input, map);
-	mlx_loop((map->mlx_data).mlx);
-
-	free((map->mlx_data).mlx);
-	free((map->mlx_data).mlx_win);
-	free(map->mlx_data.img);
-	free(map->mlx_data.img_addr);
-
-	map = map_free(map);
-	system("leaks -q fdf");
-}
 
 void	leaks(void)
 {
 	system("leaks -q fdf");
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
-	char	*path = "./test_maps/mars.fdf";
-	char	*txt;
-
-	txt = readfile(path);
-	if (!txt)
+	if (argc == 2 )
 	{
-		ft_putstr_fd("Error.\n", 2);
-		return (0);
+		fdf(argv[1]);
 	}
-	fdf(txt);
-	free(txt);
-	txt = NULL;
-	path = NULL;
+	else if (argc > 2)
+	{
+		write(1, ANSICOLOR_RED, 6);
+		ft_putstr_fd("Error.\n", 2);
+		write(1, ANSICOLOR_RESET, 5);
+	}
+
 	atexit(leaks);
 	//system("leaks -q fdf");
 	return (0);

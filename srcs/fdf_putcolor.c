@@ -35,7 +35,7 @@ static int	*fdf_putcolor_interp(int steps, int c_vw[2][3], double f)
 	return (colors);
 }
 
-int	*fdf_putcolor_x(t_pt *pt1, t_pt *pt2)
+static int	*fdf_putcolor_x(t_pt *pt1, t_pt *pt2)
 {
 	const int	steps = abs((pt2->px_xy[0] - pt1->px_xy[0]));
 	double		f;
@@ -62,7 +62,7 @@ int	*fdf_putcolor_x(t_pt *pt1, t_pt *pt2)
 	return (fdf_putcolor_interp(steps, c_vw, f));
 }
 
-int	*fdf_putcolor_y(t_pt *pt1, t_pt *pt2)
+static int	*fdf_putcolor_y(t_pt *pt1, t_pt *pt2)
 {
 	const int	steps = abs((pt2->px_xy[1] - pt1->px_xy[1]));
 	double		f;

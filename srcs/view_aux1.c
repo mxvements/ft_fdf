@@ -39,17 +39,10 @@ void	view_scale(t_view *vw)
 
 void	view_rotate(t_view *vw)
 {
-	//printf("rot_x: \n");
-	//arrdbl_print_3x3(vw->view);
 	if (vw->rot_rad_x != 0)
 		view_rot_x(vw);
-	//printf("rot_y: \n");
-	//arrdbl_print_3x3(vw->view);
-	
 	if (vw->rot_rad_y != 0)
 		view_rot_y(vw);
-	//printf("rot_z: \n");
-	//arrdbl_print_3x3(vw->view);
 	if (vw->rot_rad_z != 0)
 		view_rot_z(vw);
 	vw->rot_rad_z = 0;

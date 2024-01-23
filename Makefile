@@ -15,9 +15,8 @@ NAME=		fdf
 #HRDS=
 
 SRCS=		main.c \
-			automata.c \
-			automata_v2.c \
-			automata_aux.c \
+			automata1.c \
+			automata2.c \
 			fdf_aux.c \
 			fdf_keyhooks1.c \
 			fdf_keyhooks2.c \
@@ -26,6 +25,7 @@ SRCS=		main.c \
 			fdf_putcolor.c \
 			map_init1.c \
 			map_init2.c \
+			map_init3.c \
 			map_change.c \
 			map_free.c \
 			matrix_aux1.c \

@@ -32,11 +32,12 @@
 # define KEY_9			XK_KP_9
 # define KEY_r			XK_r 
 # define KEY_s			XK_s
-# define KEY_t			XK_t
-# define KEY_x			XK_x
-# define KEY_y			XK_y
-# define KEY_z			XK_z
-# define KEY_left		XK
+# define KEY_T			XK_t
+# define KEY_X			XK_x
+# define KEY_Y			XK_y
+# define KEY_Z			XK_z
+# define KEY_H
+# define KEY_left		
 # define KEY_right		
 # define KEY_down		
 # define KEY_up

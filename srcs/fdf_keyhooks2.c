@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_keyhooks2.c                                         :+:      :+:    :+:   */
+/*   fdf_keyhooks2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luciama2 <luciama2@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,7 +15,7 @@
 int	fdf_handle_input_rst(t_map *map)
 {
 	write(1, ANSICOLOR_BLUE, 6);
-	if (*(map->keys->keysym) == KEY_r && map->keys->key_tr == 0)
+	if (*(map->keys->keysym) == KEY_R && map->keys->key_tr == 0)
 	{
 		ft_putstr_fd("********************** rot **********************\n", 1);
 		ft_putstr_fd("Press (x) to rotate the X axis\n", 1);
@@ -23,13 +23,13 @@ int	fdf_handle_input_rst(t_map *map)
 		ft_putstr_fd("Press (z) to rotate the Z axis\n", 1);
 		map->keys->key_tr = 'r';
 	}
-	if (*(map->keys->keysym) == KEY_s && map->keys->key_tr == 0)
+	if (*(map->keys->keysym) == KEY_S && map->keys->key_tr == 0)
 	{
 		ft_putstr_fd("********************** scl **********************\n", 1);
 		ft_putstr_fd("Press number to scale on the X axis\n", 1);
 		map->keys->key_tr = 's';
 	}
-	if (*(map->keys->keysym) == KEY_t && map->keys->key_tr == 0)
+	if (*(map->keys->keysym) == KEY_T && map->keys->key_tr == 0)
 	{
 		ft_putstr_fd("********************** mov **********************\n", 1);
 		ft_putstr_fd("Press (x) to move on the X axis\n", 1);
@@ -48,11 +48,11 @@ int	fdf_handle_input_xyz(t_map *map)
 		return (map->keys->key_ax);
 	else if (map->keys->key_tr != 0)
 	{
-		if (*(map->keys->keysym) == KEY_x)
+		if (*(map->keys->keysym) == KEY_X)
 			map->keys->key_ax = 'x';
-		else if (*(map->keys->keysym) == KEY_y)
+		else if (*(map->keys->keysym) == KEY_Y)
 			map->keys->key_ax = 'y';
-		else if (*(map->keys->keysym) == KEY_z)
+		else if (*(map->keys->keysym) == KEY_Z)
 			map->keys->key_ax = 'z';
 	}
 	if (map->keys->key_tr == 'r')
@@ -74,7 +74,7 @@ int	fdf_handle_input_sign(t_map *map)
 	t_keyin	*keys;
 
 	keys = (map->keys);
-	if (keys->key_tr != 0 && keys->key_ax !=0)
+	if (keys->key_tr != 0 && keys->key_ax != 0)
 	{
 		keys->key_sign = -1;
 		return (fdf_handle_input_nbr(map));
@@ -84,7 +84,7 @@ int	fdf_handle_input_sign(t_map *map)
 
 int	fdf_handle_input_nbr(t_map *map)
 {
-	if ((map->keys->key_tr == 's' && map->keys->key_ax == 0) 
+	if ((map->keys->key_tr == 's' && map->keys->key_ax == 0)
 		|| (map->keys->key_tr != 0 && map->keys->key_ax != 0))
 	{
 		if (*(map->keys->keysym) == KEY_0)

@@ -12,59 +12,55 @@
 
 #include "fdf.h"
 
-int	fdf_get_key_index(int k)
+static int	fdf_get_key_index(int k)
 {
 	if (k == KEY_ESC)
 		return (0);
 	else if (k == KEY_ENTER)
 		return (1);
-	else if (k == KEY_minus)
+	else if (k == KEY_MINUS)
 		return (2);
-	else if (k == KEY_plus)
+	else if (k == KEY_PLUS)
 		return (3);
-	else if (k == KEY_left || k == KEY_right || k == KEY_up || k == KEY_down)
+	else if (k == KEY_LEFT || k == KEY_RIGHT || k == KEY_UP || k == KEY_DOWN)
 		return (4);
-	else if (k == KEY_r || k == KEY_s || k == KEY_t)
+	else if (k == KEY_R || k == KEY_S || k == KEY_T)
 		return (5);
-	else if (k == KEY_x || k == KEY_y || k == KEY_z)
+	else if (k == KEY_X || k == KEY_Y || k == KEY_Z)
 		return (6);
 	else if (k == KEY_0 || k == KEY_1 || k == KEY_2 || k == KEY_3 || k == KEY_4
 		|| k == KEY_5 || k == KEY_6 || k == KEY_7 || k == KEY_8 || k == KEY_9)
 		return (7);
-	else if (k == KEY_i || k == KEY_p)
+	else if (k == KEY_I || k == KEY_P)
 		return (8);
-	/*else if(k == KEY_u)
-		return (9);*/
 	return (-1);
 }
 
-//int (*f)(int keycode, void *param)
 int	fdf_key_input(int keysym, t_map *map)
 {
 	int				key_index;
 
 	map->keys->keysym = &keysym;
 	key_index = fdf_get_key_index(keysym);
-	if (key_index == 0) //esc
+	if (key_index == 0)
 		return (map_escape(map));
-	else if (key_index == 1)//enter keypad
+	else if (key_index == 1)
 		return (map_updatevw(map));
-	else if (key_index == 2) //- in keypad, sign or zoom
+	else if (key_index == 2)
 		return (fdf_handle_input_sign(map));
-	else if (key_index == 3) //+- in keypad 
+	else if (key_index == 3)
 		return (fdf_handle_input_zoom(map));
-	else if (key_index == 4) //arrowpad 
+	else if (key_index == 4)
 		return (fdf_handle_input_pan(map));
-	else if (key_index == 5) //rst
+	else if (key_index == 5)
 		return (fdf_handle_input_rst(map));
-	else if (key_index == 6) //xyz
+	else if (key_index == 6)
 		return (fdf_handle_input_xyz(map));
-	else if (key_index == 7) //nbrs
+	else if (key_index == 7)
 		return (fdf_handle_input_nbr(map));
 	else if (key_index == 8)
 		return (fdf_handle_input_reset(map));
-	else
-		return (-1);
+	return (-1);
 }
 
 int	fdf_handle_input_reset(t_map *map)
@@ -74,14 +70,14 @@ int	fdf_handle_input_reset(t_map *map)
 
 	keys = map->keys;
 	keysym = *(keys->keysym);
-	if (keysym == KEY_i)
+	if (keysym == KEY_I)
 	{
 		arrdbl_free(map->vw->view, 3);
 		map->vw->view = arrdbl_init(3, 3, 1);
 		view_isometric(map);
 		return (map_change(map));
 	}
-	if (keysym == KEY_p)
+	if (keysym == KEY_P)
 	{
 		arrdbl_free(map->vw->view, 3);
 		map->vw->view = arrdbl_init(3, 3, 1);
@@ -99,9 +95,9 @@ int	fdf_handle_input_zoom(t_map *map)
 	keys = (map->keys);
 	keysym = *(map->keys->keysym);
 	keys->key_tr = 's';
-	if (keysym == KEY_minus)
+	if (keysym == KEY_MINUS)
 		(keys->key_nbr) = 0.9;
-	if (keysym == KEY_plus)
+	if (keysym == KEY_PLUS)
 		(keys->key_nbr) = 1.1;
 	return (map_updatevw(map));
 }
@@ -114,17 +110,17 @@ int	fdf_handle_input_pan(t_map *map)
 	keys = (map->keys);
 	keys->key_tr = 't';
 	keysym = *(map->keys->keysym);
-	if (keysym == KEY_left || keysym == KEY_right)
-		keys->key_ax = 'x'; //For default Plane (XY)
-	else if (keysym == KEY_up || keysym == KEY_down)
-		keys->key_ax = 'y'; //For default Plane (XY)
-	if (keysym == KEY_left)
+	if (keysym == KEY_LEFT || keysym == KEY_RIGHT)
+		keys->key_ax = 'x';
+	else if (keysym == KEY_UP || keysym == KEY_DOWN)
+		keys->key_ax = 'y';
+	if (keysym == KEY_LEFT)
 		(keys->key_nbr) -= 1;
-	else if (keysym == KEY_right)
+	else if (keysym == KEY_RIGHT)
 		(keys->key_nbr) += 1;
-	else if (keysym == KEY_up)
+	else if (keysym == KEY_UP)
 		(keys->key_nbr) -= 1;
-	else if (keysym == KEY_down)
-		(keys->key_nbr)+= 1;
+	else if (keysym == KEY_DOWN)
+		(keys->key_nbr) += 1;
 	return (map_updatevw(map));
 }

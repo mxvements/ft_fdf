@@ -19,10 +19,12 @@ int	map_escape(t_map *map)
 	mlx_data = &(map->mlx_data);
 	write(1, ANSICOLOR_MAGENTA, 6);
 	write(1, "(EXC)\n", 6);
-	mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
-	//TODO: FREE THINGS?
-	//exit(EXIT_SUCCESS);
 	write(1, ANSICOLOR_RESET, 5);
+	mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
+	free(map->mlx_data.img);
+	free(map->mlx_data.img_addr);
+	free((map->mlx_data).mlx);
+	exit(EXIT_SUCCESS);
 	return (-1);
 }
 
@@ -65,10 +67,9 @@ int	map_change(t_map *map)
 	map->mlx_data.img_addr = mlx_get_data_addr((map->mlx_data).img,
 								&(map->mlx_data).bpp, &(map->mlx_data).line_len,
 								&(map->mlx_data).endian);
-	map = map_viewptmap(map); //transform points
-	map = map_pixelptmap(map); //get pixel coord
+	map = map_viewptmap(map);
+	map = map_pixelptmap(map);
 	map_printview(map);
 	fdf_keystruct_reset(keys);
-	//printf("key_tra:  %d, key_ax: %d, key_nbr. %f\n", keys->key_tr, keys->key_ax, keys->key_nbr);
 	return (1);
 }

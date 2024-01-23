@@ -25,7 +25,6 @@
 # include <math.h>
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
-# include "automata.h"
 
 # define ANSICOLOR_GRAY		"\x1b[30m"
 # define ANSICOLOR_RED		"\x1b[31m"
@@ -43,7 +42,7 @@
 
 typedef struct s_mlx
 {
-	void	*mlx; //INSTANCIA DE 
+	void	*mlx;
 	void	*mlx_win;
 	void	*img;
 	char	*img_addr;
@@ -54,10 +53,10 @@ typedef struct s_mlx
 
 typedef struct s_point
 {
-	int	xyz[3]; //{x, y, z}
+	int	xyz[3];
 	int	vw_xyz[3];
 	int	px_xy[2];
-	int color;
+	int	color;
 }	t_pt;
 
 typedef struct s_view
@@ -73,20 +72,20 @@ typedef struct s_view
 
 typedef struct s_keyin
 {
-	int *keysym;
-	int key_tr;
-	int key_ax;
-	double key_nbr;
+	int		*keysym;
+	int		key_tr;
+	int		key_ax;
+	double	key_nbr;
 	double	key_sign;
-	int	mouse_xy[2];
-	int	mouse_flag;
+	int		mouse_xy[2];
+	int		mouse_flag;
 }	t_keyin;
 
 typedef struct s_map
 {
 	int		x_dim;
 	int		y_dim;
-	t_pt	**map; //double array of points of x_dim and y_dim of map
+	t_pt	**map;
 	t_view	*vw;
 	t_keyin	*keys;
 	t_mlx	mlx_data;
@@ -109,6 +108,27 @@ void	view_scale(t_view *vw);
 void	view_rotate(t_view *vw);
 void	view_isometric(t_map *map);
 void	view_plan(t_map	*map);
+//map change
+int		map_escape(t_map *map);
+int		map_updatevw(t_map *map);
+int		map_change(t_map *map);
+//MLX
+t_map	*map_mlx(t_map *map);
+void	map_printview(t_map *map);
+//map  init
+void	*map_free(t_map *map);
+void	*map_free_keystruct(t_keyin *keys);
+void	*map_free_vwstruct(t_view *vw);
+void	*map_free_ptmap(t_map *map, int x);
+void	map_free_mlx(t_map *map);
+void	*map_evalerror_ptmap(t_map *map, int x);
+t_map	*map_pixelptmap(t_map *map);
+t_map	*map_viewptmap(t_map *map);
+t_map	*map_view(t_map *map);
+t_map	*map_build(char *txt, t_map *map);
+char	*map_read_size(char *path, t_map *map);
+void	*map_init(void);
+void	fdf(char *path);
 //fdf aux functions
 void	fdf_show_menu(void);
 void	fdf_show_transformation(t_keyin *keys);
@@ -118,42 +138,20 @@ int		fdf_handle_input_nbr(t_map *map);
 int		fdf_handle_input_sign(t_map *map);
 int		fdf_handle_input_zoom(t_map *map);
 int		fdf_handle_input_pan(t_map *map);
+int		fdf_handle_input_height(t_map *map);
 int		fdf_handle_input_reset(t_map *map);
-int		fdf_get_key_index(int k);
 int		fdf_key_input(int keysym, t_map *map);
 int		fdf_mousedown_input(int button, int x, int y, t_map *map);
 int		fdf_mousemove_input(int x, int y, t_map *map);
 t_map	*fdf_keystruct_init(t_map *map);
 void	fdf_keystruct_reset(t_keyin *keys);
-void	fdf_pixelput(t_mlx *mlx, int x, int y, int color);
-void	fdf_linebresenham_x(int *px1, int *px2, t_map *map, int *colors);
-void	fdf_linebresenham_y(int *px1, int *px2, t_map *map, int *colors);
-void	fdf_putlines(t_map *map, int x, int y);
-//colors
-int		*fdf_putcolor_x(t_pt *pt1, t_pt *pt2);
-int		*fdf_putcolor_y(t_pt *pt1, t_pt *pt2);
-int 	*fdf_putcolor_wrapper(t_pt *pt1, t_pt *pt2, const int dx, const int dy);
-//MLX
-t_map	*map_mlx(t_map *map);
-void	map_printview(t_map *map);
-//map  init
-void	*map_free(t_map *map);
-void	*map_free_keystruct(t_keyin *keys);
-void	*map_free_vwstruct(t_view *vw);
-void 	*map_free_ptmap(t_map *map, int x);
-void	*map_evalerror_ptmap(t_map *map, int x);
-t_dll	*map_getptinfo(t_dll *ptnode, t_map *map, int x, int y); //could be static
-t_map	*map_ptmap(t_map *map, t_dll **lst);
-t_map	*map_pixelptmap(t_map *map);
-t_map	*map_viewptmap(t_map *map);
-t_map	*map_view(t_map *map);
-t_map	*map_size(char *txt, t_map *map);
-t_map	*fdf_init(char *txt);
-//map change
-int		map_escape(t_map *map);
-int		map_updatevw(t_map *map);
-int		map_change(t_map *map);
+//color and lines
+int		*fdf_putcolor_wrapper(t_pt *pt1, t_pt *pt2, const int dx, const int dy);
+t_map	*fdf_putlines(t_map *map, int x, int y);
+void	fdf_pxput(t_mlx *mlx, int x, int y, int color);
 //automata
-t_map	*a_parse2(char *txt, t_map *map);
-t_map 	*arr_evalpoint(char *s, t_map *map, int *x, int *y);
+t_map	*arr_evalpoint(char *s, t_map *map, int *x, int *y);
+size_t	a_getstate(int i, int j);
+size_t	a_changestate(char c, size_t state);
+t_map	*a_parse(char *txt, t_map *map);
 #endif

@@ -40,7 +40,7 @@ void	*map_free_vwstruct(t_view *vw)
 	return (NULL);
 }
 
-void 	*map_free_ptmap(t_map *map, int x)
+void	*map_free_ptmap(t_map *map, int x)
 {
 	while (--x >= 0)
 	{
@@ -55,4 +55,12 @@ void 	*map_free_ptmap(t_map *map, int x)
 	if (x < (map->y_dim))
 		map_free(map);
 	return (map->map);
+}
+
+void	map_free_mlx(t_map *map)
+{
+	free((map->mlx_data).mlx);
+	free((map->mlx_data).mlx_win);
+	free(map->mlx_data.img);
+	free(map->mlx_data.img_addr);
 }

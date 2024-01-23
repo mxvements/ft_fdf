@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	fdf_linebresenham_x(int *p1, int *p2, t_map *map, int *colors)
+static void	fdf_linebresenham_x(int *p1, int *p2, t_map *map, int *colors)
 {
 	int				x;
 	int				y;
@@ -26,7 +26,7 @@ void	fdf_linebresenham_x(int *p1, int *p2, t_map *map, int *colors)
 	while (((x - p1[0]) * (x - p2[0]) <= 0) && (dx + dy != 0))
 	{
 		if ((x < WIDTH && y < HEIGHT && x > 0 && y > 0))
-			fdf_pixelput(&(map->mlx_data), x, y, colors[abs(x - p1[0])]);
+			fdf_pxput(&(map->mlx_data), x, y, colors[abs(x - p1[0])]);
 		if (dx != 0)
 			x += ((p2[0] - p1[0]) / dx);
 		if (p < 0)
@@ -40,7 +40,7 @@ void	fdf_linebresenham_x(int *p1, int *p2, t_map *map, int *colors)
 	}
 }
 
-void	fdf_linebresenham_y(int *p1, int *p2, t_map *map, int *colors)
+static void	fdf_linebresenham_y(int *p1, int *p2, t_map *map, int *colors)
 {
 	int				x;
 	int				y;
@@ -54,7 +54,7 @@ void	fdf_linebresenham_y(int *p1, int *p2, t_map *map, int *colors)
 	while (((y - p1[1]) * (y - p2[1]) <= 0) && (dx + dy != 0))
 	{
 		if ((x < WIDTH && y < HEIGHT && x > 0 && y > 0))
-			fdf_pixelput(&(map->mlx_data), x, y, colors[abs(y - p1[1])]);
+			fdf_pxput(&(map->mlx_data), x, y, colors[abs(y - p1[1])]);
 		if (dy != 0)
 			y += ((p2[1] - p1[1]) / dy);
 		if (p < 0)
@@ -68,7 +68,7 @@ void	fdf_linebresenham_y(int *p1, int *p2, t_map *map, int *colors)
 	}
 }
 
-static void	fdf_linebresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
+static t_map	*fdf_linebresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
 {
 	const int	dx = abs(pt1->px_xy[0] - pt2->px_xy[0]);
 	const int	dy = abs(pt1->px_xy[1] - pt2->px_xy[1]);
@@ -76,7 +76,7 @@ static void	fdf_linebresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
 
 	colors = fdf_putcolor_wrapper(pt1, pt2, dx, dy);
 	if (!colors)
-		return ; //TODO: free everything
+		return (map_free(map));
 	if (dx >= dy)
 	{
 		if (pt1->px_xy[0] <= pt2->px_xy[0])
@@ -92,9 +92,10 @@ static void	fdf_linebresenham_wrapper(t_map *map, t_pt *pt1, t_pt *pt2)
 			fdf_linebresenham_y(pt2->px_xy, pt1->px_xy, map, colors);
 	}
 	free(colors);
+	return (map);
 }
 
-void	fdf_putlines(t_map *map, int x, int y)
+t_map	*fdf_putlines(t_map *map, int x, int y)
 {
 	t_pt	*pt;
 	t_pt	*pt_right;
@@ -105,15 +106,20 @@ void	fdf_putlines(t_map *map, int x, int y)
 	{
 		pt_down = &(map->map[y][x + 1]);
 		fdf_linebresenham_wrapper(map, pt, pt_down);
+		if (!map)
+			return (NULL);
 	}
 	if (y != (map->y_dim - 1))
 	{
 		pt_right = &(map->map[y + 1][x]);
 		fdf_linebresenham_wrapper(map, pt, pt_right);
+		if (!map)
+			return (NULL);
 	}
+	return (map);
 }
 
-void	fdf_pixelput(t_mlx *mlx, int x, int y, int color)
+void	fdf_pxput(t_mlx *mlx, int x, int y, int color)
 {
 	int	dist;
 	int	line_length;

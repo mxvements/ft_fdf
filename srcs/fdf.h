@@ -149,6 +149,7 @@ int		fdf_handle_input_pan(t_map *map);
 int		fdf_handle_input_height(t_map *map);
 int		fdf_handle_input_reset(t_map *map);
 int		fdf_hanlde_input_enter(t_map *map);
+int		fdf_handle_destroy(t_map *map);
 int		fdf_key_input(int keysym, t_map *map);
 int		fdf_mousedown_input(int button, int x, int y, t_map *map);
 int		fdf_mousemove_input(int x, int y, t_map *map);

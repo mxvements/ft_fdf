@@ -52,3 +52,16 @@ void	fdf_show_transformation(t_keyin *keys)
 	ft_putstr_fd("px\n", 1);
 	write(1, ANSICOLOR_RESET, 5);
 }
+
+int	fdf_handle_destroy(t_map *map)
+{
+	t_mlx	*mlx_data;
+
+	mlx_data = &(map->mlx_data);
+	mlx_destroy_window(mlx_data->mlx, mlx_data->mlx_win);
+	free(map->mlx_data.img);
+	free(map->mlx_data.img_addr);
+	free((map->mlx_data).mlx);
+	exit(EXIT_SUCCESS);
+	return (1);
+}

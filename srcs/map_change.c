@@ -25,7 +25,7 @@ int	map_escape(t_map *map)
 	free(map->mlx_data.img_addr);
 	free((map->mlx_data).mlx);
 	exit(EXIT_SUCCESS);
-	return (-1);
+	return (1);
 }
 
 static void	map_updatevw_rot(t_map *map)

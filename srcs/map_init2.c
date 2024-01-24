@@ -20,27 +20,17 @@ void	*map_evalerror_ptmap(t_map *map, int y)
 	return (map_free_ptmap(map, y));
 }
 
-t_map	*map_viewptmap(t_map *map)
+void	*map_init(void)
 {
-	t_view	*vw;
-	t_pt	*pt;
-	int		x;
-	int		y;
+	t_map	*map;
 
-	vw = map->vw;
-	y = 0;
-	while (y < map->y_dim)
-	{
-		x = 0;
-		while (x < map->x_dim)
-		{
-			pt = &(map->map[y][x]);
-			pt_rotate(pt, vw);
-			x++;
-		}
-		y++;
-	}
-	return (map);
+	map = (t_map *)malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->keys = NULL;
+	map->vw = NULL;
+	map->map = NULL;
+	return ((void *)map);
 }
 
 t_map	*map_view(t_map *map)

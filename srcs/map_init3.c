@@ -88,3 +88,26 @@ t_map	*map_pixelptmap(t_map *map)
 	}
 	return (map);
 }
+
+t_map	*map_viewptmap(t_map *map)
+{
+	t_view	*vw;
+	t_pt	*pt;
+	int		x;
+	int		y;
+
+	vw = map->vw;
+	y = 0;
+	while (y < map->y_dim)
+	{
+		x = 0;
+		while (x < map->x_dim)
+		{
+			pt = &(map->map[y][x]);
+			pt_rotate(pt, vw);
+			x++;
+		}
+		y++;
+	}
+	return (map);
+}

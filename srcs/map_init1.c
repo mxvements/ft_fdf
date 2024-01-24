@@ -82,17 +82,12 @@ char	*map_read_size(char *path, t_map *map)
 	return (txt);
 }
 
-void	*map_init(void)
+static void	fdf_hooks(t_map *map)
 {
-	t_map	*map;
-
-	map = (t_map *)malloc(sizeof(t_map));
-	if (!map)
-		return (NULL);
-	map->keys = NULL;
-	map->vw = NULL;
-	map->map = NULL;
-	return ((void *)map);
+	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map);
+	mlx_mouse_hook(map->mlx_data.mlx_win, fdf_mousedown_input, map);
+	mlx_hook(map->mlx_data.mlx_win, 6, 0, fdf_mousemove_input, map);
+	mlx_hook(map->mlx_data.mlx_win, 17, 0, fdf_handle_destroy, map);
 }
 
 void	fdf(char *path)
@@ -115,9 +110,7 @@ void	fdf(char *path)
 	free(txt);
 	if (!map)
 		return ;
-	mlx_key_hook(map->mlx_data.mlx_win, fdf_key_input, map);
-	mlx_mouse_hook(map->mlx_data.mlx_win, fdf_mousedown_input, map);
-	mlx_hook(map->mlx_data.mlx_win, 6, 0, fdf_mousemove_input, map);
+	fdf_hooks(map);
 	mlx_loop((map->mlx_data).mlx);
 	map_free_mlx(map);
 	map = map_free(map);

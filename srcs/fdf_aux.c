@@ -16,16 +16,16 @@ void	fdf_show_menu(void)
 {
 	write(1, ANSICOLOR_BLUE, 6);
 	ft_putstr_fd("********************** fdf **********************\n", 1);
-	ft_putstr_fd("Press (ESC) to close window\n", 1);
-	ft_putstr_fd("Press (r) to rotate\n", 1);
-	ft_putstr_fd("Press (s) to scale\n", 1);
-	ft_putstr_fd("Press (t) to translate\n", 1);
-	ft_putstr_fd("Press (i) to reset view to isometric\n", 1);
-	ft_putstr_fd("Press (p) to reset view to plan\n", 1);
-	ft_putstr_fd("Use arrows to move view\n", 1);
-	ft_putstr_fd("Use keypad's -+ to move zoom out/in\n", 1);
+	ft_putstr_fd("Use (ESC) to close window\n", 1);
+	ft_putstr_fd("Use (r) to rotate\n", 1);
+	ft_putstr_fd("Use (s) to scale\n", 1);
+	ft_putstr_fd("Use (t) to translate\n", 1);
+	ft_putstr_fd("Use (i) to reset view to isometric\n", 1);
+	ft_putstr_fd("Use (p) to reset view to plan\n", 1);
+	ft_putstr_fd("Use (arrows) to move view\n", 1);
+	ft_putstr_fd("Use keypad's (-+) to move zoom out/in\n", 1);
 	ft_putstr_fd("Use mouse's wheel to move zoom out/in\n", 1);
-	ft_putstr_fd("Use mouse's righnt-click to rotate view\n", 1);
+	ft_putstr_fd("Use mouse's right-click to rotate view\n", 1);
 	write(1, ANSICOLOR_RESET, 5);
 }
 

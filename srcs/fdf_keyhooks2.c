@@ -26,7 +26,7 @@ int	fdf_handle_input_rst(t_map *map)
 	if (*(map->keys->keysym) == KEY_S && map->keys->key_tr == 0)
 	{
 		ft_putstr_fd("********************** scl **********************\n", 1);
-		ft_putstr_fd("Press number to scale on the X axis\n", 1);
+		ft_putstr_fd("Press keypad number to scale on the X axis\n", 1);
 		map->keys->key_tr = 's';
 	}
 	if (*(map->keys->keysym) == KEY_T && map->keys->key_tr == 0)
@@ -56,9 +56,9 @@ int	fdf_handle_input_xyz(t_map *map)
 			map->keys->key_ax = 'z';
 	}
 	if (map->keys->key_tr == 'r')
-		ft_putstr_fd("+ Press (nbrs) to ROTATE ", 1);
+		ft_putstr_fd("+ Press keypad (nbrs) + (enter) to ROTATE ", 1);
 	if (map->keys->key_tr == 't')
-		ft_putstr_fd("+ Press (nbrs) to MOVE ", 1);
+		ft_putstr_fd("+ Press keypad (nbrs) + (enter) to MOVE ", 1);
 	if (map->keys->key_ax == 'x')
 		ft_putstr_fd("on the X axis\n", 1);
 	else if (map->keys->key_ax == 'y')

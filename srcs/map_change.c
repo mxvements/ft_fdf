@@ -27,6 +27,7 @@ int	map_escape(t_map *map)
 	exit(EXIT_SUCCESS);
 	return (-1);
 }
+
 static void	map_updatevw_rot(t_map *map)
 {
 	const t_keyin	*keys = (map->keys);

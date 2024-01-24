@@ -14,7 +14,7 @@
 
 int	fdf_handle_input_rst(t_map *map)
 {
-	write(1, ANSICOLOR_BLUE, 6);
+	write(1, ANSICOLOR_GREEN, 6);
 	if (*(map->keys->keysym) == KEY_R && map->keys->key_tr == 0)
 	{
 		ft_putstr_fd("********************** rot **********************\n", 1);
@@ -43,7 +43,7 @@ int	fdf_handle_input_rst(t_map *map)
 
 int	fdf_handle_input_xyz(t_map *map)
 {
-	write(1, ANSICOLOR_BLUE, 6);
+	write(1, ANSICOLOR_GREEN, 6);
 	if (map->keys->key_tr == 's')
 		return (map->keys->key_ax);
 	else if (map->keys->key_tr != 0)
@@ -118,5 +118,5 @@ int	fdf_hanlde_input_enter(t_map *map)
 
 	result = map_updatevw(map);
 	fdf_show_menu();
-	return(result);
+	return (result);
 }

@@ -14,7 +14,7 @@
 
 void	fdf_show_menu(void)
 {
-	write(1, ANSICOLOR_BLUE, 6);
+	write(1, ANSICOLOR_CYAN, 6);
 	ft_putstr_fd("********************** fdf **********************\n", 1);
 	ft_putstr_fd("Use (ESC) to close window\n", 1);
 	ft_putstr_fd("Use (r) to rotate\n", 1);

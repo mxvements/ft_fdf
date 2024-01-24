@@ -45,7 +45,7 @@ int	fdf_key_input(int keysym, t_map *map)
 	if (key_index == 0)
 		return (map_escape(map));
 	else if (key_index == 1)
-		return (map_updatevw(map));
+		return (fdf_hanlde_input_enter(map));
 	else if (key_index == 2)
 		return (fdf_handle_input_sign(map));
 	else if (key_index == 3)

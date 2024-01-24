@@ -27,22 +27,28 @@ int	map_escape(t_map *map)
 	exit(EXIT_SUCCESS);
 	return (-1);
 }
+static void	map_updatevw_rot(t_map *map)
+{
+	const t_keyin	*keys = (map->keys);
+
+	if (keys->key_ax == 'x')
+		map->vw->rot_rad_x = keys->key_nbr * keys->key_sign * (M_PI / 180);
+	if (keys->key_ax == 'y')
+		map->vw->rot_rad_y = keys->key_nbr * keys->key_sign * (M_PI / 180);
+	if (keys->key_ax == 'z')
+		map->vw->rot_rad_z = keys->key_nbr * keys->key_sign * (M_PI / 180);
+}
 
 int	map_updatevw(t_map *map)
 {
 	const t_keyin	*keys = (map->keys);
 
 	if (keys->key_tr == 'r')
-	{
-		if (keys->key_ax == 'x')
-			map->vw->rot_rad_x = keys->key_nbr * keys->key_sign * (M_PI / 180);
-		if (keys->key_ax == 'y')
-			map->vw->rot_rad_y = keys->key_nbr * keys->key_sign * (M_PI / 180);
-		if (keys->key_ax == 'z')
-			map->vw->rot_rad_z = keys->key_nbr * keys->key_sign * (M_PI / 180);
-	}
-	if (keys->key_tr == 's')
-		map->vw->scale_f = keys->key_nbr * keys->key_sign;
+		map_updatevw_rot(map);
+	if (keys->key_tr == 's' && keys->key_sign == 1)
+		map->vw->scale_f = keys->key_nbr ;
+	if (keys->key_tr == 's' && keys->key_sign == -1)
+		map->vw->scale_f = 1 / keys->key_nbr;
 	if (keys->key_tr == 't')
 	{
 		if (keys->key_ax == 'x')

@@ -74,7 +74,8 @@ int	fdf_handle_input_sign(t_map *map)
 	t_keyin	*keys;
 
 	keys = (map->keys);
-	if (keys->key_tr != 0 && keys->key_ax != 0)
+	if ((keys->key_tr != 0 && keys->key_ax != 0)
+		|| (map->keys->key_tr == 's' && map->keys->key_ax == 0))
 	{
 		keys->key_sign = -1;
 		return (fdf_handle_input_nbr(map));
@@ -109,4 +110,13 @@ int	fdf_handle_input_nbr(t_map *map)
 			map->keys->key_nbr = (map->keys->key_nbr * 10) + 9;
 	}
 	return (map->keys->key_nbr);
+}
+
+int	fdf_hanlde_input_enter(t_map *map)
+{
+	int	result;
+
+	result = map_updatevw(map);
+	fdf_show_menu();
+	return(result);
 }

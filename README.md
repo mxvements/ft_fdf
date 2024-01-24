@@ -86,6 +86,30 @@ You will get some extra points if you can:
 
 # How to use
 
+1 - Clone the repository
+```
+git@github.com:mxvements/ft_fdf.git
+```
+
+2 - Compilation
+
+Enter the project folder and run make, makefile rules
+```
+`make` - compile fdf (with libft and gnl)
+`make clean` - delete all *.o files (from fdf's srcs and libft + gnl)
+`make fclean` - delete all *.o & *.a (executable) files
+`make re` - use fclean + all, recompile fdf
+```
+
+# Project
+
+- Project with bonus:
+	- used bitwise to interpolate colors. Colors only shown if they are included on the map
+	- rotate, move and scale using mouse and keys
+	- showed a menu on the stdout to guide on instructions
+	- added parallel view (plan) and reset to the default isometric
+	- height scale and general scale of map are controlled throught a header macro
+
 *tbd*
 
 # Other
@@ -111,6 +135,7 @@ At 42 School, it is expected that almost every project is written in accordance 
 + [MiniLibX Documentation](https://harm-smits.github.io/42docs/libs/minilibx/introduction.html)
 + [MannBell blog about the project](https://m4nnb3ll.medium.com/fil-de-fer-fdf-the-first-graphical-project-at-42-the-network-5cce69203448)
 + [](https://paulbourke.net/geometry/rotate/)
++ [Abdul Bari video about the Bresenham's algorithm](https://www.youtube.com/watch?v=RGB-wlatStc)
 
 # License
 [MIT License](https://github.com/mxvements/ft_license/blob/main/LICENSE.txt)

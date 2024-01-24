@@ -42,7 +42,7 @@ void	*map_free_vwstruct(t_view *vw)
 
 void	*map_free_ptmap(t_map *map, int y)
 {
-	int i;
+	int	i;
 
 	i = y;
 	while (--i >= 0)

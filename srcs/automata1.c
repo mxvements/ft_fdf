@@ -82,9 +82,9 @@ t_map	*a_parse(char *txt, t_map *map)
 	while (txt[++i] != '\0')
 	{
 		ostate = a_changestate(txt[i], state);
-		if ((state == 0 || state == 4) && (ostate == 2 || ostate == 3))
+		if ((state == 0 || state >= 4) && (ostate == 2 || ostate == 3))
 			init_pt = i;
-		if ((state == 3 && ostate == 4) || (ostate == 3 && txt[i + 1] == '\0'))
+		if ((state == 3 && ostate >= 4) || (ostate == 3 && txt[i + 1] == '\0'))
 		{
 			map = arr_evalpoint((txt + init_pt), map, &(xy[0]), &(xy[1]));
 			a_parse_updatecoord(&(xy[0]), &(xy[1]), txt[i]);

@@ -69,7 +69,7 @@ t_map	*map_build(char *txt, t_map *map)
 	map = map_ptmap_init(map);
 	if (!map)
 		return (NULL);
-	map = (t_map *)a_parse(txt, map);
+	map = txt_parse(txt, map);
 	if (!map)
 		return (NULL);
 	map = map_view(map);

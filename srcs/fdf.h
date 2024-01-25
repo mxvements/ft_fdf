@@ -33,7 +33,7 @@
 # define WIDTH				1280
 # define HEIGHT				720
 # define SCALE				15
-# define ZSCALE				1
+# define ZSCALE				5
 
 typedef struct s_mlx
 {
@@ -164,9 +164,6 @@ void	fdf_pxput(t_mlx *mlx, int x, int y, int color);
 /* ************************************************************************** */
 /*                                  parse                                     */
 /* ************************************************************************** */
-t_map	*arr_evalpoint(char *s, t_map *map, int *x, int *y);
-size_t	a_getstate(int i, int j);
-size_t	a_changestate(char c, size_t state);
-t_map	*a_parse(char *txt, t_map *map);
+t_map	*txt_parse(char *txt, t_map *map);
 
 #endif

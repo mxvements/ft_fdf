@@ -15,8 +15,6 @@ NAME=		fdf
 #HRDS=
 
 SRCS=		main.c \
-			automata1.c \
-			automata2.c \
 			fdf_aux.c \
 			fdf_keyhooks1.c \
 			fdf_keyhooks2.c \
@@ -32,7 +30,8 @@ SRCS=		main.c \
 			view_aux1.c \
 			view_aux2.c \
 			pt_aux.c \
-			keys_aux.c
+			keys_aux.c \
+			parse_split.c
 
 SRCS_DIR=	./srcs/
 

@@ -72,28 +72,28 @@ static void	a_parse_updatecoord(int *x, int *y, int c)
 t_map	*a_parse(char *txt, t_map *map)
 {
 	int			i;
-	size_t		state;
-	size_t		ostate;
+	size_t		st;
+	size_t		ost;
 	size_t		init_pt;
 	static int	xy[2];
 
 	i = -1;
-	state = 0;
+	st = 0;
 	while (txt[++i] != '\0')
 	{
-		ostate = a_changestate(txt[i], state);
-		if ((state == 4 || state == 3) && ostate == 5)
-			a_parse_updatecoord(&(xy[0]), &(xy[1]), txt[i]);
-		if ((state == 0 || state >= 4) && (ostate == 2 || ostate == 3))
+		ost = a_changestate(txt[i], st);
+		if ((st == 0 || st >= 4) && (ost == 2 || ost == 3))
 			init_pt = i;
-		if ((state == 3 && ostate >= 4) || (ostate == 3 && txt[i + 1] == '\0'))
+		else if ((st == 3 && ost >= 4) || (ost == 3 && txt[i + 1] == '\0'))
 		{
 			map = arr_evalpoint((txt + init_pt), map, &(xy[0]), &(xy[1]));
 			a_parse_updatecoord(&(xy[0]), &(xy[1]), txt[i]);
 		}
-		if (ostate == 1 || (ostate < 3 && txt[i + 1] == '\0'))
+		else if ((st == 4 || st == 3) && ost == 5)
+			a_parse_updatecoord(&(xy[0]), &(xy[1]), txt[i]);
+		else if (ost == 1 || (ost < 3 && txt[i + 1] == '\0'))
 			return (map_evalerror_ptmap(map, map->y_dim));
-		state = ostate;
+		st = ost;
 	}
 	return (map);
 }

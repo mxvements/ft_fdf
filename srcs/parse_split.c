@@ -32,18 +32,18 @@ static void	*txt_evalpoint(char *ptinfo, t_pt *pt, int x, int y)
 
 t_map	*txt_parse(char *txt, t_map *map)
 {
-	char **parse_y;
-	char **parse_x;
-	int	y;
-	int	x;
+	char	**parse_y;
+	char	**parse_x;
+	int		y;
+	int		x;
 
 	parse_y = ft_split(txt, '\n');
-	y = -1; 
+	y = -1;
 	while (parse_y[++y] != NULL)
 	{
 		parse_x = ft_split(parse_y[y], ' ');
 		x = -1;
-		while(parse_x[++x] != NULL)
+		while (parse_x[++x] != NULL)
 		{
 			if (txt_evalpoint(parse_x[x], &(map->map[y][x]), x, y) == NULL)
 				return (map_evalerror_ptmap(map, y));

@@ -33,7 +33,7 @@
 # define WIDTH				1280
 # define HEIGHT				720
 # define SCALE				15
-# define ZSCALE				5
+# define ZSCALE				1
 
 typedef struct s_mlx
 {

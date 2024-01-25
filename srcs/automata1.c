@@ -20,7 +20,7 @@
 		{1, 1, 1, 1, 1},	//	1	ERR
 		{1, 1, 3, 1, 1},	//	2	SIGN '-' '+'
 		{4, 1, 3, 5, 1},	//	3	DICT "0123456789abcdefx,"
-		{4, 2, 3, 1, 1}		//	4	SPACE 
+		{4, 2, 3, 5, 1}		//	4	SPACE 
 		{1, 2, 3, 1, 1}		//	5	\n
 
 */
@@ -31,7 +31,7 @@ size_t	a_getstate(int i, int j)
 		{1, 1, 1, 1, 1}, \
 		{1, 1, 3, 1, 1}, \
 		{4, 1, 3, 5, 1}, \
-		{4, 2, 3, 1, 1}, \
+		{4, 2, 3, 5, 1}, \
 		{1, 2, 3, 1, 1} \
 	};
 
@@ -82,6 +82,8 @@ t_map	*a_parse(char *txt, t_map *map)
 	while (txt[++i] != '\0')
 	{
 		ostate = a_changestate(txt[i], state);
+		if ((state == 4 || state == 3) && ostate == 5)
+			a_parse_updatecoord(&(xy[0]), &(xy[1]), txt[i]);
 		if ((state == 0 || state >= 4) && (ostate == 2 || ostate == 3))
 			init_pt = i;
 		if ((state == 3 && ostate >= 4) || (ostate == 3 && txt[i + 1] == '\0'))

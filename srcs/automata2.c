@@ -21,12 +21,12 @@ t_map	*arr_evalpoint(char *s, t_map *map, int *x, int *y)
 
 	if (!map)
 		return (NULL);
-	ss = ft_substr(s, 0, sp + 1);
+	ss = ft_substr(s, 0, sp);
 	comma = ft_strchri(ss, ',');
 	atoiflag = 0;
 	(map->map[*y][*x]).xyz[0] = *x;
 	(map->map[*y][*x]).xyz[1] = *y;
-	(map->map[*y][*x]).xyz[2] = ft_atoif(s, &atoiflag) / ZSCALE;
+	(map->map[*y][*x]).xyz[2] = ft_atoif(ss, &atoiflag) / ZSCALE;
 	if (atoiflag < 0)
 		return (map_evalerror_ptmap(map, map->y_dim));
 	if (comma != -1)

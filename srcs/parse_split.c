@@ -30,6 +30,18 @@ static void	*txt_evalpoint(char *ptinfo, t_pt *pt, int x, int y)
 	return ((void *)pt);
 }
 
+static void arrchr_free(char **arr)
+{
+    int i;
+
+    i = -1;
+    while (arr[++i] != NULL)
+    {
+        free(arr[i]);
+    }
+    free(arr);
+}
+
 t_map	*txt_parse(char *txt, t_map *map)
 {
 	char	**parse_y;
@@ -48,7 +60,9 @@ t_map	*txt_parse(char *txt, t_map *map)
 			if (txt_evalpoint(parse_x[x], &(map->map[y][x]), x, y) == NULL)
 				return (map_evalerror_ptmap(map, y));
 		}
+		arrchr_free(parse_x);
 	}
+	arrchr_free(parse_y);
 	if (x != map->x_dim || y != map->y_dim)
 		return (map_evalerror_ptmap(map, y));
 	return (map);

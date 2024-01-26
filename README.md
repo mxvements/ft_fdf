@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://img.shields.io/badge/status-wip-success?color=00ABAD&style=flat-square" />
     <img src="https://img.shields.io/badge/started-23%20%2F%2012%20%2F%202023-success?color=00ABAD&style=flat-square" />
-    <img src="https://img.shields.io/badge/score-1--%20%2F%20100-success?color=00ABAD&style=flat-square" />
+    <img src="https://img.shields.io/badge/score-125%20%2F%20100-success?color=00ABAD&style=flat-square" />
     <img src="https://img.shields.io/github/languages/top/mxvements/ft_fdf?color=00ABAD&style=flat-square" />
     <img src="https://img.shields.io/github/last-commit/mxvements/ft_fdf?color=00ABAD&style=flat-square" />
     <br>
@@ -97,7 +97,7 @@ Enter the project folder and run make, makefile rules
 ```
 `make` - compile fdf (with libft and gnl)
 `make clean` - delete all *.o files (from fdf's srcs and libft + gnl)
-`make fclean` - delete all *.o & *.a (executable) files
+`make fclean` - delete all *.o & *.a & executable files
 `make re` - use fclean + all, recompile fdf
 ```
 
